@@ -1,0 +1,32 @@
+Package: REcopol
+Title: Analyse fossil pollen records
+Version: 0.0.0.9003
+Authors@R: 
+    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: The package assemble function used in community ecology and present them in easy-to-use wrapper functions.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
+Imports: 
+    ape,
+    assertthat,
+    dplyr,
+    ggplot2,
+    magrittr,
+    mvpart,
+    picante,
+    purrr,
+    RColorBrewer,
+    RFossilpol,
+    tibble,
+    tidyr,
+    usethis,
+    vegan
+Remotes: 
+    cran/mvpart,
+    HOPE-UIB-BIO/R-Fossilpol-package
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
