@@ -13,8 +13,6 @@ diversity_estimate_rarefy <-
 
     util_check_class("set_margin", "numeric")
 
-    util_check_vector_values("set_margin", c(1, 2))
-
     if(missing(sample_size)){
       sample_size <- min(apply(data_matrix, set_margin, sum))
     }
