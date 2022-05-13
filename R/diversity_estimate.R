@@ -22,7 +22,7 @@ diversity_estimate <-
       dplyr::mutate_all(., .f = floor) %>%
       as.matrix()
 
-    util_check_class("method", "numeric")
+    util_check_class("method", "character")
 
     method <- match.arg(method)
 
