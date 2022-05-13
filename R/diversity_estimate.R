@@ -1,6 +1,6 @@
 #' @title Estimation of interpolation and extrapolation of individual-based Hill number
 #' @param data_source Data frame with rows as levels and columns as taxa
-#' @param method Selected method of diversify estimation c("randomised", "rarefy")
+#' @param sel_method Selected method of diversify estimation c("randomised", "rarefy")
 #' @param sample_size minimum sample size
 #' @param rand number of randomisations
 #' @description Estimation of interpolation and extrapolation of individual-based Hill number
@@ -8,7 +8,7 @@
 #' @export
 diversity_estimate <-
   function(data_source,
-           method = c("rarefy", "randomised"),
+           sel_method = c("rarefy", "randomised"),
            sample_size,
            rand = 999) {
 
@@ -22,11 +22,11 @@ diversity_estimate <-
       dplyr::mutate_all(., .f = floor) %>%
       as.matrix()
 
-    util_check_class("method", "character")
+    sel_method <- match.arg(sel_method)
 
-    method <- match.arg(method)
+    util_check_class("sel_method", "character")
 
-    util_check_vector_values("method", c("rarefy", "randomised"))
+    util_check_vector_values("sel_method", c("rarefy", "randomised"))
 
     if(missing(sample_size)){
       sample_size <-
@@ -42,7 +42,7 @@ diversity_estimate <-
       msg = "'sample_size' has be integer")
 
 
-    if(method == "randomised") {
+    if(sel_method == "randomised") {
 
       util_check_class("rand", "numeric")
 
@@ -58,7 +58,7 @@ diversity_estimate <-
           set_margin = 1,
           rand = rand)
 
-    } else if (method == "rarefy"){
+    } else if (sel_method == "rarefy"){
       div <-
         diversity_estimate_rarefy(
           data_matrix = round(data_matrix),

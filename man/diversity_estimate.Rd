@@ -6,7 +6,7 @@
 \usage{
 diversity_estimate(
   data_source,
-  method = c("rarefy", "randomised"),
+  sel_method = c("rarefy", "randomised"),
   sample_size,
   rand = 999
 )
@@ -14,7 +14,7 @@ diversity_estimate(
 \arguments{
 \item{data_source}{Data frame with rows as levels and columns as taxa}
 
-\item{method}{Selected method of diversify estimation c("randomised", "rarefy")}
+\item{sel_method}{Selected method of diversify estimation c("randomised", "rarefy")}
 
 \item{sample_size}{minimum sample size}
 
