@@ -43,14 +43,14 @@ fit_custom_gam <-
 
       data_weight <-
         data_source %>%
-        dplyr::mutate(weight_var = with(data_source, get(weights_var)))
+        dplyr::mutate(weights = with(data_source, get(weights_var)))
 
 
     } else {
 
       data_weight <-
         data_source %>%
-        dplyr::mutate(weight_var = rep(1, nrow(data_source)))
+        dplyr::mutate(weights = rep(1, nrow(data_source)))
 
     }
 
@@ -63,7 +63,7 @@ fit_custom_gam <-
     if(
       sel_k > nrow(data_weight)-1
     ) {
-      sel_k <- nrow(dadata_weight)-1
+      sel_k <- nrow(data_weight)-1
     }
 
     formula_w <-
@@ -73,11 +73,11 @@ fit_custom_gam <-
     res_gam <-
       mgcv::gam(
         formula = formula_w,
-        data = data_weight,
+        data = as.data.frame(data_weight),
         family =  eval(parse(text = error_family)),
-        weights = weights_var,
-        method = "REML")
+        weights = weights,
+        method = "REML",
+        na.action = "na.omit")
 
     return(res_gam)
-
   }
