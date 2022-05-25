@@ -6,13 +6,15 @@
 #' @param data_source Data.frame
 #' @param weights_var Character. Name of the variable to use as weights
 #' @param sel_k Define `k` (wiggliness)
+#' @description A wrapper function for `mgcv::gam` to help fit GAM models
+#' functionally.
 #' @return Fitted GAM model
 #' @export
 fit_custom_gam <-
   function(
-    y_var,
-    x_var,
-    error_family,
+    x_var = "age",
+    y_var = "var",
+    error_family = "gaussian(link = 'identity')",
     smooth_basis = c('tp', 'cr'),
     data_source,
     weights_var = NULL,
@@ -59,12 +61,6 @@ fit_custom_gam <-
     assertthat::assert_that(
       round(sel_k) == sel_k,
       msg = "'sel_k' must be an integer")
-
-    if(
-      sel_k > nrow(data_weight)-1
-    ) {
-      sel_k <- nrow(data_weight)-1
-    }
 
     formula_w <-
       paste0(y_var, "~ s(", x_var,", k = ", sel_k, ",bs = '", smooth_basis, "' )") %>%
