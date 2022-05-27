@@ -94,7 +94,7 @@ fit_hgam <-
             formula = stats::as.formula(formula_hgam),
             data = data_source,
             method = "fREML",
-            family = eval(parse(text = sel_var_error)),
+            family = eval(parse(text = error_family)),
             cluster = cl,
             control = mgcv::gam.control(
               trace = TRUE,
@@ -112,7 +112,7 @@ fit_hgam <-
             formula = stats::as.formula(formula_gam),
             data = data_source,
             method = "fREML",
-            family = eval(parse(text = sel_var_error)),
+            family = eval(parse(text = error_family)),
             control = mgcv::gam.control(
               trace = TRUE,
               maxit = max_itiration))
