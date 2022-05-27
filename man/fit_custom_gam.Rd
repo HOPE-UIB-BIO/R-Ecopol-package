@@ -23,11 +23,12 @@ fit_custom_gam(
 
 \item{smooth_basis}{Character. Name of the Smooth basis to use}
 
-\item{data_source}{Data.frame}
+\item{data_source}{Data.frame with columns whose names are set by \code{y_var} and
+\code{x_var}}
 
 \item{weights_var}{Character. Name of the variable to use as weights}
 
-\item{sel_k}{Define \code{k} (wiggliness)}
+\item{sel_k}{Numeric. Define \code{k} (wiggliness)}
 }
 \value{
 Fitted GAM model

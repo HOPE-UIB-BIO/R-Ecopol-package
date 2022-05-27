@@ -3,9 +3,10 @@
 #' @param x_var Character. Name of the X-variable
 #' @param error_family Character. Name of the error-family to be used
 #' @param smooth_basis Character. Name of the Smooth basis to use
-#' @param data_source Data.frame
+#' @param data_source Data.frame with columns whose names are set by `y_var` and
+#'  `x_var`
 #' @param weights_var Character. Name of the variable to use as weights
-#' @param sel_k Define `k` (wiggliness)
+#' @param sel_k Numeric. Define `k` (wiggliness)
 #' @description A wrapper function for `mgcv::gam` to help fit GAM models
 #' functionally.
 #' @return Fitted GAM model
