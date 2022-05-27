@@ -5,9 +5,9 @@
 \title{Fit custom single term GAM model}
 \usage{
 fit_custom_gam(
-  y_var,
-  x_var,
-  error_family,
+  x_var = "age",
+  y_var = "var",
+  error_family = "gaussian(link = 'identity')",
   smooth_basis = c("tp", "cr"),
   data_source,
   weights_var = NULL,
@@ -15,23 +15,25 @@ fit_custom_gam(
 )
 }
 \arguments{
-\item{y_var}{Character. Name of the Y-variable}
-
 \item{x_var}{Character. Name of the X-variable}
+
+\item{y_var}{Character. Name of the Y-variable}
 
 \item{error_family}{Character. Name of the error-family to be used}
 
 \item{smooth_basis}{Character. Name of the Smooth basis to use}
 
-\item{data_source}{Data.frame}
+\item{data_source}{Data.frame with columns whose names are set by \code{y_var} and
+\code{x_var}}
 
 \item{weights_var}{Character. Name of the variable to use as weights}
 
-\item{sel_k}{Define \code{k} (wiggliness)}
+\item{sel_k}{Numeric. Define \code{k} (wiggliness)}
 }
 \value{
 Fitted GAM model
 }
 \description{
-Fit custom single term GAM model
+A wrapper function for \code{mgcv::gam} to help fit GAM models
+functionally.
 }

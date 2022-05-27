@@ -3,16 +3,19 @@
 #' @param x_var Character. Name of the X-variable
 #' @param error_family Character. Name of the error-family to be used
 #' @param smooth_basis Character. Name of the Smooth basis to use
-#' @param data_source Data.frame
+#' @param data_source Data.frame with columns whose names are set by `y_var` and
+#'  `x_var`
 #' @param weights_var Character. Name of the variable to use as weights
-#' @param sel_k Define `k` (wiggliness)
+#' @param sel_k Numeric. Define `k` (wiggliness)
+#' @description A wrapper function for `mgcv::gam` to help fit GAM models
+#' functionally.
 #' @return Fitted GAM model
 #' @export
 fit_custom_gam <-
   function(
-    y_var,
-    x_var,
-    error_family,
+    x_var = "age",
+    y_var = "var",
+    error_family = "gaussian(link = 'identity')",
     smooth_basis = c('tp', 'cr'),
     data_source,
     weights_var = NULL,
@@ -43,14 +46,14 @@ fit_custom_gam <-
 
       data_weight <-
         data_source %>%
-        dplyr::mutate(weight_var = with(data_source, get(weights_var)))
+        dplyr::mutate(weights = with(data_source, get(weights_var)))
 
 
     } else {
 
       data_weight <-
         data_source %>%
-        dplyr::mutate(weight_var = rep(1, nrow(data_source)))
+        dplyr::mutate(weights = rep(1, nrow(data_source)))
 
     }
 
@@ -60,12 +63,6 @@ fit_custom_gam <-
       round(sel_k) == sel_k,
       msg = "'sel_k' must be an integer")
 
-    if(
-      sel_k > nrow(data_weight)-1
-    ) {
-      sel_k <- nrow(dadata_weight)-1
-    }
-
     formula_w <-
       paste0(y_var, "~ s(", x_var,", k = ", sel_k, ",bs = '", smooth_basis, "' )") %>%
       stats::as.formula(.)
@@ -73,11 +70,11 @@ fit_custom_gam <-
     res_gam <-
       mgcv::gam(
         formula = formula_w,
-        data = data_weight,
+        data = as.data.frame(data_weight),
         family =  eval(parse(text = error_family)),
-        weights = weights_var,
-        method = "REML")
+        weights = weights,
+        method = "REML",
+        na.action = "na.omit")
 
     return(res_gam)
-
   }
