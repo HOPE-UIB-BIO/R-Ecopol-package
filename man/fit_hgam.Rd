@@ -40,4 +40,5 @@ Fitted hGAM model
 Fit a hierarchical GAM model with a single common smoother plus
 group-level smoothers with differing wiggliness (random effect). If there is
 less number of groups in the dataset than 2, normal GAM model will be fitted.
+The function uses cluser analyses with automatically detectec number of cores.
 }
