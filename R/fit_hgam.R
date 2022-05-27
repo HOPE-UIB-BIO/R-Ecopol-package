@@ -11,6 +11,7 @@
 #' @description Fit a hierarchical GAM model with a single common smoother plus
 #' group-level smoothers with differing wiggliness (random effect). If there is
 #' less number of groups in the dataset than 2, normal GAM model will be fitted.
+#' The function uses cluser analyses with automatically detectec number of cores.
 #' @return Fitted hGAM model
 #' @export
 fit_hgam <-
@@ -95,7 +96,7 @@ fit_hgam <-
             method = "fREML",
             family = eval(parse(text = sel_var_error)),
             cluster = cl,
-            control = gam.control(
+            control = mgcv::gam.control(
               trace = TRUE,
               maxit = max_itiration))
       )
@@ -111,10 +112,10 @@ fit_hgam <-
             formula = stats::as.formula(formula_gam),
             data = data_source,
             method = "fREML",
-            family = error_family,
-            control = gam.control(
+            family = eval(parse(text = sel_var_error)),
+            control = mgcv::gam.control(
               trace = TRUE,
-              maxit = 200))
+              maxit = max_itiration))
       )
     }
 
