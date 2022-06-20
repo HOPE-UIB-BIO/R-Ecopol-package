@@ -23,12 +23,6 @@ diversity_estimate_rarefy <-
       round(sample_size) == sample_size,
       msg = "'sample_size' has be integer")
 
-    util_check_class("rand", "numeric")
-
-    assertthat::assert_that(
-      rand ==  round(rand),
-      msg = "'rand' must be a 'integer'")
-
     # helper functions
     hill0 <-
       function(data, sample_size){
