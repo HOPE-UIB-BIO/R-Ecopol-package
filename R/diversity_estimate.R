@@ -12,7 +12,6 @@ diversity_estimate <-
            sample_size,
            rand = 999) {
 
-
     util_check_class("data_source", "data.frame")
 
     # remove sample_id, round down, and tranform into matrix
@@ -41,7 +40,6 @@ diversity_estimate <-
       round(sample_size) == sample_size,
       msg = "'sample_size' has be integer")
 
-
     if(sel_method == "randomised") {
 
       util_check_class("rand", "numeric")
@@ -49,7 +47,6 @@ diversity_estimate <-
       assertthat::assert_that(
         rand ==  round(rand),
         msg = "'rand' must be a 'integer'")
-
 
       div <-
         diversity_estimate_randomise(
@@ -70,7 +67,6 @@ diversity_estimate <-
       div %>%
       as.data.frame() %>%
       tibble::as_tibble()
-
 
     # add sample_id if present in the original data
     if("sample_id" %in% names(data_source)){
