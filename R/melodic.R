@@ -1,183 +1,148 @@
 #' @title Mean Dissimilarity Components
-#' @param samp community matrix; sites in lines, species in columns
-#' @param dis dissimilarity matrix
-#' @param type
-#' \itemize{
-#' \item `"both"` - for results with abundances weighted and non-weighted
-#' \item `"abundance"` - for results with abundances weighted
-#' \item `"presence"` - for results with abundances non-weighted
-#' }
-#' @description Function `melodic` obtained from https://doi.org/10.1007/s00442-016-3546-0
-#' @author Carlos P. Carmona
+#' @param data_source_community
+#' community matrix; sites in lines, species in columns
+#' @param data_source_dissimilarity dissimilarity matrix
+#' @description Function `melodic` adapted from
+#' https://doi.org/10.1007/s00442-016-3546-0
+#' @author Ondrej Mottl, Carlos P. Carmona
 melodic <-
-  function(
-    samp,
-    dis,
-    type = "both"){
+  function(data_source_community,
+           data_source_dissimilarity) {
+
+    # check for
+    util_check_class(
+      "data_source_community", "matrix"
+    )
+
+
+    util_check_class(
+      "data_source_dissimilarity",
+      c("matrix", "dist")
+    )
 
     if
     (
-      class(samp) != "matrix"
+      !any(class(data_source_dissimilarity) == "matrix")
     ) {
-      samp <-
-        as.matrix(samp)
+      data_source_dissimilarity <-
+        as.matrix(data_source_dissimilarity)
     }
 
-    if
-    (
-      class(dis) != "matrix"
-    ) {
-      dis <-
-        as.matrix(dis)
-    }
+    assertthat::assert_that(
+      is.null(colnames(data_source_community)) == FALSE &&
+        is.null(colnames(data_source_dissimilarity)) == FALSE,
+      msg = paste0(
+        "Both data_source_community and data_source_dissimilarity",
+        "must have colnames.\n"
+      )
+    )
 
-    if
-    (
-      is.null(colnames(samp)) | is.null(colnames(dis))
-    ) {
-      stop("Both samp and dis must have colnames.\n")
-    }
+    assertthat::assert_that(
+      ncol(data_source_community) == ncol(data_source_dissimilarity) &&
+        ncol(data_source_community) == nrow(data_source_dissimilarity),
+      msg = paste(
+        "'data_source_community' and 'data_source_dissimilarity' must",
+        "have the same number of taxa"
+      )
+    )
 
-    N <- dim(samp)[1]
+    assertthat::assert_that(
+      all(sort(colnames(data_source_dissimilarity)) == sort(colnames(data_source_community))) &
+        all(sort(rownames(data_source_dissimilarity)) == sort(colnames(data_source_community))),
+      msg = paste(
+        "'data_source_community' and 'data_source_dissimilarity' must",
+        "have the same taxa names"
+      )
+    )
 
+    n_row <- nrow(data_source_community)
+
+    # pre-allocate space
     melodic <- list()
 
-    if
-    (
-      type == "both"
-    ) {
-
-      melodic$abundance <-
-        list()
-
-      melodic$abundance$mpd <-
-        melodic$abundance$rao <-
-        melodic$abundance$simpson <-
-        numeric(N)
-
+    melodic$abundance <-
       melodic$presence <-
-        list()
+      list()
 
-      melodic$presence$mpd <-
-        melodic$presence$rao <-
-        melodic$presence$simpson <-
-        numeric(N)
-
-    }
-    else if
-    (
-      type == "abundance"
-    ) {
-
-      melodic$abundance <-
-        list()
-
+    melodic$richness <-
       melodic$abundance$mpd <-
-        melodic$abundance$rao <-
-        melodic$abundance$simpson <-
-        numeric(N)
-    }
-    else if
-    (
-      type == "presence"
-    ) {
-
-      melodic$presence <-
-        list()
-
+      melodic$abundance$rao <-
+      melodic$abundance$simpson <-
       melodic$presence$mpd <-
-        melodic$presence$rao <-
-        melodic$presence$simpson <-
-        numeric(N)
-    }
-    for (i in 1:N){
+      melodic$presence$rao <-
+      melodic$presence$simpson <-
+      numeric(n_row)
 
-      sppInSample <-
-        names(samp[i, samp[i, ] > 0])
+    for (i in 1:n_row) {
+
+      spp_in_sample <-
+        names(data_source_community[i, data_source_community[i, ] > 0])
 
       melodic$richness[i] <-
-        rowSums(samp > 0)[i]
+        length(spp_in_sample)
 
-      if (length(sppInSample) > 1){
+      if
+      (
+        length(spp_in_sample) <= 1
+      ) {
+        melodic$abundance$mpd[i] <- NA
 
-        sample.dis <-
-          dis[sppInSample, sppInSample]
+        melodic$abundance$rao[i] <-
+          melodic$abundance$simpson[i] <- 0
 
-        abund.w <-
-          numeric(
-            length(sppInSample)
-          )
+        melodic$presence$mpd[i] <- NA
 
-        if
-        (
-          type == "both" | type == "abundance"
-        ) {
+        melodic$presence$rao[i] <-
+          melodic$presence$simpson[i] <- 0
 
-          abund.w <-
-            samp[i, sppInSample] / sum(samp[i, sppInSample])
-
-          sample.weights <-
-            outer(abund.w , abund.w)
-
-          melodic$abundance$mpd[i] <-
-            stats::weighted.mean(
-              sample.dis[lower.tri(sample.dis)],
-              sample.weights[lower.tri(sample.weights)]
-            )
-
-          melodic$abundance$rao[i] <-
-            sum(sample.weights * sample.dis)
-
-          melodic$abundance$simpson[i] <-
-            sum(2 * sample.weights[lower.tri(sample.weights)])
-
-        }
-        if
-        (
-          type == "both" | type == "presence"
-        ) {
-
-          abund.nw <-
-            rep(1, length(sppInSample)) / length(sppInSample)
-
-          sample.weights <-
-            outer(abund.nw, abund.nw)
-
-          melodic$presence$mpd[i] <-
-            stats::weighted.mean(
-              sample.dis[lower.tri(sample.dis)],
-              sample.weights[lower.tri(sample.weights)]
-            )
-
-          melodic$presence$rao[i] <-
-            sum(sample.weights * sample.dis)
-
-          melodic$presence$simpson[i] <-
-            sum(2 * sample.weights[lower.tri(sample.weights)])
-        }
-      }	else {
-        if
-        (
-          type=="both" | type=="abundance"
-        )
-        {
-
-          melodic$abundance$mpd[i] <- NA
-
-          melodic$abundance$rao[i] <-
-            melodic$abundance$simpson[i] <- 0
-        }
-        if
-        (
-          type == "both" | type == "presence"
-          ) {
-
-          melodic$presence$mpd[i] <- NA
-
-          melodic$presence$rao[i] <-
-            melodic$presence$simpson[i] <-0
-        }
+        next
       }
+
+      sample_dis <-
+        data_source_dissimilarity[rownames(data_source_dissimilarity) %in% spp_in_sample,
+                                  base::colnames(data_source_dissimilarity) %in% spp_in_sample]
+
+      abund_w <-
+        numeric(
+          length(spp_in_sample)
+        )
+
+      abund_w <-
+        data_source_community[i, spp_in_sample] /
+        sum(data_source_community[i, spp_in_sample])
+
+      sample_weights <-
+        outer(abund_w, abund_w)
+
+      melodic$abundance$mpd[i] <-
+        stats::weighted.mean(
+          sample_dis[lower.tri(sample_dis)],
+          sample_weights[lower.tri(sample_weights)]
+        )
+
+      melodic$abundance$rao[i] <-
+        sum(sample_weights * sample_dis)
+
+      melodic$abundance$simpson[i] <-
+        sum(2 * sample_weights[lower.tri(sample_weights)])
+
+      abund_nw <-
+        rep(1, length(spp_in_sample)) / length(spp_in_sample)
+
+      sample_weights_nw <-
+        outer(abund_nw, abund_nw)
+
+      melodic$presence$mpd[i] <-
+        stats::weighted.mean(
+          sample_dis[lower.tri(sample_dis)],
+          sample_weights_nw[lower.tri(sample_weights_nw)]
+        )
+
+      melodic$presence$rao[i] <-
+        sum(sample_weights_nw * sample_dis)
+
+      melodic$presence$simpson[i] <-
+        sum(2 * sample_weights_nw[lower.tri(sample_weights_nw)])
     }
 
     out <-

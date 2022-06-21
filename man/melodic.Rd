@@ -4,22 +4,17 @@
 \alias{melodic}
 \title{Mean Dissimilarity Components}
 \usage{
-melodic(samp, dis, type = "both")
+melodic(data_source_community, data_source_dissimilarity)
 }
 \arguments{
-\item{samp}{community matrix; sites in lines, species in columns}
+\item{data_source_community}{community matrix; sites in lines, species in columns}
 
-\item{dis}{dissimilarity matrix}
-
-\item{type}{\itemize{
-\item \code{"both"} - for results with abundances weighted and non-weighted
-\item \code{"abundance"} - for results with abundances weighted
-\item \code{"presence"} - for results with abundances non-weighted
-}}
+\item{data_source_dissimilarity}{dissimilarity matrix}
 }
 \description{
-Function \code{melodic} obtained from https://doi.org/10.1007/s00442-016-3546-0
+Function \code{melodic} adapted from
+https://doi.org/10.1007/s00442-016-3546-0
 }
 \author{
-Carlos P. Carmona
+Ondrej Mottl, Carlos P. Carmona
 }
