@@ -6,15 +6,20 @@
 \usage{
 diversity_estimate(
   data_source,
-  sel_method = c("rarefy", "randomised"),
+  sel_method = c("taxonomic", "phylogenetic_diversity", "phylogenetic_nri",
+    "phylogenetic_nti"),
   sample_size,
-  rand = 999
+  rand = 999,
+  iterations = 1000,
+  abundance_weighted = TRUE,
+  phylogenetic_tree = NULL
 )
 }
 \arguments{
-\item{data_source}{Data frame with rows as levels and columns as taxa}
+\item{data_source}{Data frame with rows as levels and columns as taxa. First
+row should be named \code{sample_id}.}
 
-\item{sel_method}{Selected method of diversify estimation c("randomised", "rarefy")}
+\item{sel_method}{Selected method of diversify estimation c("taxonomic_randomised", "taxonomic_rarefy")}
 
 \item{sample_size}{minimum sample size}
 
