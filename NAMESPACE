@@ -3,6 +3,7 @@
 export("%>%")
 export(add_data_partition)
 export(diversity_estimate)
+export(diversity_estimate_functional)
 export(diversity_estimate_phylogenetic)
 export(diversity_estimate_taxonomic)
 export(fit_custom_gam)

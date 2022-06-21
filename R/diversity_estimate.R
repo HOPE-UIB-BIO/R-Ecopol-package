@@ -118,44 +118,82 @@ diversity_estimate <-
     (
       sel_method == "phylogenetic_diversity"
     ) {
-
-      diversity_estimate_phylogenetic(
-        data_source = data_matrix,
-        method = "diversity",
-        abundance_weighted = abundance_weighted,
-        rand = rand,
-        iterations = iterations,
-        phylogenetic_tree = phylogenetic_tree
-      )
+      div <-
+        diversity_estimate_phylogenetic(
+          data_source = data_matrix,
+          method = "diversity",
+          abundance_weighted = abundance_weighted,
+          rand = rand,
+          iterations = iterations,
+          phylogenetic_tree = phylogenetic_tree
+        )
 
     } else if
     (
       sel_method == "phylogenetic_nri"
     ) {
 
-      diversity_estimate_phylogenetic(
-        data_source = data_matrix,
-        method = "NRI",
-        abundance_weighted = abundance_weighted,
-        rand = rand,
-        iterations = iterations,
-        phylogenetic_tree = phylogenetic_tree
-      )
+      div <-
+        diversity_estimate_phylogenetic(
+          data_source = data_matrix,
+          method = "NRI",
+          abundance_weighted = abundance_weighted,
+          rand = rand,
+          iterations = iterations,
+          phylogenetic_tree = phylogenetic_tree
+        )
 
     } else if
     (
       sel_method == "phylogenetic_nti"
     ) {
 
-      diversity_estimate_phylogenetic(
-        data_source = data_matrix,
-        method = "NTI",
-        abundance_weighted = abundance_weighted,
-        rand = rand,
-        iterations = iterations,
-        phylogenetic_tree = phylogenetic_tree
-      )
+      div <-
+        diversity_estimate_phylogenetic(
+          data_source = data_matrix,
+          method = "NTI",
+          abundance_weighted = abundance_weighted,
+          rand = rand,
+          iterations = iterations,
+          phylogenetic_tree = phylogenetic_tree
+        )
 
+    } else if
+    (
+      sel_method == "functional_rao"
+    ) {
+
+      div <-
+        diversity_estimate_functional(
+          data_source_community = data_matrix,
+          data_source_traits = data_source_traits,
+          sel_method = "rao",
+          rand = rand
+        )
+    } else if
+    (
+      sel_method == "functional_mpd"
+    ) {
+
+      div <-
+        diversity_estimate_functional(
+          data_source_community = data_matrix,
+          data_source_traits = data_source_traits,
+          sel_method = "mpd",
+          rand = rand
+        )
+    } else if
+    (
+      sel_method == "functional_simpson"
+    ) {
+
+      div <-
+        diversity_estimate_functional(
+          data_source_community = data_matrix,
+          data_source_traits = data_source_traits,
+          sel_method = "simpson",
+          rand = rand
+        )
     }
 
     res <-
