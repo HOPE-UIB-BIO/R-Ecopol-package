@@ -1,11 +1,40 @@
-#' @title Estimation of interpolation and extrapolation of individual-based Hill number
+#' @title Estimate diversity for community data
 #' @param data_source Data frame with rows as levels and columns as taxa. First
-#' row should be named `sample_id`.
-#' @param sel_method Selected method of diversify estimation c("taxonomic_randomised", "taxonomic_rarefy")
-#' @param sample_size minimum sample size
-#' @param rand number of randomisations
-#' @description Estimation of interpolation and extrapolation of individual-based Hill number
-#' @returns Tibble including phylogenetic diversity metric for each level.
+#' columns should be named `sample_id`.
+#' @param sel_method Character. Selected method of diversify estimation
+#' \itemize{
+#' \item `"taxonomic"` - individual-based Hill numbers (diversity and evenness)
+#' \item `"phylogenetic_diversity"` - Faith's phylogenetic diversity
+#' \item `"phylogenetic_nri"` - Net Relatedness Index
+#' \item `"phylogenetic_nti"` - Nearest Taxon Index
+#' }
+#' @param sample_size Numeric. Only for `"taxonomic"`. Minimum sample size
+#' @param abundance_weighted Logical. Only for `"phylogenetic"`. It FALSE,
+#' presence/absence data will be used.
+#' @param rand Numeric. Number of randomisations
+#' @param iterations Numeric. Only for `"phylogenetic"`. Number of iterations
+#' to use for each randomization (for independent swap and trial null models).
+#' @param phylogenetic_tree Only for `"phylogenetic"`. Phylogenetic backbone tree
+#' constructed using `ape` package.
+#' @description Estimation of diversity from community data.
+#' @returns Data frame with diversity metric estimated for each level (sample).
+#' Possible outputs depending on the `sel_method`:
+#' \itemize{
+#' \item `n0` -
+#' \item `n1` -
+#' \item `n2` -
+#' \item `n1_minus_n2` -
+#' \item `n2_divided_by_n1` -
+#' \item `n1_divided_by_n0` -
+#' \item `n_taxa` -
+#' \item `faith_pd_diversity` -
+#' \item `mean_pairwise_distances` -
+#' \item `net_relatedness_index` -
+#' \item `mean_nearest_taxon_distances` -
+#' \item `nearest_taxon_index` -
+#' \item `z_score` -
+#' \item `p_value` -
+#' }
 #' @export
 diversity_estimate <-
   function(data_source,

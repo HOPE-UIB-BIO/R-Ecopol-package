@@ -2,8 +2,9 @@
 #' @param data_matrix Data matrix. Rows as levels and columns as taxa. Row names
 #' should be the `sample_id`.
 #' @param sample_size Numeric. Minimum sample size
-#' @return Data frame with Hills number N0, N1, and N2, evenness ratios, and error estimates
+#' @return Data frame with Hills number N0, N1, and N2, evenness ratios (N1-N2, N2/N1, N1/N0)
 #' @description Estimation of interpolation and extrapolation of individual-based Hill numbers
+#' @export
 diversity_estimate_taxonomic <-
   function(data_matrix,
            sample_size

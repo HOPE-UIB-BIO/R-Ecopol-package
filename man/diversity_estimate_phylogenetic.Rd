@@ -5,26 +5,26 @@
 \title{Estimating phylogenetic diversity}
 \usage{
 diversity_estimate_phylogenetic(
-  data_source,
+  data_matrix,
   tree,
   dataset_id,
-  method = c("diversity", "NRI", "NTI"),
+  sel_method = c("diversity", "NRI", "NTI"),
   abundance_weighted = TRUE,
   rand = 999,
   iterations = 1000
 )
 }
 \arguments{
-\item{data_source}{Data frame with rows as levels and columns as taxa}
+\item{data_matrix}{Data frame with rows as levels and columns as taxa}
 
-\item{tree}{Phylogenetic diversity tree constructed using ape package}
+\item{tree}{Phylogenetic backbone tree constructed using ape package}
 
-\item{dataset_id}{Optional. unique dataset identification as character}
-
-\item{method}{Selected method for diversity estimation.
-"diversity" = Faith's phylogenetic diversity
-"NRI" = Net Relatedness Index
-"NTI" = Nearest Taxon Index}
+\item{sel_method}{Selected method for diversity estimation.
+\itemize{
+\item \code{"diversity"} - Faith's phylogenetic diversity
+\item \code{"NRI"} = Net Relatedness Index
+\item \code{"NTI"} = Nearest Taxon Index
+}}
 
 \item{abundance_weighted}{Logical. It FALSE, presence absence data will
 be used.}
@@ -35,8 +35,18 @@ be used.}
 (for independent swap and trial null models)}
 }
 \value{
-Tibble with Hill numbers N0, N1, N2, the evenness ratios N2/N1, N2/N0, and the
-modified versions of N2/N1 and N2/N0
+Data frame with diversity metric estimated for each level (sample).
+Possible outputs depending on the \code{sel_method}:
+\itemize{
+\item \code{n_taxa} -
+\item \code{faith_pd_diversity} -
+\item \code{mean_pairwise_distances} -
+\item \code{net_relatedness_index} -
+\item \code{mean_nearest_taxon_distances} -
+\item \code{nearest_taxon_index} -
+\item \code{z_score} -
+\item \code{p_value} -
+}
 }
 \description{
 Function for estimating one of three metrics of phylogenetic

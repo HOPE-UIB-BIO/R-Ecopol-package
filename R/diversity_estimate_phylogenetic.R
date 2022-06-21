@@ -1,11 +1,12 @@
 #' @title Estimating phylogenetic diversity
-#' @param data_source Data frame with rows as levels and columns as taxa
-#' @param tree Phylogenetic diversity tree constructed using ape package
-#' @param dataset_id Optional. unique dataset identification as character
-#' @param method Selected method for diversity estimation.
-#'  "diversity" = Faith's phylogenetic diversity
-#'  "NRI" = Net Relatedness Index
-#'  "NTI" = Nearest Taxon Index
+#' @param data_matrix Data frame with rows as levels and columns as taxa
+#' @param tree Phylogenetic backbone tree constructed using ape package
+#' @param sel_method Selected method for diversity estimation.
+#' \itemize{
+#' \item `"diversity"` - Faith's phylogenetic diversity
+#' \item `"NRI"` = Net Relatedness Index
+#' \item `"NTI"` = Nearest Taxon Index
+#' }
 #' @param abundance_weighted Logical. It FALSE, presence absence data will
 #'  be used.
 #' @param rand Number of randomization
@@ -13,29 +14,38 @@
 #'  (for independent swap and trial null models)
 #' @description Function for estimating one of three metrics of phylogenetic
 #'  diversity
-#' @return Tibble with Hill numbers N0, N1, N2, the evenness ratios N2/N1, N2/N0, and the
-#' modified versions of N2/N1 and N2/N0
+#' @return
+#' Data frame with diversity metric estimated for each level (sample).
+#' Possible outputs depending on the `sel_method`:
+#' \itemize{
+#' \item `n_taxa` -
+#' \item `faith_pd_diversity` -
+#' \item `mean_pairwise_distances` -
+#' \item `net_relatedness_index` -
+#' \item `mean_nearest_taxon_distances` -
+#' \item `nearest_taxon_index` -
+#' \item `z_score` -
+#' \item `p_value` -
+#' }
 #' @export
 diversity_estimate_phylogenetic <-
-  function(data_source, tree, dataset_id,
-           method = c("diversity", "NRI", "NTI"),
+  function(data_matrix, tree, dataset_id,
+           sel_method = c("diversity", "NRI", "NTI"),
            abundance_weighted = TRUE,
            rand = 999,
            iterations = 1000) {
 
-    util_check_class("data_source", "data.frame")
-
-    util_check_col_names("data_source", "sample_id")
+    util_check_class("data_matrix", "data.frame")
 
     util_check_class("tree", "phylo")
 
     util_check_class("abundance_weighted", "logical")
 
-    method <- match.arg(method)
+    sel_method <- match.arg(sel_method)
 
-    util_check_class("method", "character")
+    util_check_class("sel_method", "character")
 
-    util_check_vector_values("method", c("diversity", "NRI", "NTI"))
+    util_check_vector_values("sel_method", c("diversity", "NRI", "NTI"))
 
     util_check_class("rand", "numeric")
 
@@ -49,31 +59,20 @@ diversity_estimate_phylogenetic <-
       iterations ==  round(iterations),
       msg = "'iterations' must be a 'integer'")
 
-    if(!missing(dataset_id)){
-
-      util_check_class("dataset_id", "character")
-
-      cat(
-        paste("Processing dataset", dataset_id), "\n")
-
-    }
-
-    dat <-
-      data_source %>%
-      as.data.frame() %>%
-      tibble::column_to_rownames("sample_id")
-
     assertthat::assert_that(
       all(colnames(dat) %in% tree$tip.label),
-      msg = "All taxa names from 'data_source' has to be present in 'tree'")
+      msg = "All taxa names from 'data_matrix' has to be present in 'tree'")
 
-    if(ncol(dat) <= 2){
-      cat("Dataset does not have enough taxons to estimate diversity", "\n")
+    if
+    (
+      ncol(dat) <= 2
+    ) {
+      cat("Dataset does not have enough taxons to estimate phylogenetic diversity", "\n")
 
       return(NA)
     }
 
-    # Make a vector of families from the tree that are missing from the data_source data
+    # Make a vector of families from the tree that are missing from the data_matrix data
     drop_list <-
       tree$tip.label[!tree$tip.label %in% colnames(dat)]
 
@@ -86,10 +85,13 @@ diversity_estimate_phylogenetic <-
     # Create cophenetic distance from the pruned tree.
     phy_dist <- stats::cophenetic(pruned_tree)
 
-    if(method == "diversity"){
+    if
+    (
+      sel_method == "diversity"
+    ) {
       # Calculate Faith's pylogenetic diversity
 
-     cat("Estimating Faith's pylogenetic diversity", "\n")
+      cat("Estimating Faith's pylogenetic diversity", "\n")
 
       res <-
         picante::ses.pd(
@@ -103,11 +105,14 @@ diversity_estimate_phylogenetic <-
         tibble::as_tibble() %>%
         dplyr::rename(
           n_taxa = ntaxa,
-          faith_pd_diverity = pd.obs,
+          faith_pd_diversity = pd.obs,
           z_score = pd.obs.z,
           p_value = pd.obs.p) %>%
-        dplyr::select(sample_id, n_taxa, faith_pd_diverity, z_score, p_value)
-    } else if(method == "NRI"){
+        dplyr::select(sample_id, n_taxa, faith_pd_diversity, z_score, p_value)
+    } else if
+    (
+      sel_method == "NRI"
+    ) {
       # Calculate NRI
 
       cat("Estimating Net Relatedness Index (NRI)", "\n")
@@ -128,10 +133,13 @@ diversity_estimate_phylogenetic <-
           p_value = mpd.obs.p) %>%
         dplyr::mutate(net_relatedness_index = mpd.obs.z*(-1)) %>%
         dplyr::select(sample_id, n_taxa, mean_pairwise_distances, net_relatedness_index, p_value)
-    } else if(method == "NTI"){
+    } else if
+    (
+      sel_method == "NTI"
+    ) {
       # Calculate NRI
 
-     cat("Estimating Nearest Taxon Index (NTI)", "\n")
+      cat("Estimating Nearest Taxon Index (NTI)", "\n")
 
       res <-
         picante::ses.mntd(

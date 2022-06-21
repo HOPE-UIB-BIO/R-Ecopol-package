@@ -2,7 +2,7 @@
 % Please edit documentation in R/diversity_estimate.R
 \name{diversity_estimate}
 \alias{diversity_estimate}
-\title{Estimation of interpolation and extrapolation of individual-based Hill number}
+\title{Estimate diversity for community data}
 \usage{
 diversity_estimate(
   data_source,
@@ -17,17 +17,49 @@ diversity_estimate(
 }
 \arguments{
 \item{data_source}{Data frame with rows as levels and columns as taxa. First
-row should be named \code{sample_id}.}
+columns should be named \code{sample_id}.}
 
-\item{sel_method}{Selected method of diversify estimation c("taxonomic_randomised", "taxonomic_rarefy")}
+\item{sel_method}{Character. Selected method of diversify estimation
+\itemize{
+\item \code{"taxonomic"} - individual-based Hill numbers (diversity and evenness)
+\item \code{"phylogenetic_diversity"} - Faith's phylogenetic diversity
+\item \code{"phylogenetic_nri"} - Net Relatedness Index
+\item \code{"phylogenetic_nti"} - Nearest Taxon Index
+}}
 
-\item{sample_size}{minimum sample size}
+\item{sample_size}{Numeric. Only for \code{"taxonomic"}. Minimum sample size}
 
-\item{rand}{number of randomisations}
+\item{rand}{Numeric. Number of randomisations}
+
+\item{iterations}{Numeric. Only for \code{"phylogenetic"}. Number of iterations
+to use for each randomization (for independent swap and trial null models).}
+
+\item{abundance_weighted}{Logical. Only for \code{"phylogenetic"}. It FALSE,
+presence/absence data will be used.}
+
+\item{phylogenetic_tree}{Only for \code{"phylogenetic"}. Phylogenetic backbone tree
+constructed using \code{ape} package.}
 }
 \value{
-Tibble including phylogenetic diversity metric for each level.
+Data frame with diversity metric estimated for each level (sample).
+Possible outputs depending on the \code{sel_method}:
+\itemize{
+\item \code{n0} -
+\item \code{n1} -
+\item \code{n2} -
+\item \code{n1_minus_n2} -
+\item \code{n2_divided_by_n1} -
+\item \code{n1_divided_by_n0} -
+\item \code{n_taxa} -
+\item \code{faith_pd_diversity} -
+\item \code{mean_pairwise_distances} -
+\item \code{net_relatedness_index} -
+\item \code{mean_nearest_taxon_distances} -
+\item \code{nearest_taxon_index} -
+\item \code{z_score} -
+\item \code{p_value} -
+}
 }
 \description{
-Estimation of interpolation and extrapolation of individual-based Hill number
+Estimation of diversity from community data.
 }

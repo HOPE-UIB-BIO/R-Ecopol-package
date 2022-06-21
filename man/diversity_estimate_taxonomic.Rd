@@ -13,7 +13,7 @@ should be the \code{sample_id}.}
 \item{sample_size}{Numeric. Minimum sample size}
 }
 \value{
-Data frame with Hills number N0, N1, and N2, evenness ratios, and error estimates
+Data frame with Hills number N0, N1, and N2, evenness ratios (N1-N2, N2/N1, N1/N0)
 }
 \description{
 Estimation of interpolation and extrapolation of individual-based Hill numbers
