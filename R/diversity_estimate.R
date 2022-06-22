@@ -28,6 +28,9 @@
 #' @param phylogenetic_tree
 #' Only for `"phylogenetic"`. Phylogenetic backbone tree constructed
 #' using `ape` package.
+#' #' @param data_source_traits
+#' Data frame. Row names be the same taxa as
+#' in `data_source_community` and vice versa.
 #' @description
 #' Estimation of diversity from community data. TODO
 #' @returns
@@ -69,7 +72,8 @@ diversity_estimate <-
            rand = 999,
            iterations = 1000,
            abundance_weighted = TRUE,
-           phylogenetic_tree = NULL) {
+           data_source_tree = NULL,
+           data_source_traits = NULL) {
     util_check_class("data_source", "data.frame")
 
     util_check_col_names("data_source", "sample_id")
@@ -160,7 +164,7 @@ diversity_estimate <-
           abundance_weighted = abundance_weighted,
           rand = rand,
           iterations = iterations,
-          phylogenetic_tree = phylogenetic_tree
+          phylogenetic_tree = data_source_tree
         )
     } else if
     (
@@ -173,7 +177,7 @@ diversity_estimate <-
           abundance_weighted = abundance_weighted,
           rand = rand,
           iterations = iterations,
-          phylogenetic_tree = phylogenetic_tree
+          phylogenetic_tree = data_source_tree
         )
     } else if
     (
@@ -186,7 +190,7 @@ diversity_estimate <-
           abundance_weighted = abundance_weighted,
           rand = rand,
           iterations = iterations,
-          phylogenetic_tree = phylogenetic_tree
+          phylogenetic_tree = data_source_tree
         )
     } else if
     (

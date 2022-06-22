@@ -3,8 +3,8 @@
 #' Data matrix. Rows as levels and columns as taxa.
 #' Row names should be the `sample_id`.
 #' @param data_source_traits
-#' Data matrix. Row names and col names must be the same as
-#' in `data_source_community`
+#' Data frame. Row names be the same taxa as
+#' in `data_source_community` and vice versa.
 #' @param sel_method
 #' Selected method for diversity estimation:
 #' \itemize{
