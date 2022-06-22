@@ -2,26 +2,44 @@
 % Please edit documentation in R/diversity_estimate_functional.R
 \name{diversity_estimate_functional}
 \alias{diversity_estimate_functional}
-\title{Estimate of functional diversity}
+\title{Estimate functional diversity}
 \usage{
 diversity_estimate_functional(
   data_source_community,
   data_source_traits,
   sel_method = c("rao", "mpd", "simpson"),
+  abundance_weighted = TRUE,
   rand = 1000
 )
 }
 \arguments{
-\item{data_source_community}{Data matrix. Rows as levels and columns as data_source_community. Row names
-should be the \code{sample_id}.}
+\item{data_source_community}{Data matrix. Rows as levels and columns as taxa.
+Row names should be the \code{sample_id}.}
 
-\item{data_source_traits}{Data matrix. Row names and col names must be the same
-as data_source_community in \code{data_source_community}}
+\item{data_source_traits}{Data matrix. Row names and col names must be the same as
+in \code{data_source_community}}
 
-\item{rand}{Number of randomization}
+\item{sel_method}{Selected method for diversity estimation:
+\itemize{
+\item \code{"rao"} - Rao's quadratic diversity
+\item \code{"mpd"} = Mean Pairwise Distance
+\item \code{"simpson"} = Simpsons Diversity Index
+}}
+
+\item{abundance_weighted}{Logical. It FALSE, presence absence data will be used.}
+
+\item{rand}{Numeric. Number of randomization}
 }
 \value{
-TODO
+Data frame with diversity metric estimated for each level (sample).
+Possible outputs depending on the \code{sel_method}:
+\itemize{
+\item \code{fd_rao} - Rao's quadratic diversity
+\item \code{fd_mpd} - Mean Pairwise Distance
+\item \code{fd_simpson} - Simpsons Diversity Index
+\item \code{z_score} - Standarise Effect Size (SES), calculated as
+(observed value - mean randomised value ) / sd of randomised value
+}
 }
 \description{
 TODO

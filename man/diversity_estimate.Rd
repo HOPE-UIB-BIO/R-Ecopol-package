@@ -7,7 +7,7 @@
 diversity_estimate(
   data_source,
   sel_method = c("taxonomic", "phylogenetic_diversity", "phylogenetic_nri",
-    "phylogenetic_nti"),
+    "phylogenetic_nti", "functional_rao", "functional_rao", "functional_rao"),
   sample_size,
   rand = 999,
   iterations = 1000,
@@ -21,10 +21,14 @@ columns should be named \code{sample_id}.}
 
 \item{sel_method}{Character. Selected method of diversify estimation
 \itemize{
-\item \code{"taxonomic"} - individual-based Hill numbers (diversity and evenness)
-\item \code{"phylogenetic_diversity"} - Faith's phylogenetic diversity
-\item \code{"phylogenetic_nri"} - Net Relatedness Index
-\item \code{"phylogenetic_nti"} - Nearest Taxon Index
+\item \code{"taxonomic"} - individual-based Hill numbers of taxonomic diversity
+(diversity and evenness)
+\item \code{"phylogenetic_diversity"} - phylogenetic Faith's diversity
+\item \code{"phylogenetic_nri"} - phylogenetic Net Relatedness Index
+\item \code{"phylogenetic_nti"} - phylogenetic Nearest Taxon Index
+\item \code{"functional_rao"} - functional Rao's quadratic diversity
+\item \code{"functional_mpd"} - functional Mean Pairwise Distance
+\item \code{"functional_simpson"} - functional Simpsons Diversity Index
 }}
 
 \item{sample_size}{Numeric. Only for \code{"taxonomic"}. Minimum sample size}
@@ -34,32 +38,35 @@ columns should be named \code{sample_id}.}
 \item{iterations}{Numeric. Only for \code{"phylogenetic"}. Number of iterations
 to use for each randomization (for independent swap and trial null models).}
 
-\item{abundance_weighted}{Logical. Only for \code{"phylogenetic"}. It FALSE,
-presence/absence data will be used.}
+\item{abundance_weighted}{Logical. Only for \code{"phylogenetic"} or \code{"functional"}.
+It FALSE, presence/absence data will be used for calculations.}
 
-\item{phylogenetic_tree}{Only for \code{"phylogenetic"}. Phylogenetic backbone tree
-constructed using \code{ape} package.}
+\item{phylogenetic_tree}{Only for \code{"phylogenetic"}. Phylogenetic backbone tree constructed
+using \code{ape} package.}
 }
 \value{
 Data frame with diversity metric estimated for each level (sample).
 Possible outputs depending on the \code{sel_method}:
 \itemize{
-\item \code{n0} -
-\item \code{n1} -
-\item \code{n2} -
-\item \code{n1_minus_n2} -
-\item \code{n2_divided_by_n1} -
-\item \code{n1_divided_by_n0} -
-\item \code{n_taxa} -
-\item \code{faith_pd_diversity} -
-\item \code{mean_pairwise_distances} -
-\item \code{net_relatedness_index} -
-\item \code{mean_nearest_taxon_distances} -
-\item \code{nearest_taxon_index} -
-\item \code{z_score} -
-\item \code{p_value} -
+\item \code{n0} - taxonomic Hill' N0
+\item \code{n1} - taxonomic Hill' N1
+\item \code{n2} - taxonomic Hill' N2
+\item \code{n1_minus_n2} - taxonomic evenness ratios (N1-N2)
+\item \code{n2_divided_by_n1} -  taxonomic evenness ratios (N2/N1)
+\item \code{n1_divided_by_n0} - taxonomic evenness ratios (N1/N0)
+\item \code{n_taxa} - Taxonomic richness
+\item \code{pd_faith} - Faith's phylogenetic diversity
+\item \code{pd_mpd} - phylogenetic Mean Pairwise Distance
+\item \code{pd_nri} - phylogenetic Net Relatedness Index
+\item \code{pd_mntd} - phylogenetic Mean Nearest Taxon Distance
+\item \code{pd_nti} - phylogenetic Nearest Taxon Index
+\item \code{fd_rao} - Rao's quadratic diversity
+\item \code{fd_mpd} - Mean Pairwise Distance
+\item \code{fd_simpson} - Simpsons Diversity Index
+\item \code{z_score} - Standarise Effect Size (SES), calculated as
+(observed value - mean randomised value ) / sd of randomised value
 }
 }
 \description{
-Estimation of diversity from community data.
+Estimation of diversity from community data. TODO
 }

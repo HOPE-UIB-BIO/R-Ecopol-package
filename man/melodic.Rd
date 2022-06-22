@@ -15,6 +15,13 @@ melodic(data_source_community, data_source_dissimilarity)
 Function \code{melodic} adapted from
 https://doi.org/10.1007/s00442-016-3546-0
 }
+\references{
+de Bello, F., Carmona, C.P., Lepš, J. et al.
+Functional diversity through the mean trait dissimilarity:
+resolving shortcomings with existing paradigms and algorithms.
+Oecologia 180, 933–940 (2016).
+https://doi.org/10.1007/s00442-016-3546-0
+}
 \author{
 Ondrej Mottl, Carlos P. Carmona
 }

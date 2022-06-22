@@ -6,30 +6,29 @@
 \usage{
 diversity_estimate_phylogenetic(
   data_matrix,
-  tree,
-  dataset_id,
-  sel_method = c("diversity", "NRI", "NTI"),
+  phylogenetic_tree,
+  sel_method = c("diversity", "nri", "nti"),
   abundance_weighted = TRUE,
   rand = 999,
   iterations = 1000
 )
 }
 \arguments{
-\item{data_matrix}{Data frame with rows as levels and columns as taxa}
+\item{data_matrix}{Data matrix. Rows as levels and columns as data.
+Row names should be the \code{sample_id}.}
 
-\item{tree}{Phylogenetic backbone tree constructed using ape package}
+\item{phylogenetic_tree}{Phylogenetic backbone phylogenetic_tree constructed using \code{ape} package}
 
 \item{sel_method}{Selected method for diversity estimation.
 \itemize{
 \item \code{"diversity"} - Faith's phylogenetic diversity
-\item \code{"NRI"} = Net Relatedness Index
-\item \code{"NTI"} = Nearest Taxon Index
+\item \code{"nri"} = Net Relatedness Index
+\item \code{"nti"} = Nearest Taxon Index
 }}
 
-\item{abundance_weighted}{Logical. It FALSE, presence absence data will
-be used.}
+\item{abundance_weighted}{Logical. It FALSE, presence absence data will be used.}
 
-\item{rand}{Number of randomization}
+\item{rand}{Numeric. Number of randomization}
 
 \item{iterations}{Number of iterations to use for each randomization
 (for independent swap and trial null models)}
@@ -38,17 +37,16 @@ be used.}
 Data frame with diversity metric estimated for each level (sample).
 Possible outputs depending on the \code{sel_method}:
 \itemize{
-\item \code{n_taxa} -
-\item \code{faith_pd_diversity} -
-\item \code{mean_pairwise_distances} -
-\item \code{net_relatedness_index} -
-\item \code{mean_nearest_taxon_distances} -
-\item \code{nearest_taxon_index} -
-\item \code{z_score} -
-\item \code{p_value} -
+\item \code{n_taxa} - Taxonomic richness
+\item \code{pd_faith} - Faith's phylogenetic diversity
+\item \code{pd_mpd} - Mean Pairwise Distance
+\item \code{pd_nri} - Net Relatedness Index
+\item \code{pd_mntd} - Mean Nearest Taxon Distance
+\item \code{pd_nti} - Nearest Taxon Index
+\item \code{z_score} - Standarise Effect Size (SES), calculated as
+(observed value - mean randomised value ) / sd of randomised value
 }
 }
 \description{
-Function for estimating one of three metrics of phylogenetic
-diversity
+Function for estimating one of three metrics of phylogenetic diversity
 }

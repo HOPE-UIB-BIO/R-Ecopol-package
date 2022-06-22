@@ -5,6 +5,12 @@
 #' @description Function `melodic` adapted from
 #' https://doi.org/10.1007/s00442-016-3546-0
 #' @author Ondrej Mottl, Carlos P. Carmona
+#' @references
+#' de Bello, F., Carmona, C.P., Lepš, J. et al.
+#' Functional diversity through the mean trait dissimilarity:
+#' resolving shortcomings with existing paradigms and algorithms.
+#' Oecologia 180, 933–940 (2016).
+#' https://doi.org/10.1007/s00442-016-3546-0
 melodic <-
   function(data_source_community,
            data_source_dissimilarity) {
@@ -74,7 +80,6 @@ melodic <-
       numeric(n_row)
 
     for (i in 1:n_row) {
-
       spp_in_sample <-
         names(data_source_community[i, data_source_community[i, ] > 0])
 
@@ -99,8 +104,10 @@ melodic <-
       }
 
       sample_dis <-
-        data_source_dissimilarity[rownames(data_source_dissimilarity) %in% spp_in_sample,
-                                  base::colnames(data_source_dissimilarity) %in% spp_in_sample]
+        data_source_dissimilarity[
+          rownames(data_source_dissimilarity) %in% spp_in_sample,
+          base::colnames(data_source_dissimilarity) %in% spp_in_sample
+        ]
 
       abund_w <-
         numeric(
@@ -109,7 +116,7 @@ melodic <-
 
       abund_w <-
         data_source_community[i, spp_in_sample] /
-        sum(data_source_community[i, spp_in_sample])
+          sum(data_source_community[i, spp_in_sample])
 
       sample_weights <-
         outer(abund_w, abund_w)

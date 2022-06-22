@@ -1,17 +1,63 @@
-#' @title Estimate of functional diversity
-#' @param data_source_community Data matrix. Rows as levels and columns as data_source_community. Row names
-#' should be the `sample_id`.
-#' @param data_source_traits Data matrix. Row names and col names must be the same
-#' as data_source_community in `data_source_community`
-#' @param rand Number of randomization
-#' @return TODO
+#' @title Estimate functional diversity
+#' @param data_source_community
+#' Data matrix. Rows as levels and columns as taxa.
+#' Row names should be the `sample_id`.
+#' @param data_source_traits
+#' Data matrix. Row names and col names must be the same as
+#' in `data_source_community`
+#' @param sel_method
+#' Selected method for diversity estimation:
+#' \itemize{
+#' \item `"rao"` - Rao's quadratic diversity
+#' \item `"mpd"` = Mean Pairwise Distance
+#' \item `"simpson"` = Simpsons Diversity Index
+#' }
+#' @param abundance_weighted
+#' Logical. It FALSE, presence absence data will be used.
+#' @param rand
+#' Numeric. Number of randomization
+#' @return
+#' Data frame with diversity metric estimated for each level (sample).
+#' Possible outputs depending on the `sel_method`:
+#' \itemize{
+#' \item `fd_rao` - Rao's quadratic diversity
+#' \item `fd_mpd` - Mean Pairwise Distance
+#' \item `fd_simpson` - Simpsons Diversity Index
+#' \item `z_score` - Standarise Effect Size (SES), calculated as
+#' (observed value - mean randomised value ) / sd of randomised value
+#' }
 #' @description TODO
 #' @export
 diversity_estimate_functional <-
   function(data_source_community,
            data_source_traits,
            sel_method = c("rao", "mpd", "simpson"),
+           abundance_weighted = TRUE,
            rand = 1000) {
+    util_check_class("data_source_community", "data.frame")
+
+    util_check_class("data_source_traits", "data.frame")
+
+    util_check_class("abundance_weighted", "logical")
+
+    sel_method <- match.arg(sel_method)
+
+    util_check_class("sel_method", "character")
+
+    util_check_vector_values(
+      "sel_method",
+      c("rao", "mpd", "simpson")
+    )
+
+    util_check_class("rand", "numeric")
+
+    assertthat::assert_that(
+      rand == round(rand),
+      msg = "'rand' must be a 'integer'"
+    )
+
+    sel_abund <-
+      ifelse(abundance_weighted, "abundance", "presence")
 
     trait_dis <-
       vegan::vegdist(
@@ -49,9 +95,8 @@ diversity_estimate_functional <-
       # calculate randomised value
       rand_value[, i] <-
         melodic(data_source_community, trait_dis_rand) %>%
-        purrr::pluck("abundance") %>%
+        purrr::pluck(sel_abund) %>%
         purrr::pluck(sel_method)
-
     }
 
     result <-
@@ -60,18 +105,25 @@ diversity_estimate_functional <-
       ) %>%
       dplyr::mutate(
         # observe value
-        obs_value =  melodic(data_source_community, trait_dis) %>%
-          purrr::pluck("abundance") %>%
+        obs_value = melodic(data_source_community, trait_dis) %>%
+          purrr::pluck(sel_abund) %>%
           purrr::pluck(sel_method),
         # mean value of randomised value
         rand_value_mean = rowMeans(rand_value),
         # standard deviations of randomized value
         rand_value_sd = apply(rand_value, 1, sd),
         # Standardise effect size
-        SES = (obs_value - rand_value_mean) / rand_value_sd,
+        z_score = (obs_value - rand_value_mean) / rand_value_sd,
         sample_id = rownames(data_source_community)
       ) %>%
-      tibble::column_to_rownames("sample_id")
+      tibble::column_to_rownames("sample_id") %>%
+      dplyr::select(obs_value, z_score) %>%
+      rlang::set_names(
+        nm = c(
+          paste0("fd_", sel_method),
+          "z_score"
+        )
+      )
 
     return(result)
   }

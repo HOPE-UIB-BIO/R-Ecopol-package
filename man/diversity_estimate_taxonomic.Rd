@@ -7,14 +7,23 @@
 diversity_estimate_taxonomic(data_matrix, sample_size)
 }
 \arguments{
-\item{data_matrix}{Data matrix. Rows as levels and columns as taxa. Row names
-should be the \code{sample_id}.}
+\item{data_matrix}{Data matrix. Rows as levels and columns as taxa.
+Row names should be the \code{sample_id}.}
 
 \item{sample_size}{Numeric. Minimum sample size}
 }
 \value{
-Data frame with Hills number N0, N1, and N2, evenness ratios (N1-N2, N2/N1, N1/N0)
+#' Data frame with diversity metric estimated for each level (sample):
+\itemize{
+\item \code{n0} - Hill' N0
+\item \code{n1} - Hill' N1
+\item \code{n2} - Hill' N2
+\item \code{n1_minus_n2} - evenness ratios (N1-N2)
+\item \code{n2_divided_by_n1} - evenness ratios (N2/N1)
+\item \code{n1_divided_by_n0} - evenness ratios (N1/N0)
+}
 }
 \description{
-Estimation of interpolation and extrapolation of individual-based Hill numbers
+Estimation of interpolation and extrapolation of individual-based
+Hill numbers
 }
