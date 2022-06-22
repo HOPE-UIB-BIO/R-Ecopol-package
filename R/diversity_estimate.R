@@ -88,7 +88,10 @@ diversity_estimate <-
         "taxonomic",
         "phylogenetic_diversity",
         "phylogenetic_nri",
-        "phylogenetic_nti"
+        "phylogenetic_nti",
+        "functional_rao",
+        "functional_mpd",
+        "functional_simpson"
       )
     )
 
