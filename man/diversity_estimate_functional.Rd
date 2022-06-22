@@ -16,8 +16,8 @@ diversity_estimate_functional(
 \item{data_source_community}{Data matrix. Rows as levels and columns as taxa.
 Row names should be the \code{sample_id}.}
 
-\item{data_source_traits}{Data matrix. Row names and col names must be the same as
-in \code{data_source_community}}
+\item{data_source_traits}{Data frame. Row names be the same taxa as
+in \code{data_source_community} and vice versa.}
 
 \item{sel_method}{Selected method for diversity estimation:
 \itemize{
