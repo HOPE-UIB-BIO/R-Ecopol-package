@@ -20,6 +20,7 @@ Imports:
     purrr,
     RColorBrewer,
     RFossilpol,
+    rlang,
     tibble,
     tidyr,
     usethis,
@@ -30,3 +31,4 @@ Remotes:
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+VignetteBuilder: knitr

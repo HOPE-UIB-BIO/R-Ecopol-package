@@ -2,27 +2,71 @@
 % Please edit documentation in R/diversity_estimate.R
 \name{diversity_estimate}
 \alias{diversity_estimate}
-\title{Estimation of interpolation and extrapolation of individual-based Hill number}
+\title{Estimate diversity for community data}
 \usage{
 diversity_estimate(
   data_source,
-  sel_method = c("rarefy", "randomised"),
+  sel_method = c("taxonomic", "phylogenetic_diversity", "phylogenetic_nri",
+    "phylogenetic_nti", "functional_rao", "functional_rao", "functional_rao"),
   sample_size,
-  rand = 999
+  rand = 999,
+  iterations = 1000,
+  abundance_weighted = TRUE,
+  phylogenetic_tree = NULL
 )
 }
 \arguments{
-\item{data_source}{Data frame with rows as levels and columns as taxa}
+\item{data_source}{Data frame with rows as levels and columns as taxa. First
+columns should be named \code{sample_id}.}
 
-\item{sel_method}{Selected method of diversify estimation c("randomised", "rarefy")}
+\item{sel_method}{Character. Selected method of diversify estimation
+\itemize{
+\item \code{"taxonomic"} - individual-based Hill numbers of taxonomic diversity
+(diversity and evenness)
+\item \code{"phylogenetic_diversity"} - phylogenetic Faith's diversity
+\item \code{"phylogenetic_nri"} - phylogenetic Net Relatedness Index
+\item \code{"phylogenetic_nti"} - phylogenetic Nearest Taxon Index
+\item \code{"functional_rao"} - functional Rao's quadratic diversity
+\item \code{"functional_mpd"} - functional Mean Pairwise Distance
+\item \code{"functional_simpson"} - functional Simpsons Diversity Index
+}}
 
-\item{sample_size}{minimum sample size}
+\item{sample_size}{Numeric. Only for \code{"taxonomic"}. Minimum sample size}
 
-\item{rand}{number of randomisations}
+\item{rand}{Numeric. Number of randomisations}
+
+\item{iterations}{Numeric. Only for \code{"phylogenetic"}. Number of iterations
+to use for each randomization (for independent swap and trial null models).}
+
+\item{abundance_weighted}{Logical. Only for \code{"phylogenetic"} or \code{"functional"}.
+It FALSE, presence/absence data will be used for calculations.}
+
+\item{phylogenetic_tree}{Only for \code{"phylogenetic"}. Phylogenetic backbone tree constructed
+using \code{ape} package.}
 }
 \value{
-Tibble including phylogenetic diversity metric for each level.
+Data frame with diversity metric estimated for each level (sample).
+Possible outputs depending on the \code{sel_method}:
+\itemize{
+\item \code{n0} - taxonomic Hill' N0
+\item \code{n1} - taxonomic Hill' N1
+\item \code{n2} - taxonomic Hill' N2
+\item \code{n1_minus_n2} - taxonomic evenness ratios (N1-N2)
+\item \code{n2_divided_by_n1} -  taxonomic evenness ratios (N2/N1)
+\item \code{n1_divided_by_n0} - taxonomic evenness ratios (N1/N0)
+\item \code{n_taxa} - Taxonomic richness
+\item \code{pd_faith} - Faith's phylogenetic diversity
+\item \code{pd_mpd} - phylogenetic Mean Pairwise Distance
+\item \code{pd_nri} - phylogenetic Net Relatedness Index
+\item \code{pd_mntd} - phylogenetic Mean Nearest Taxon Distance
+\item \code{pd_nti} - phylogenetic Nearest Taxon Index
+\item \code{fd_rao} - Rao's quadratic diversity
+\item \code{fd_mpd} - Mean Pairwise Distance
+\item \code{fd_simpson} - Simpsons Diversity Index
+\item \code{z_score} - Standarise Effect Size (SES), calculated as
+(observed value - mean randomised value ) / sd of randomised value
+}
 }
 \description{
-Estimation of interpolation and extrapolation of individual-based Hill number
+Estimation of diversity from community data. TODO
 }
