@@ -4,7 +4,7 @@
 #' @param data_source_dissimilarity dissimilarity matrix
 #' @description Function `melodic` adapted from
 #' https://doi.org/10.1007/s00442-016-3546-0
-#' @author Ondrej Mottl, Carlos P. Carmona
+#' @author Carlos P. Carmona, Ondrej Mottl
 #' @references
 #' de Bello, F., Carmona, C.P., Lepš, J. et al.
 #' Functional diversity through the mean trait dissimilarity:

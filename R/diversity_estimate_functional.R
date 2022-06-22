@@ -27,6 +27,7 @@
 #' (observed value - mean randomised value ) / sd of randomised value
 #' }
 #' @description TODO
+#' @author Triin Reitalu, Ondrej Mottl
 #' @export
 diversity_estimate_functional <-
   function(data_source_community,
@@ -34,7 +35,7 @@ diversity_estimate_functional <-
            sel_method = c("rao", "mpd", "simpson"),
            abundance_weighted = TRUE,
            rand = 1000) {
-    util_check_class("data_source_community", "data.frame")
+    util_check_class("data_source_community", c("data.frame", "matrix"))
 
     util_check_class("data_source_traits", "data.frame")
 

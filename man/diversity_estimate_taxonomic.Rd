@@ -27,3 +27,6 @@ Row names should be the \code{sample_id}.}
 Estimation of interpolation and extrapolation of individual-based
 Hill numbers
 }
+\author{
+Vivian Felde, Ondrej Mottl
+}

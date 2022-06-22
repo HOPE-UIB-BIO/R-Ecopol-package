@@ -16,11 +16,12 @@
 #' @description
 #' Estimation of interpolation and extrapolation of individual-based
 #' Hill numbers
+#' @author Vivian Felde, Ondrej Mottl
 #' @export
 diversity_estimate_taxonomic <-
   function(data_matrix,
            sample_size) {
-    util_check_class("data_matrix", "matrix")
+    util_check_class("data_matrix", c("data.frame", "matrix"))
 
     if
     (

@@ -44,3 +44,6 @@ Possible outputs depending on the \code{sel_method}:
 \description{
 TODO
 }
+\author{
+Triin Reitalu, Ondrej Mottl
+}
