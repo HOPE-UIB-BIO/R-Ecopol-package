@@ -14,6 +14,7 @@
 #' \item `"functional_mpd"` - functional Mean Pairwise Distance
 #' \item `"functional_simpson"` - functional Simpsons Diversity Index
 #' }
+#' @param round Logical. Should pollen values be rounded?
 #' @param sample_size
 #' Numeric. Only for `"taxonomic"`. Minimum sample size
 #' @param abundance_weighted
@@ -63,6 +64,7 @@ diversity_estimate <-
              "functional_mpd",
              "functional_simpson"
            ),
+           round = TRUE,
            sample_size,
            rand = 999,
            iterations = 1000,
@@ -71,14 +73,6 @@ diversity_estimate <-
     util_check_class("data_source", "data.frame")
 
     util_check_col_names("data_source", "sample_id")
-
-    # remove sample_id, round down, and transform into matrix
-    data_matrix <-
-      data_source %>%
-      tibble::column_to_rownames("sample_id") %>%
-      dplyr::mutate_all(., .f = floor) %>%
-      as.matrix() %>%
-      round()
 
     sel_method <- match.arg(sel_method)
 
@@ -100,6 +94,25 @@ diversity_estimate <-
       rand == round(rand),
       msg = "'rand' must be a 'integer'"
     )
+
+    if
+    (
+      round == TRUE
+    ) {
+      # remove sample_id, round down, and transform into matrix
+      data_matrix <-
+        data_source %>%
+        tibble::column_to_rownames("sample_id") %>%
+        dplyr::mutate_all(., .f = floor) %>%
+        as.matrix() %>%
+        round()
+    } else {
+      # remove sample_id, and transform into matrix
+      data_matrix <-
+        data_source %>%
+        tibble::column_to_rownames("sample_id") %>%
+        as.matrix()
+    }
 
     if
     (
