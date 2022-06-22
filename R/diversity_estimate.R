@@ -155,7 +155,7 @@ diversity_estimate <-
     ) {
       div <-
         diversity_estimate_phylogenetic(
-          data_source = data_matrix,
+          data_matrix = data_matrix,
           sel_method = "diversity",
           abundance_weighted = abundance_weighted,
           rand = rand,
@@ -168,7 +168,7 @@ diversity_estimate <-
     ) {
       div <-
         diversity_estimate_phylogenetic(
-          data_source = data_matrix,
+          data_matrix = data_matrix,
           sel_method = "nri",
           abundance_weighted = abundance_weighted,
           rand = rand,
@@ -181,7 +181,7 @@ diversity_estimate <-
     ) {
       div <-
         diversity_estimate_phylogenetic(
-          data_source = data_matrix,
+          data_matrix = data_matrix,
           sel_method = "nti",
           abundance_weighted = abundance_weighted,
           rand = rand,
