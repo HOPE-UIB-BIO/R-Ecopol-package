@@ -8,6 +8,7 @@ diversity_estimate(
   data_source,
   sel_method = c("taxonomic", "phylogenetic_diversity", "phylogenetic_nri",
     "phylogenetic_nti", "functional_rao", "functional_mpd", "functional_simpson"),
+  round = TRUE,
   sample_size,
   rand = 999,
   iterations = 1000,
@@ -30,6 +31,8 @@ columns should be named \code{sample_id}.}
 \item \code{"functional_mpd"} - functional Mean Pairwise Distance
 \item \code{"functional_simpson"} - functional Simpsons Diversity Index
 }}
+
+\item{round}{Logical. Should pollen values be rounded?}
 
 \item{sample_size}{Numeric. Only for \code{"taxonomic"}. Minimum sample size}
 
