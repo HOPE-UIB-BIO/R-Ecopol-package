@@ -60,8 +60,8 @@ diversity_estimate <-
              "phylogenetic_nri",
              "phylogenetic_nti",
              "functional_rao",
-             "functional_rao",
-             "functional_rao"
+             "functional_mpd",
+             "functional_simpson"
            ),
            sample_size,
            rand = 999,
@@ -156,7 +156,7 @@ diversity_estimate <-
       div <-
         diversity_estimate_phylogenetic(
           data_source = data_matrix,
-          method = "NRI",
+          method = "nri",
           abundance_weighted = abundance_weighted,
           rand = rand,
           iterations = iterations,
@@ -169,7 +169,7 @@ diversity_estimate <-
       div <-
         diversity_estimate_phylogenetic(
           data_source = data_matrix,
-          method = "NTI",
+          method = "nti",
           abundance_weighted = abundance_weighted,
           rand = rand,
           iterations = iterations,
