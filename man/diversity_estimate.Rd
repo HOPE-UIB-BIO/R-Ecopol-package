@@ -7,7 +7,7 @@
 diversity_estimate(
   data_source,
   sel_method = c("taxonomic", "phylogenetic_diversity", "phylogenetic_nri",
-    "phylogenetic_nti", "functional_rao", "functional_rao", "functional_rao"),
+    "phylogenetic_nti", "functional_rao", "functional_mpd", "functional_simpson"),
   sample_size,
   rand = 999,
   iterations = 1000,
