@@ -20,6 +20,7 @@ Imports:
     purrr,
     RColorBrewer,
     RFossilpol,
+    rlang,
     tibble,
     tidyr,
     usethis,
