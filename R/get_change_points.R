@@ -1,6 +1,7 @@
 #' @title Detect change points in a vector
 #' @param data_source Vector with values (numeric, character, or factor)
-#' @param direction Which direction should the values be compared ("front" or "back")
+#' @param direction 
+#' Which direction should the values be compared ("front" or "back")
 #' @return Vector with binary values of length = `data_source` + 1.
 #' `1` represent change point
 #' @export
