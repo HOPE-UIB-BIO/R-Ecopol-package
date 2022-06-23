@@ -1,7 +1,7 @@
 #' @title Detect change points for all columns
 #' @param data_source Data.frame with columns to detect change points in
-#' @param var_name_order Character. Name of the columns, which should be use
-#' as a order of values
+#' @param var_name_order Character.
+#' Name of the columns, which should be use as a order of values
 #' @param use_inbetween_values
 #' Logical. If `TRUE` additional values will be placed
 #' in between values of `var_name_order`.
@@ -12,8 +12,10 @@
 #' \item `"only_inbetween"` - only inbetween values,
 #' \item `"both"` - both inbetween values and original data
 #' }
-#' @param var_name_detection Character. Columns to use to change point detection
-#' will be automatically selected if they partly matched `var_name_detection`
+#' @param var_name_detection
+#' Character. Optional. Columns to use to change point detection
+#' will be automatically selected if they partly matched `var_name_detection`.
+#' For all columns use `NULL``.
 #' @param direction
 #' Which direction should the values be compared ("front" or "back")
 #' @return Data.frame with `var_name_order` and all columns detected based on
@@ -24,15 +26,13 @@ get_change_points_all <-
            var_name_order = "age",
            use_inbetween_values = TRUE,
            sel_output = c("only_inbetween", "both"),
-           var_name_detection = "_part",
+           var_name_detection = NULL,
            direction = c("front", "back")) {
     util_check_class("data_source", "data.frame")
 
     util_check_class("var_name_order", "character")
 
     util_check_class("use_inbetween_values", "logical")
-
-    util_check_class("var_name_detection", "character")
 
     util_check_class("direction", "character")
 
@@ -41,15 +41,6 @@ get_change_points_all <-
     util_check_vector_values("direction", c("front", "back"))
 
     util_check_col_names("data_source", c(var_name_order, "sample_id"))
-
-    assertthat::assert_that(
-      stringr::str_detect(names(data_source), var_name_detection) %>%
-        any(),
-      msg = paste(
-        "'data_source' must contain at least one column which partly matched with",
-        var_name_detection
-      )
-    )
 
     if (
       use_inbetween_values == TRUE
@@ -80,6 +71,35 @@ get_change_points_all <-
         data_position_fin <-
         data_source %>%
         purrr::pluck(var_name_order)
+    }
+
+    if
+    (
+      is.null(var_name_detection) == FALSE
+    ) {
+      util_check_class("var_name_detection", "character")
+
+      assertthat::assert_that(
+        stringr::str_detect(names(data_source), var_name_detection) %>%
+          any(),
+        msg = paste(
+          "'data_source' must contain at least one column",
+          "which partly matched with",
+          util_paste_as_vector(var_name_detection)
+        )
+      )
+    } else {
+      var_name_detection <-
+        data_source %>% 
+        dplyr::select(
+          !dplyr::any_of(
+            c(
+              "sample_id",
+              var_name_order
+            )
+          )
+        ) %>%
+        names()
     }
 
     var_list <-
