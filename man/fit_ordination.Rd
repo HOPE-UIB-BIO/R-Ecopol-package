@@ -9,7 +9,7 @@ fit_ordination(
   data_source_predictors,
   var_name_pred = c("age"),
   var_name_cond = NULL,
-  sel_method = c("poly", "linear"),
+  sel_method = c("cca", "rda"),
   transform_to_percentage = FALSE,
   tranformation = c("none", "chisq", "hellinger")
 )
@@ -26,8 +26,8 @@ can be predictors and/or conditional variables.}
 \item{var_name_cond}{Character. Optional name of conditional variable}
 
 \item{sel_method}{\itemize{
-\item \code{"poly"} - Correspondence Analysis
-\item \code{"linear"} - Redundancy Analysis
+\item \code{"cca"} - Correspondence Analysis
+\item \code{"rda"} - Redundancy Analysis
 }}
 
 \item{transform_to_percentage}{Logical. Should community data be tranformed into percentages?}

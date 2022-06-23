@@ -11,8 +11,8 @@
 #' Character. Optional name of conditional variable
 #' @param sel_method
 #' \itemize{
-#' \item `"poly"` - Correspondence Analysis
-#' \item `"linear"` - Redundancy Analysis
+#' \item `"cca"` - Correspondence Analysis
+#' \item `"rda"` - Redundancy Analysis
 #' }
 #' @param transform_to_percentage
 #' Logical. Should community data be tranformed into percentages?
@@ -35,7 +35,7 @@ fit_ordination <-
              data_source_predictors,
              var_name_pred = c("age"),
              var_name_cond = NULL,
-             sel_method = c("poly", "linear"),
+             sel_method = c("cca", "rda"),
              transform_to_percentage = FALSE,
              tranformation = c("none", "chisq", "hellinger")) {
         util_check_class("data_source_community", "data.frame")
@@ -75,7 +75,7 @@ fit_ordination <-
 
         util_check_vector_values(
             "sel_method",
-            c("linear", "poly")
+            c("rda", "cca")
         )
 
         util_check_class("transform_to_percentage", "logical")
@@ -186,7 +186,7 @@ fit_ordination <-
 
         if
         (
-            sel_method == "linear"
+            sel_method == "rda"
         ) {
             res_ord <-
                 vegan::rda(
@@ -196,7 +196,7 @@ fit_ordination <-
                 )
         } else if
         (
-            sel_method == "poly"
+            sel_method == "cca"
         ) {
             res_ord <-
                 vegan::cca(
