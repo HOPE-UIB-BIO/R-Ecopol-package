@@ -8,6 +8,7 @@ get_change_points_all(
   data_source,
   var_name_order = "age",
   use_inbetween_values = TRUE,
+  sel_output = c("only_inbetween", "both"),
   var_name_detection = "_part",
   direction = c("front", "back")
 )
@@ -19,7 +20,14 @@ get_change_points_all(
 as a order of values}
 
 \item{use_inbetween_values}{Logical. If \code{TRUE} additional values will be placed
-in between values of \code{var_name_order}.}
+in between values of \code{var_name_order}.
+#' @param sel_output
+Character. Only used for \code{use_inbetween_values} == \code{TRUE}
+Define what should the function output.
+\itemize{
+\item \code{"only_inbetween"} - only inbetween values,
+\item \code{"both"} - both inbetween values and original data
+}}
 
 \item{var_name_detection}{Character. Columns to use to change point detection
 will be automatically selected if they partly matched \code{var_name_detection}}

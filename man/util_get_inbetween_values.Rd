@@ -4,10 +4,19 @@
 \alias{util_get_inbetween_values}
 \title{Get in-between values}
 \usage{
-util_get_inbetween_values(data_source)
+util_get_inbetween_values(
+  data_source,
+  sel_output = c("only_inbetween", "both")
+)
 }
 \arguments{
 \item{data_source}{Vector with values}
+
+\item{sel_output}{Character. Define what should the function output.
+\itemize{
+\item \code{"only_inbetween"} - only inbetween values,
+\item \code{"both"} - both inbetween values and original data
+}}
 }
 \description{
 Add values in-between each pair or values in a vector. Position
