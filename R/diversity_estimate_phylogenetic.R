@@ -119,7 +119,7 @@ diversity_estimate_phylogenetic <-
           samp = data_ordered,
           tree = pruned_tree,
           null.model = "taxa.labels",
-          rand = rand,
+          runs = rand,
           iterations = iterations,
           include.root = TRUE
         ) %>%
@@ -144,7 +144,7 @@ diversity_estimate_phylogenetic <-
           dis = phy_dist,
           null.model = "taxa.labels",
           abundance.weighted = abundance_weighted,
-          rand = rand,
+          runs = rand,
           iterations = iterations
         ) %>%
         tibble::as_tibble() %>%
@@ -168,7 +168,7 @@ diversity_estimate_phylogenetic <-
           dis = phy_dist,
           null.model = "taxa.labels",
           abundance.weighted = abundance_weighted,
-          rand = rand,
+          runs = rand,
           iterations = iterations
         ) %>%
         tibble::as_tibble() %>%
