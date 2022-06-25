@@ -123,7 +123,6 @@ diversity_estimate_phylogenetic <-
           iterations = iterations,
           include.root = TRUE
         ) %>%
-        tibble::as_tibble() %>%
         dplyr::rename(
           n_taxa = ntaxa,
           pd_faith = pd.obs,
@@ -147,7 +146,6 @@ diversity_estimate_phylogenetic <-
           runs = rand,
           iterations = iterations
         ) %>%
-        tibble::as_tibble() %>%
         dplyr::rename(
           n_taxa = ntaxa,
           pd_mpd = mpd.obs,
@@ -171,7 +169,6 @@ diversity_estimate_phylogenetic <-
           runs = rand,
           iterations = iterations
         ) %>%
-        tibble::as_tibble() %>%
         dplyr::rename(
           n_taxa = ntaxa,
           pd_mntd = mntd.obs,
