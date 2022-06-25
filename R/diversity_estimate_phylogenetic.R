@@ -117,7 +117,7 @@ diversity_estimate_phylogenetic <-
       res <-
         picante::ses.pd(
           samp = data_ordered,
-          phylogenetic_tree = pruned_tree,
+          tree = pruned_tree,
           null.model = "taxa.labels",
           rand = rand,
           iterations = iterations,
