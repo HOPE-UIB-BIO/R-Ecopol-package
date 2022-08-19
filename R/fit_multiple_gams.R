@@ -3,7 +3,7 @@
 #' @param data_source Data frame with `x_var`, `y_var`, and `group_var`
 #' @inheritParams fit_gam_safely
 #' @description Helper function to apply multiple`fit_gam_safely`.
-#' @seealso [fit_gam_safely()] 
+#' @seealso [fit_gam_safely()]
 fit_multiple_gams <-
   function(data_source,
            x_var = "age",
@@ -40,7 +40,7 @@ fit_multiple_gams <-
     n_datasets <-
       data_source %>%
       dplyr::distinct(get(group_var)) %>%
-      purrr::pluck(group_var) %>%
+      purrr::pluck(1) %>%
       length()
 
     cat(paste("N datasets:", n_datasets), "\n")
@@ -48,8 +48,18 @@ fit_multiple_gams <-
     suppressWarnings(
       res <-
         data_source %>%
+        dplyr::select(
+          dplyr::all_of(
+            c(group_var, x_var, y_var)
+          )
+        ) %>%
         dplyr::group_by(get(group_var)) %>%
-        tidyr::nest(data = c(eval(x_var), eval(y_var))) %>%
+        tidyr::nest(data = dplyr::any_of(
+          c(
+            x_var,
+            y_var
+          )
+        )) %>%
         tidyr::drop_na(data) %>%
         dplyr::ungroup() %>%
         dplyr::mutate(
