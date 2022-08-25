@@ -12,6 +12,9 @@ fit_hgam(
   smooth_basis = c("tp", "cr"),
   data_source,
   sel_k = 10,
+  sel_m = NULL,
+  common_trend = TRUE,
+  use_parallel = TRUE,
   max_itiration = 200
 )
 }
@@ -29,16 +32,25 @@ fit_hgam(
 \item{data_source}{Data.frame with columns whose names are set by \code{y_var},
 \code{x_var}, \code{group_var}}
 
-\item{max_itiration}{Numeric. Maximum number of iteration for hGAM to try.}
+\item{sel_k}{Numeric. Define \code{k} (wiggliness) for \code{x_var}}
 
-\item{#'}{@param sel_k Numeric. Define \code{k} (wiggliness) for \code{x_var}}
+\item{sel_m}{Numeric. User specify the order of the penalty for this term.
+if \code{NULL}, function will use \code{1} or \code{2} depending on the presence of common
+trend.}
+
+\item{common_trend}{Logical. Should hGAM have a common shared trend?}
+
+\item{use_parallel}{Logical. Should computation use parallel?}
+
+\item{max_itiration}{Numeric. Maximum number of iteration for hGAM to try.}
 }
 \value{
 Fitted hGAM model
 }
 \description{
-Fit a hierarchical GAM model with a single common smoother plus
-group-level smoothers with differing wiggliness (random effect). If there is
-less number of groups in the dataset than 2, normal GAM model will be fitted.
-The function uses cluser analyses with automatically detectec number of cores.
+Fit a hierarchical GAM model with/without a single common
+smoother (\code{common_trend}) plus group-level smoothers with differing
+wiggliness (random effect). If there is less number of groups in the dataset
+than 2, normal GAM model will be fitted.
+If \code{use_parallel} is \code{TRUE}, number of cores is automatically detected.
 }
