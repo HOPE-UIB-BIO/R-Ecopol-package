@@ -2,18 +2,19 @@
 % Please edit documentation in R/predic_model.R
 \name{predic_model}
 \alias{predic_model}
-\title{Predict data from a linear model}
+\title{Predict data from a regression model}
 \usage{
-predic_model(data_source, model_source, exclude_var = NA)
+predic_model(data_source, model_source, exclude_var = NULL)
 }
 \arguments{
 \item{data_source}{Data.frame with values to be predicted upon}
 
-\item{model_source}{Selected model. Can be \code{lm}, \code{glm}, or \code{gam}}
+\item{model_source}{Selected model. Can be any of supported models by
+\code{marginaleffects}}
 
 \item{exclude_var}{Vector with terms to exclude. This is used only for \code{gam}
 models}
 }
 \description{
-Predict data from a linear model
+Predict model using \code{marginaleffects::predictions} function
 }
