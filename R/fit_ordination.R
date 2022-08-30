@@ -1,4 +1,4 @@
-#' @title Fit (partial) constrained ordination
+#' @title Fit ordination
 #' @param data_source_community
 #' Data.frame with community data. Each row is sample. First columns is
 #' `sample_id`, each other is taxa.
@@ -13,6 +13,7 @@
 #' \itemize{
 #' \item `"cca"` - Correspondence Analysis
 #' \item `"rda"` - Redundancy Analysis
+#' \item `"dca"` - Detrended Correspondence Analysis
 #' }
 #' @param transform_to_percentage
 #' Logical. Should community data be tranformed into percentages?
@@ -23,31 +24,29 @@
 #' \item "chisq" - Chisq tranformation
 #' \item "hellinger" - Hellinger tranformation
 #' }
-#' It is recomneded to apply tranformation to percenatge data.
+#' It is recomneded to apply tranformation to percentage data.
 #' @description
 #' This is a wrapper function to perform standard data preparation
-#' and (partial) consatrined ordination with fossil pollen data.
-#' By default ordination is constrained by age.
+#' and either unconstrained (DCA) or (partialy-)consatrined ordination (CCA/RDA)
+#' with fossil pollen data. By default constrained ordination is constrained by
+#' `"age"`.
 #' @returns Ordniation from `vegan` package
 #' @export
 fit_ordination <-
     function(data_source_community,
-             data_source_predictors,
+             data_source_predictors = NULL,
              var_name_pred = c("age"),
              var_name_cond = NULL,
-             sel_method = c("cca", "rda"),
+             sel_method = c("cca", "rda", "dca"),
              transform_to_percentage = FALSE,
              tranformation = c("none", "chisq", "hellinger")) {
         util_check_class("data_source_community", "data.frame")
 
         util_check_col_names("data_source_community", "sample_id")
 
-        util_check_class("data_source_predictors", "data.frame")
+        util_check_class("data_source_predictors", c("data.frame", "NULL"))
 
-        util_check_class("var_name_pred", "character")
-
-        if
-        (
+        if (
             is.null(var_name_cond) == FALSE
         ) {
             util_check_class("var_name_cond", "character")
@@ -61,22 +60,24 @@ fit_ordination <-
             )
         }
 
-        util_check_col_names(
-            "data_source_predictors",
-            c(
-                "sample_id",
-                var_name_pred
-            )
+        util_check_vector_values(
+            "sel_method",
+            c("rda", "cca", "dca")
         )
 
         sel_method <- match.arg(sel_method)
 
         util_check_class("sel_method", "character")
 
-        util_check_vector_values(
-            "sel_method",
-            c("rda", "cca")
-        )
+        if (
+            sel_method != "dca"
+        ) {
+            util_check_col_names("data_source_predictors", "sample_id")
+
+            util_check_class("var_name_pred", "character")
+
+            util_check_col_names("data_source_predictors", var_name_pred)
+        }
 
         util_check_class("transform_to_percentage", "logical")
 
@@ -107,18 +108,22 @@ fit_ordination <-
             data_source_community %>%
             purrr::pluck("sample_id")
 
-        pred_sample_id <-
-            data_source_predictors %>%
-            purrr::pluck("sample_id")
+        if (
+            sel_method != "dca"
+        ) {
+            pred_sample_id <-
+                data_source_predictors %>%
+                purrr::pluck("sample_id")
 
-        assertthat::assert_that(
-            all(community_sample_id %in% pred_sample_id) &&
-                all(pred_sample_id %in% community_sample_id),
-            msg = paste(
-                "'sample_id' column must contain the same values in both",
-                "'data_source_community' and 'data_source_predictors'."
+            assertthat::assert_that(
+                all(community_sample_id %in% pred_sample_id) &&
+                    all(pred_sample_id %in% community_sample_id),
+                msg = paste(
+                    "'sample_id' column must contain the same values in both",
+                    "'data_source_community' and 'data_source_predictors'."
+                )
             )
-        )
+        }
 
         # data tranformation
         if
@@ -145,6 +150,16 @@ fit_ordination <-
                 rowSums(data_com) > 0,
                 colSums(data_com) > 0
             ]
+
+        if (
+            sel_method == c("dca")
+        ) {
+            res_ord <-
+                vegan::decorana(
+                    veg = decorana
+                )
+            return(res_ord)
+        }
 
         data_pred <-
             data_source_predictors %>%
