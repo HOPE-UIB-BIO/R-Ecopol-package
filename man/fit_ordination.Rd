@@ -2,14 +2,14 @@
 % Please edit documentation in R/fit_ordination.R
 \name{fit_ordination}
 \alias{fit_ordination}
-\title{Fit (partial) constrained ordination}
+\title{Fit ordination}
 \usage{
 fit_ordination(
   data_source_community,
-  data_source_predictors,
+  data_source_predictors = NULL,
   var_name_pred = c("age"),
   var_name_cond = NULL,
-  sel_method = c("cca", "rda"),
+  sel_method = c("cca", "rda", "dca"),
   transform_to_percentage = FALSE,
   tranformation = c("none", "chisq", "hellinger")
 )
@@ -28,6 +28,7 @@ can be predictors and/or conditional variables.}
 \item{sel_method}{\itemize{
 \item \code{"cca"} - Correspondence Analysis
 \item \code{"rda"} - Redundancy Analysis
+\item \code{"dca"} - Detrended Correspondence Analysis
 }}
 
 \item{transform_to_percentage}{Logical. Should community data be tranformed into percentages?}
@@ -38,13 +39,14 @@ can be predictors and/or conditional variables.}
 \item "chisq" - Chisq tranformation
 \item "hellinger" - Hellinger tranformation
 }
-It is recomneded to apply tranformation to percenatge data.}
+It is recomneded to apply tranformation to percentage data.}
 }
 \value{
 Ordniation from \code{vegan} package
 }
 \description{
 This is a wrapper function to perform standard data preparation
-and (partial) consatrined ordination with fossil pollen data.
-By default ordination is constrained by age.
+and either unconstrained (DCA) or (partialy-)consatrined ordination (CCA/RDA)
+with fossil pollen data. By default constrained ordination is constrained by
+\code{"age"}.
 }
