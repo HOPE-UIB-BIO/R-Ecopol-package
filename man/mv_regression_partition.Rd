@@ -28,6 +28,6 @@ Hellinger, \code{chisq} = Chisq, \code{none} = without transformation. Both Hell
 and Chisq are recommend for proportional/percentage data}
 }
 \description{
-Transform pollen data into percentages, apply Chisq
+Transform pollen data into percentages, apply selected
 tranformation, and then apply multivariate regression trees.
 }
