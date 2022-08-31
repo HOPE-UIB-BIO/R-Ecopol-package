@@ -8,7 +8,7 @@
 #'  level
 #' @param rand Number of multiple cross-validations
 #' @inheritParams tranform_percentage_data
-#' @description Transform pollen data into percentages, apply Chisq
+#' @description Transform pollen data into percentages, apply selected
 #' tranformation, and then apply multivariate regression trees.
 #' @export
 mv_regression_partition <-
@@ -16,7 +16,6 @@ mv_regression_partition <-
            data_source_levels,
            rand = 1000,
            transformation = c("chisq", "hellinger", "none")) {
-
     util_check_class("data_source_counts", "data.frame")
 
     util_check_col_names("data_source_counts", "sample_id")
@@ -36,12 +35,14 @@ mv_regression_partition <-
     data_percentage <-
       transfer_into_proportions(
         data_source_counts,
-        method = "percentages")
+        method = "percentages"
+      )
 
     data_trans <-
       tranform_percentage_data(
         data_percentage,
-        transformation = transformation) %>%
+        transformation = transformation
+      ) %>%
       tibble::column_to_rownames("sample_id")
 
     age <-
@@ -49,23 +50,37 @@ mv_regression_partition <-
 
     mvpart_result <-
       mvpart::mvpart(data.matrix(data_trans) ~ age,
-                     xv = "1se",
-                     xvmult	= rand,
-                     plot.add = FALSE,
-                     data = data_trans)
+        xv = "1se",
+        xvmult = rand,
+        plot.add = FALSE,
+        data = data_trans
+      )
+
+    # wrapper to prevent any message
+    capture.output(
+      change_points_age <-
+        as.data.frame(summary(mvpart_result)$splits) %>%
+        purrr::pluck("index"),
+      file = "NUL"
+    )
 
     partitions <-
       tibble::tibble(
         sample_id = data_source_levels$sample_id,
-        partition = renumber_groups(mvpart_result$where))
+        partition = renumber_groups(mvpart_result$where)
+      )
 
     # number of partitions
-    mrt_groups <- length(unique(partitions))
+    mrt_groups <- length(unique(partitions$partition))
 
     results <-
-      list(mrt_result = mvpart_result,
-           partitions = partitions,
-           mrt_groups = mrt_groups/nrow(data_trans))
+      list(
+        mrt_result = mvpart_result,
+        change_points = change_points_age,
+        partitions = partitions,
+        mrt_groups = mrt_groups,
+        mrt_groups_per_sample = mrt_groups / nrow(data_trans)
+      )
 
     return(results)
   }

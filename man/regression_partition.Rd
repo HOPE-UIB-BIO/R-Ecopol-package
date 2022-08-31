@@ -2,7 +2,7 @@
 % Please edit documentation in R/regression_partition.R
 \name{regression_partition}
 \alias{regression_partition}
-\title{Partition data in groups}
+\title{Partition data using regression tree}
 \usage{
 regression_partition(data_source, var = "", age_var = "")
 }
@@ -11,7 +11,7 @@ regression_partition(data_source, var = "", age_var = "")
 
 \item{var}{Name (in quotes) of variable to partition}
 
-\item{age_var}{Name (in quotes) of variable which define the age os samples}
+\item{age_var}{Name (in quotes) of variable which define the age of samples}
 }
 \description{
 Partition chronologically ordered data using regression trees
