@@ -90,8 +90,7 @@ fit_ordination <-
             c("none", "chisq", "hellinger")
         )
 
-        if
-        (
+        if (
             transform_to_percentage == FALSE &&
                 tranformation != "none"
         ) {
@@ -126,8 +125,7 @@ fit_ordination <-
         }
 
         # data tranformation
-        if
-        (
+        if (
             transform_to_percentage == TRUE
         ) {
             data_source_community <-
@@ -152,11 +150,11 @@ fit_ordination <-
             ]
 
         if (
-            sel_method == c("dca")
+            sel_method == "dca"
         ) {
             res_ord <-
                 vegan::decorana(
-                    veg = decorana
+                    veg = data_com
                 )
             return(res_ord)
         }
@@ -184,8 +182,7 @@ fit_ordination <-
                 )
             )
 
-        if
-        (
+        if (
             is.null(var_name_cond) == FALSE
         ) {
             formula_work <-
@@ -199,8 +196,7 @@ fit_ordination <-
                 as.formula(formula_raw)
         }
 
-        if
-        (
+        if (
             sel_method == "rda"
         ) {
             res_ord <-
@@ -209,8 +205,7 @@ fit_ordination <-
                     data = data_pred,
                     na.action = na.omit
                 )
-        } else if
-        (
+        } else if (
             sel_method == "cca"
         ) {
             res_ord <-
