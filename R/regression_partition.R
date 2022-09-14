@@ -41,18 +41,20 @@ regression_partition <-
                 )
         }
 
-        rpart_groups <-
-            renumber_groups(pruned_tree$where)
-
         rpart_partitions <-
-            rpart_groups %>%
+            data_source %>%
+            dplyr::mutate(
+                partition = renumber_groups(pruned_tree$where))
+
+        rpart_groups <-
+            rpart_partitions$partition %>%
             unique() %>%
             length()
 
         # wrapper to prevent any message
         capture.output(
             change_points_age <-
-                as.data.frame(summary(mvpart_result)$splits) %>%
+                as.data.frame(summary(pruned_tree)$splits) %>%
                 purrr::pluck("index"),
             file = "NUL"
         )
