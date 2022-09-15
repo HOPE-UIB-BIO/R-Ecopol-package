@@ -11,15 +11,13 @@
 #' the term, `lm` is fitted instead. If no model was cretaed (due to errors),
 #' the function retun `NA_real`
 fit_gam_safely <-
-  function(
-    data_source,
-    x_var = "age",
-    y_var = "var",
-    smooth_basis = c('tp', 'cr'),
-    error_family = "gaussian(link = 'identity')",
-    sel_k = 10,
-    max_k = 10) {
-
+  function(data_source,
+           x_var = "age",
+           y_var = "var",
+           smooth_basis = c("tp", "cr"),
+           error_family = "gaussian(link = 'identity')",
+           sel_k = 10,
+           max_k = 10) {
     current_env <- environment()
 
     util_check_class("y_var", "character")
@@ -32,7 +30,7 @@ fit_gam_safely <-
 
     util_check_class("smooth_basis", "character")
 
-    util_check_vector_values("smooth_basis", c('tp', 'cr'))
+    util_check_vector_values("smooth_basis", c("tp", "cr"))
 
     util_check_class("data_source", "data.frame")
 
@@ -42,39 +40,50 @@ fit_gam_safely <-
 
     assertthat::assert_that(
       round(sel_k) == sel_k,
-      msg = "'sel_k' must be an integer")
+      msg = "'sel_k' must be an integer"
+    )
 
     util_check_class("max_k", "numeric")
 
     assertthat::assert_that(
       round(max_k) == max_k,
-      msg = "'max_k' must be an integer")
+      msg = "'max_k' must be an integer"
+    )
 
-    if(
-      sel_k > nrow(data_source)-1
+    if (
+      sel_k > nrow(data_source) - 1
     ) {
-      sel_k <- nrow(data_source)-1
+      sel_k <- nrow(data_source) - 1
     }
 
     # if the selected `sel_k` is bigger than maximum `max_k`, use the `max_k`
-    if(sel_k >= max_k) {
+    if (sel_k >= max_k) {
       sel_k <- max_k
     }
 
-    # if there is no variation in the
-    if(
+    # transform into numeric
+    data_source <-
       data_source %>%
-      purrr::pluck(y_var) %>%
-      sd() == 0
+      dplyr::mutate(
+        !!y_var := as.numeric(get(y_var))
+      )
+
+    # if there is no variation in the var, use `lm` (straith line)
+    if (
+      data_source %>%
+        purrr::pluck(y_var) %>%
+        sd() == 0
     ) {
+      formula_w <-
+        paste0(y_var, "~", x_var) %>%
+        stats::as.formula(.)
 
       fin_mod <-
         stats::lm(
-          formula = var ~ age,
-          data = data_source)
-
+          formula = formula_w,
+          data = data_source
+        )
     } else {
-
       try(
         fin_mod <-
           fit_custom_gam(
@@ -83,7 +92,8 @@ fit_gam_safely <-
             error_family = error_family,
             smooth_basis = smooth_basis,
             data_source = data_source,
-            sel_k  = sel_k),
+            sel_k = sel_k
+          ),
         silent = TRUE
       )
     }
@@ -91,5 +101,6 @@ fit_gam_safely <-
     ifelse(
       exists("fin_mod", envir = current_env),
       return(fin_mod),
-      return(NA_real_))
+      return(NA_real_)
+    )
   }
