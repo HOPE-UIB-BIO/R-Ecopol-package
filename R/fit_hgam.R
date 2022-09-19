@@ -103,12 +103,31 @@ fit_hgam <-
     )
 
     formula_gam <-
-      paste0(y_var, " ~ s(", x_var, ", k = ", sel_k, ", bs = '", smooth_basis, "')")
+      paste0(
+        y_var,
+        " ~ s(",
+        x_var,
+        ", k = ", sel_k,
+        ", bs = '", smooth_basis, "'",
+        ")"
+      )
 
     formula_hgam <-
       paste(
-        paste0("s(", x_var, ", by = ", group_var, ", bs = '", smooth_basis, "', m = ", sel_m, ")"),
-        paste0("s(", group_var, ", bs = 're', k = ", n_groups, ")"),
+        paste0(
+          "s(", x_var,
+          ", by = ", group_var,
+          ", bs = '", smooth_basis, "'",
+          ", k = ", sel_k,
+          ", m = ", sel_m,
+          ")"
+        ),
+        paste0(
+          "s(", group_var,
+          ", bs = 're'",
+          ", k = ", n_groups,
+          ")"
+        ),
         sep = " + "
       )
 
