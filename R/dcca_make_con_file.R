@@ -2,14 +2,14 @@
 #' @description
 #' Creates CANOCO 4.5x project (.CON) file for a specific
 #' type of analysis (DCCA with detrending by segments)
-#' @param path_con
+#' @param con_file_path
 #' qualified name of CON file to create
-#' @param name_resp
+#' @param resp_file_path
 #' name of (CANOCO-format) file with response data
-#' @param name_pred
+#' @param pred_file_path
 #' name of (CANOCO-format) file with explanatory data
-#' @param base
-#' temporary file name base (for .OUT and .SOL files)
+#' @param default_name
+#' temporary file name default_name (for .OUT and .SOL files)
 #' (default "xx")
 #' @param downweight
 #' logical value: down-weighting of rare species
@@ -26,29 +26,19 @@
 #' @return
 #' TRUE on success, FALSE otherwise
 #' @author Petr Smilauer
-dcca_export_con_file <-
-  function(path_con,
-           name_resp,
-           name_pred,
-           base = "xx",
+dcca_make_con_file <-
+  function(con_file_path,
+           resp_file_path,
+           pred_file_path,
+           default_name = "xx",
            downweight = FALSE,
            n_segments = 26,
            n_rescale = 4,
            rescale_threshold = 0.0) {
     if (
-      !file.exists(name_resp)
-    ) {
-      return(FALSE)
-    }
-
-    if (
-      !file.exists(name_pred)
-    ) {
-      return(FALSE)
-    }
-
-    if (
-      !file.create(path_con)
+      (file.exists(resp_file_path) == FALSE) |
+        (file.exists(pred_file_path) == FALSE) |
+        (file.create(con_file_path) == FALSE)
     ) {
       return(FALSE)
     }
@@ -66,23 +56,23 @@ dcca_export_con_file <-
       "  0 = changing maximum sizes?"
 
     f_lines[4] <-
-      paste("", name_resp) # insert space at start
+      paste("", resp_file_path) # insert space at start
 
     f_lines[5] <-
       " S" # no covariates
 
     f_lines[6] <-
-      paste("", name_pred) # insert space at start
+      paste("", pred_file_path) # insert space at start
 
     f_lines[7] <-
       paste(
-        " ", base, ".out", # OUT file, e.g. " xx.out"
+        " ", default_name, ".out", # OUT file, e.g. " xx.out"
         sep = ""
       )
 
     f_lines[8] <-
       paste(
-        " ", base, ".sol", # solution file, e.g. " xx.sol"
+        " ", default_name, ".sol", # solution file, e.g. " xx.sol"
         sep = ""
       )
 
@@ -127,7 +117,7 @@ dcca_export_con_file <-
       "    0     0  = product of environmental variables"
 
     f_lines[19] <-
-      "   2 = square root transformation of species data"
+      "   0 = no transformation of species data"
 
     f_lines[20] <-
       "     1.00000 = weight for species  ( noweight=1)"
@@ -136,7 +126,7 @@ dcca_export_con_file <-
       "     1.00000 = weight for  samples ( noweight=1)"
 
     if (
-      downweight
+      downweight == TRUE
     ) {
       f_lines[22] <-
         "  1 = weighting of species?"
@@ -152,13 +142,12 @@ dcca_export_con_file <-
       "  0  2  0  0  0  0  0  2 = output just CaseR and CaseE"
 
     # open CON file for writing
-
     con_file <-
-      file(path_con, open = "wt")
+      file(con_file_path, open = "wt")
 
     # write formed lines to it
-
     writeLines(f_lines, con_file)
+
     # close it
     close(con_file)
 
