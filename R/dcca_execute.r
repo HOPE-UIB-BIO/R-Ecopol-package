@@ -7,18 +7,14 @@
 #' a list (described below). On failures calls the stop
 #' function, so it might be wise to enclose the call in a try
 #' construct to catch such cases
-#' @param path
-#' absolute path to the folder where .EXE is located
-#' and where also the intermediate results will be stored
-#' (so it should be writable)
-#' @param resp
+#' @param data_resp
 #' data frame with response data (pollen counts or percentages)
-#' @param pred
+#' @param data_pred
 #' data frame with required predictors (all will be used)
-#' @param base
+#' @param default_name
 #' how to name CON, OUT and SOL files (e.g. xx.con, xx.out, xx.sol)
 #' Default value "xx"
-#' The 'base' is also used for produced data files:
+#' The `default_name`` is also used for produced data files:
 #' /itemize{
 #' /item xx-pred.dta
 #' /item xx-resp.dta
@@ -36,149 +32,175 @@
 #' }
 #' @author Petr Smilauer
 dcca_execute_canoco <-
-  function(path,
-           resp,
-           pred,
-           base = "xx",
+  function(data_resp,
+           data_pred,
+           default_name = "xx",
            downweight = FALSE) {
+    if (
+      (.Platform["OS.type"] == "windows") == FALSE
+    ) {
+      stop(
+        "the `dcca_execute_canoco` funtion works only on Windows machine"
+      )
+    }
 
     # (1) Create data files -----
-    path.len <-
-      nchar(path)
+
+    # absolute path to the folder where canoco.exe is located
+    #   and where also the intermediate results will be stored
+    #   (so it should be writable)
+    sel_path <-
+      system.file("exec", package = "REcopol")
+
+    path_length <-
+      nchar(sel_path)
 
     # append slash to path, if not present
     if (
-      substr(path, path.len, path.len) != "/"
+      substr(sel_path, path_length, path_length) != "/"
     ) {
-      path <-
-        paste(
-          path, "/",
-          sep = ""
+      sel_path <-
+        paste0(
+          sel_path, "/"
         )
     }
 
+    # test the presence of canoco.exe
+    if (
+      file.exists(
+        paste0(
+          sel_path,
+          "canoco.exe"
+        )
+      ) == FALSE
+    ) {
+      stop(
+        "Cannot find 'canoco.exe' in the REcopol package folder"
+      )
+    }
+
     # fully qualified name of response data file
-    resp_fname <-
-      paste(
-        path, base, "-resp.dta",
-        sep = ""
+    resp_file_path <-
+      paste0(
+        sel_path, default_name, "-resp.dta"
+      )
+
+    # fully qualified name of  predictor data file
+    pred_file_path <-
+      paste0(
+        sel_path, default_name, "-pred.dta"
       )
 
     # create response data file
     if (
-      dcca_export_can_file(resp_fname, resp) == FALSE
+      dcca_make_can_file(
+        sel_path = resp_file_path,
+        sel_data = data_resp
+      ) == FALSE
     ) {
+      util_clean_files(sel_path)
       stop(
         "Cannot export response data into ",
-        resp_fname,
+        resp_file_path,
         call. = FALSE
       )
     }
 
-    # fully qualified name of  predictor data file
-    pred_fname <-
-      paste(
-        path, base, "-pred.dta",
-        sep = ""
-      )
-
     # create predictor data file
     if (
-      dcca_export_can_file(pred_fname, pred) == FALSE
+      dcca_make_can_file(
+        sel_path = pred_file_path,
+        sel_data = data_pred
+      ) == FALSE
     ) {
-      file.remove(resp_fname)
+      util_clean_files(sel_path)
       stop(
         "Cannot export predictor data into ",
-        pred_fname,
+        pred_file_path,
         call. = FALSE
       )
     }
 
 
     # (2) Create CON file -----
-    con_fname <-
+    con_file_path <-
       paste(
-        path, base, ".con",
+        sel_path, default_name, ".con",
         sep = ""
       )
 
     if (
-      dcca_export_con_file(
-        con_fname,
-        resp_fname,
-        pred_fname,
-        base,
-        downweight
+      dcca_make_con_file(
+        con_file_path = con_file_path,
+        resp_file_path = resp_file_path,
+        pred_file_path = pred_file_path,
+        default_name = default_name,
+        downweight = downweight
       ) == FALSE
     ) {
-      file.remove(resp_fname)
-      file.remove(pred_fname)
+      util_clean_files(sel_path)
       stop(
         "Cannot produce CON file into ",
-        con_fname,
+        con_file_path,
         call. = FALSE
       )
     }
 
 
     # (3) Execute CANOCO command line -----
-    WD <-
+    current_work_dir <-
       getwd()
 
-    setwd(path)
+    setwd(sel_path)
 
     system2(
-      "Canoco.exe",
-      args = con_fname
+      "canoco.exe",
+      args = con_file_path
     )
 
     # (4) Parse OUT file -----
-    out_fname <-
+    out_file_path <-
       paste(
-        base, ".out",
+        default_name, ".out",
         sep = ""
       )
 
     if (
-      file.exists(out_fname) == FALSE
+      file.exists(out_file_path) == FALSE
     ) {
-      file.remove(resp_fname)
-      file.remove(pred_fname)
-      file.remove(con_fname)
+      util_clean_files(sel_path)
       stop(
         "Cannot find produced file ",
-        out_fname,
+        out_file_path,
         call. = FALSE
       )
     }
 
     out_file <-
       file(
-        out_fname,
+        out_file_path,
         open = "r"
       )
 
     # first determine the number of active sample:
-    a_line <-
-      util_read_to_line(
-        out_file,
-        " No. of active  samples:"
+    sel_line <-
+      util_read_lines_until(
+        connection_file = out_file,
+        sel_text = " No. of active  samples:"
       )
 
     n_rows <-
       as.numeric(
-        (strsplit(a_line, ":", fixed = T)[[1]])[2]
+        (strsplit(sel_line, ":", fixed = T)[[1]])[2]
       )
 
     n_rows_tot <-
-      dim(resp)[1]
+      dim(data_resp)[1]
 
     if (
       (n_rows < 1) | (n_rows > n_rows_tot)
     ) {
-      file.remove(resp_fname)
-      file.remove(pred_fname)
-      file.remove(con_fname)
+      util_clean_files(sel_path)
       stop(
         "Wrong count of active samples ",
         n_rows,
@@ -187,21 +209,27 @@ dcca_execute_canoco <-
       )
     }
 
-    a_line <-
-      util_read_to_line(
-        out_file,
-        " Eigenvalues  "
+    sel_line <-
+      util_read_lines_until(
+        connection_file = out_file,
+        sel_text = " Eigenvalues  "
       )
 
     if (
-      nchar(a_line) < 20
+      nchar(sel_line) < 20
     ) {
-      file.remove(resp_fname, pred_fname, con_fname)
+      util_clean_files(
+        c(
+          resp_file_path,
+          pred_file_path,
+          con_file_path,
+          out_file_path
+        )
+      )
 
-      # file.remove( out_fname);
       stop(
         "Cannot parse produced file ",
-        out_fname,
+        out_file_path,
         call. = FALSE
       )
     }
@@ -209,7 +237,7 @@ dcca_execute_canoco <-
     # Retrieve eigenvalues and total inertia
     eigs <-
       as.numeric(
-        util_parse_line_by_tabs(a_line, 2, 6)
+        util_get_line_by_tabs(sel_line, 2, 6)
       )
 
     tot_inertia <-
@@ -219,12 +247,19 @@ dcca_execute_canoco <-
       eigs[1:4]
 
     # Retrieve and parse turnover size
-    a_line <-
-      util_read_n_lines(out_file, 1)
+    sel_line <-
+      util_read_n_lines(
+        connection_file = out_file,
+        num_lines = 1
+      )
 
     turns <-
       as.numeric(
-        util_parse_line_by_tabs(a_line, 2, 5)
+        util_get_line_by_tabs(
+          sel_line = sel_line,
+          id_from = 2,
+          id_to = 5
+        )
       )
 
     # close OUT file
@@ -232,43 +267,46 @@ dcca_execute_canoco <-
 
 
     # (5) Parse SOL file -----
-    sol_fname <-
-      paste(base, ".sol", sep = "")
+    sol_file_path <-
+      paste(default_name, ".sol", sep = "")
 
     if (
-      file.exists(sol_fname) == FALSE
+      file.exists(sol_file_path) == FALSE
     ) {
-      file.remove(resp_fname, pred_fname, con_fname, out_fname)
+      util_clean_files(sel_path)
       stop(
         "Cannot find produced file ",
-        sol_fname,
+        sol_file_path,
         call. = FALSE
       )
     }
 
     sol_file <-
-      file(sol_fname, open = "r")
+      file(sol_file_path, open = "r")
 
-    a_line <-
-      util_read_to_line(
-        sol_file,
-        " Samp: Sample scores"
+    sel_line <-
+      util_read_lines_until(
+        connection_file = sol_file,
+        sel_text = " Samp: Sample scores"
       )
 
     if (
-      nchar(a_line) < 20
+      nchar(sel_line) < 20
     ) {
-      file.remove(resp_fname, pred_fname, con_fname, out_fname)
+      util_clean_files(sel_path)
       stop(
         "Cannot parse produced file [1] ",
-        sol_fname,
+        sol_file_path,
         call. = FALSE
       )
     }
 
     # read through another five lines
-    a_line <-
-      util_read_n_lines(sol_file, 5)
+    sel_line <-
+      util_read_n_lines(
+        connection_file = sol_file,
+        num_lines = 5
+      )
 
     # prepare storage full of NA values
     case_r <-
@@ -282,12 +320,15 @@ dcca_execute_canoco <-
 
     # read single line
     for (i in 1:n_rows) {
-      a_line <-
-        util_read_n_lines(sol_file, 1)
+      sel_line <-
+        util_read_n_lines(
+          connection_file = sol_file,
+          num_lines = 1
+        )
 
       # separate its fields
       str_entries <-
-        strsplit(a_line, "\t", fixed = T)[[1]]
+        strsplit(sel_line, "\t", fixed = TRUE)[[1]]
 
       # identify case index
       i_case <-
@@ -296,7 +337,7 @@ dcca_execute_canoco <-
       if (
         (i_case < 1) | (i_case > n_rows_tot) | (length(str_entries) < 8)
       ) {
-        file.remove(resp_fname, pred_fname, con_fname, out_fname)
+        util_clean_files(sel_path)
         stop(
           "Error parsing CaseR scores for entry ",
           i,
@@ -312,27 +353,33 @@ dcca_execute_canoco <-
     # Assign row and column names
     dimnames(case_r) <-
       list(
-        dimnames(resp)[[1]],
+        dimnames(data_resp)[[1]],
         c("Axis 1", "Axis 2", "Axis 3", "Axis 4")
       )
 
     # Now read the second set of case scores
-    a_line <-
-      util_read_to_line(sol_file, " SamE: Sample scores")
+    sel_line <-
+      util_read_lines_until(
+        connection_file = sol_file,
+        sel_text = " SamE: Sample scores"
+      )
 
     if (
-      nchar(a_line) < 20
+      nchar(sel_line) < 20
     ) {
-      file.remove(resp_fname, pred_fname, con_fname, out_fname)
+      util_clean_files(sel_path)
       stop(
         "Cannot parse [2] produced file ",
-        sol_fname,
+        sol_file_path,
         call. = FALSE
       )
     }
 
-    a_line <-
-      util_read_n_lines(sol_file, 5)
+    sel_line <-
+      util_read_n_lines(
+        connection_file = sol_file,
+        num_lines = 5
+      )
 
     # prepare storage full of NA values
     case_e <-
@@ -346,12 +393,15 @@ dcca_execute_canoco <-
 
     for (j in 1:n_rows) {
       # read one line
-      a_line <-
-        util_read_n_lines(sol_file, 1)
+      sel_line <-
+        util_read_n_lines(
+          connection_file = sol_file,
+          num_lines = 1
+        )
 
       # separate its fields
       str_entries <-
-        strsplit(a_line, "\t", fixed = T)[[1]]
+        strsplit(sel_line, "\t", fixed = T)[[1]]
 
       # identify case index
       j_case <-
@@ -360,7 +410,7 @@ dcca_execute_canoco <-
       if (
         (j_case < 1) | (j_case > n_rows_tot) | (length(str_entries) < 7)
       ) {
-        file.remove(resp_fname, pred_fname, con_fname, out_fname)
+        util_clean_files(sel_path)
         stop(
           "Error parsing CaseE scores for entry ",
           j,
@@ -376,23 +426,25 @@ dcca_execute_canoco <-
     # Assing row and column names
     dimnames(case_e) <-
       list(
-        dimnames(resp)[[1]],
+        dimnames(data_resp)[[1]],
         c("Axis 1", "Axis 2", "Axis 3", "Axis 4")
       )
 
     # close SOL file
     close(sol_file)
 
-    setwd(WD) # undo change of working directory of R
+    setwd(current_work_dir) # undo change of working directory of R
 
+    util_clean_files(sel_path)
 
     # (6) Return results -----
-    list(
-      eig = eigs,
-      tot_inertia = tot_inertia,
-      turn = turns,
-      case_e = case_e,
-      case_r = case_r
-    ) %>%
-      return()
+    return(
+      list(
+        eig = eigs,
+        tot_inertia = tot_inertia,
+        turn = turns,
+        case_e = case_e,
+        case_r = case_r
+      )
+    )
   }
