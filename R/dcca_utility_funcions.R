@@ -3,15 +3,15 @@
 #' Takes a character string and parses it with TAB separator,
 #' returning specified range of string entries
 #' @author Petr Smilauer
-util_parse_line_by_tabs <-
-  function(a_line,
-           id_x_from,
-           id_x_to) {
+util_get_line_by_tabs <-
+  function(sel_line,
+           id_from,
+           id_to) {
     xy <-
-      strsplit(a_line, "\t", fixed = T)[[1]]
+      strsplit(sel_line, "\t", fixed = T)[[1]]
 
     return(
-      xy[id_x_from:id_x_to]
+      xy[id_from:id_to]
     )
   }
 
@@ -23,11 +23,11 @@ util_parse_line_by_tabs <-
 util_read_n_lines <-
   function(connection_file,
            num_lines) {
-    a_line <-
+    sel_line <-
       readLines(connection_file, n = num_lines)
 
     n_line <-
-      length(a_line)
+      length(sel_line)
 
     if (
       n_line == 0
@@ -36,11 +36,11 @@ util_read_n_lines <-
     }
 
     return(
-      a_line[n_line]
+      sel_line[n_line]
     )
   }
 
-#' @title Read individual line
+#' @title Read file until found selected text
 #' @description
 #' Takes an open connection to a text file and reads from it individual
 #' lines until it arrives to a line starting with specified text
@@ -48,29 +48,50 @@ util_read_n_lines <-
 #' Passed connection (connection_file) must be already open for reading
 #' The function returns empty string to indicate a failure
 #' @author Petr Smilauer
-util_read_to_line <-
+util_read_lines_until <-
   function(connection_file,
-           sought_text) {
-    a_line <-
+           sel_text) {
+    sel_line <-
       vector("character")
 
     while (TRUE) {
-      a_line <-
+      sel_line <-
         readLines(connection_file, n = 1)
 
       if (
-        length(a_line) == 0
+        length(sel_line) == 0
       ) {
         # return empty string on failure
         return("")
       }
 
       if (
-        startsWith(a_line, sought_text)
+        startsWith(sel_line, sel_text)
       ) {
         break
       }
     }
 
-    return(a_line[1])
+    return(sel_line[1])
+  }
+
+#' @title Delete files within folder
+#' @description Try to delete all files within folder but `file_to_omit`
+util_clean_files <-
+  function(sel_folder_path,
+           file_to_omit = "canoco.exe") {
+    all_files <-
+      list.files(sel_folder_path, full.names = TRUE)
+
+    files_filtered <-
+      all_files[stringr::str_detect(all_files, file_to_omit, negate = TRUE)]
+
+    for (i in seq_along(files_filtered)) {
+      suppressWarnings(
+        try(
+          file.remove(files_filtered[i]),
+          silent =  TRUE
+        )
+      )
+    }
   }
