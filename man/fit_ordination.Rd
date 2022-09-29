@@ -6,10 +6,10 @@
 \usage{
 fit_ordination(
   data_source_community,
+  sel_method = c("unconstrained", "constrained"),
   data_source_predictors = NULL,
-  var_name_pred = c("age"),
-  var_name_cond = NULL,
-  sel_method = c("cca", "rda", "dca"),
+  var_name_pred = "age",
+  sel_complexity = c("linear", "poly_2", "poly_3"),
   transform_to_percentage = FALSE,
   tranformation = c("none", "chisq", "hellinger")
 )
@@ -18,17 +18,21 @@ fit_ordination(
 \item{data_source_community}{Data.frame with community data. Each row is sample. First columns is
 \code{sample_id}, each other is taxa.}
 
-\item{data_source_predictors}{Data.frame with predictors. First columns is \code{sample_id}. Other columns
-can be predictors and/or conditional variables.}
-
-\item{var_name_pred}{Character. Vector with the names of predicotr variables.}
-
-\item{var_name_cond}{Character. Optional name of conditional variable}
-
 \item{sel_method}{\itemize{
-\item \code{"cca"} - Correspondence Analysis
-\item \code{"rda"} - Redundancy Analysis
-\item \code{"dca"} - Detrended Correspondence Analysis
+\item \code{"unconstrained"} - Detrended Correspondence Analysis
+\item \code{"constrained"} - Detrended Correspondence Canonical Analysis
+}}
+
+\item{data_source_predictors}{Data.frame with predictors. First columns is \code{sample_id}. Other columns
+can be predictors.}
+
+\item{var_name_pred}{Character. Vector with the name of predictot variable.}
+
+\item{sel_complexity}{Indicate how the predictor should be used
+\itemize{
+\item \code{"linear"} - a linear predictor
+\item \code{"poly_2"} - a polynomial predictor of second order
+\item \code{"poly_3"} - a polynomial predictor of third order
 }}
 
 \item{transform_to_percentage}{Logical. Should community data be tranformed into percentages?}
@@ -42,11 +46,23 @@ can be predictors and/or conditional variables.}
 It is recomneded to apply tranformation to percentage data.}
 }
 \value{
-Ordniation from \code{vegan} package
+\itemize{
+\item \code{case_r} - numeric matrix with CaseR scores for first 4 axes
+\item \code{tot_inertia} - total variation in (transformed) response data
+\item \code{axis_1_grad_length} - total gradient length of first axis
+}
+Addtional values are reported for \code{unconstrained}
+\itemize{
+\item \code{ordination} - ordination object of class "decorana"
+}
+Addtional values are reported for \code{constrained}
+\itemize{
+\item \code{sel_complexity} - see \code{sel_complexity} agument description
+}
 }
 \description{
 This is a wrapper function to perform standard data preparation
-and either unconstrained (DCA) or (partialy-)consatrined ordination (CCA/RDA)
+and either unconstrained (DCA) or consatrined ordination (DCCA)
 with fossil pollen data. By default constrained ordination is constrained by
 \code{"age"}.
 }
