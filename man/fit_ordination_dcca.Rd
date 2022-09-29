@@ -7,7 +7,7 @@
 fit_ordination_dcca(
   data_source_resp,
   data_source_pred,
-  sel_complexity = c("linear", "poly_2", "poly_3", "auto"),
+  sel_complexity = c("linear", "poly_2", "poly_3"),
   downweight = FALSE
 )
 }
@@ -17,24 +17,23 @@ rownames.}
 
 \item{data_source_pred}{Data frame with the predictor values (depth or age).  Sample ID as
 rownames.
-The number of rows must be identical with the number of rows in \code{data_source_resp}}
+The number of rows must be identical with the
+number of rows in \code{data_source_resp}}
 
 \item{sel_complexity}{Indicate how the predictor should be used
-/itemize{
-/item \verb{"linear"`` - a linear predictor /item }"poly_2"\verb{ - a polynomial predictor of second order /item `"poly_3"} - a polynomial predictor of third order
-/item `"auto"`` - a complexity will be selected based on the shape of DCA
+\itemize{
+\item \code{"linear"} - a linear predictor
+\item \code{"poly_2"} - a polynomial predictor of second order
+\item \code{"poly_3"} - a polynomial predictor of third order
 }}
 
 \item{downweight}{logical, whether to downweight rare species or not}
 }
 \value{
-/itemize{
-/item \code{eig} - numeric vector - eigenvalues for the first four axes
-/item  \code{tot_inertia} - total variation in (transformed) response data
-/item \code{turn} - numeric vector with turnover values
-/item \code{case_r} - numeric matrix with CaseE scores for (up to) first 3 axes
-/item \code{case_r} - numeric matrix with CaseR scores for first 4 axes
-/item \code{sel_complexity} - see \code{sel_complexity} agument description
+\itemize{
+\item \code{case_r} - numeric matrix with CaseR scores for first 4 axes
+\item \code{tot_inertia} - total variation in (transformed) response data
+\item \code{sel_complexity} - see \code{sel_complexity} agument description
 }
 }
 \description{
