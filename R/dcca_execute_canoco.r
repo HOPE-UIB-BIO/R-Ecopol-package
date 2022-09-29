@@ -218,15 +218,7 @@ dcca_execute_canoco <-
     if (
       nchar(sel_line) < 20
     ) {
-      util_clean_files(
-        c(
-          resp_file_path,
-          pred_file_path,
-          con_file_path,
-          out_file_path
-        )
-      )
-
+      util_clean_files(sel_path)
       stop(
         "Cannot parse produced file ",
         out_file_path,
