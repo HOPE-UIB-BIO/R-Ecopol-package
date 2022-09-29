@@ -15,20 +15,20 @@
 #' how to name CON, OUT and SOL files (e.g. xx.con, xx.out, xx.sol)
 #' Default value "xx"
 #' The `default_name`` is also used for produced data files:
-#' /itemize{
-#' /item xx-pred.dta
-#' /item xx-resp.dta
+#' \itemize{
+#' \item xx-pred.dta
+#' \item xx-resp.dta
 #' }
 #' @param downweight
 #' logical - whether to downweight rare species
 #' Default value FALSE
 #' @return
-#' /itemize{
-#' /item `eig` - numeric vector - eigenvalues for the first four axes
-#' /item  `tot_inertia` - total variation in (transformed) response data
-#' /item `turn` - numeric vector with turnover values
-#' /item `case_r` - numeric matrix with CaseE scores for (up to) first 3 axes
-#' /item `case_r` - numeric matrix with CaseR scores for first 4 axes
+#' \itemize{
+#' \item `eig` - numeric vector - eigenvalues for the first four axes
+#' \item `tot_inertia` - total variation in (transformed) response data
+#' \item `turn` - numeric vector with turnover values
+#' \item `case_e` - numeric matrix with CaseE scores for (up to) first 3 axes
+#' \item `case_r` - numeric matrix with CaseR scores for first 4 axes
 #' }
 #' @author Petr Smilauer
 dcca_execute_canoco <-
