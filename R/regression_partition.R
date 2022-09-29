@@ -44,7 +44,7 @@ regression_partition <-
         rpart_partitions <-
             data_source %>%
             dplyr::mutate(
-                partition = renumber_groups(pruned_tree$where))
+                partition = util_renumber_groups(pruned_tree$where))
 
         rpart_groups <-
             rpart_partitions$partition %>%

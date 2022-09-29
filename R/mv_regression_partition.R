@@ -67,7 +67,7 @@ mv_regression_partition <-
     partitions <-
       tibble::tibble(
         sample_id = data_source_levels$sample_id,
-        partition = renumber_groups(mvpart_result$where)
+        partition = util_renumber_groups(mvpart_result$where)
       )
 
     # number of partitions
