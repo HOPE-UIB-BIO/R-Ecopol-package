@@ -7,25 +7,22 @@
 #' @param data_source_pred
 #' Data frame with the predictor values (depth or age).  Sample ID as
 #' rownames.
-#' The number of rows must be identical with the number of rows in `data_source_resp`
+#' The number of rows must be identical with the
+#' number of rows in `data_source_resp`
 #' @param sel_complexity
 #' Indicate how the predictor should be used
-#' /itemize{
-#' /item `"linear"`` - a linear predictor
-#' /item `"poly_2"`` - a polynomial predictor of second order
-#' /item `"poly_3"`` - a polynomial predictor of third order
-#' /item `"auto"`` - a complexity will be selected based on the shape of DCA
+#' \itemize{
+#' \item `"linear"` - a linear predictor
+#' \item `"poly_2"` - a polynomial predictor of second order
+#' \item `"poly_3"` - a polynomial predictor of third order
 #' }
 #' @param downweight
 #' logical, whether to downweight rare species or not
 #' @return
-#' /itemize{
-#' /item `eig` - numeric vector - eigenvalues for the first four axes
-#' /item  `tot_inertia` - total variation in (transformed) response data
-#' /item `turn` - numeric vector with turnover values
-#' /item `case_r` - numeric matrix with CaseE scores for (up to) first 3 axes
-#' /item `case_r` - numeric matrix with CaseR scores for first 4 axes
-#' /item `sel_complexity` - see `sel_complexity` agument description
+#' \itemize{
+#' \item `case_r` - numeric matrix with CaseR scores for first 4 axes
+#' \item `tot_inertia` - total variation in (transformed) response data
+#' \item `sel_complexity` - see `sel_complexity` agument description
 #' }
 fit_ordination_dcca <-
   function(data_source_resp,
@@ -33,8 +30,7 @@ fit_ordination_dcca <-
            sel_complexity = c(
              "linear",
              "poly_2",
-             "poly_3",
-             "auto"
+             "poly_3"
            ),
            downweight = FALSE) {
     util_check_class("data_source_resp", "data.frame")
@@ -50,8 +46,7 @@ fit_ordination_dcca <-
       c(
         "linear",
         "poly_2",
-        "poly_3",
-        "auto"
+        "poly_3"
       )
     )
 
@@ -109,21 +104,35 @@ fit_ordination_dcca <-
           )
         pred_df[, 1:3] <-
           poly(pred_df[, 1], 3)
-      },
-      "auto" = {
-        stop("'auto' is currently not implemented")
       }
     )
 
     # Execute CANOCO
-    res <-
+    can_res <-
       dcca_execute_canoco(
         data_resp = data_source_resp,
         data_pred = pred_df,
         downweight = downweight
       )
 
-    res$sel_complexity <- sel_complexity
+    case_r_formated <-
+      can_res %>%
+      purrr::pluck("case_r") %>%
+      as.data.frame()  %>% 
+      rlang::set_names(
+        nm = c(
+          paste0("axis_", 1:4)
+        )
+      ) %>%
+      tibble::rownames_to_column("sample_id")  %>% 
+      tibble::as_tibble()
 
-    return(res)
+    return(
+      list(
+        case_r = case_r_formated,
+        tot_inertia = can_res %>%
+          purrr::pluck("tot_inertia"),
+        sel_complexity = sel_complexity
+      )
+    )
   }
