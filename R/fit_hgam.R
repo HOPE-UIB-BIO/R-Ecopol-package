@@ -12,6 +12,8 @@
 #' trend.
 #' @param common_trend Logical. Should hGAM have a common shared trend?
 #' @param use_parallel Logical. Should computation use parallel?
+#' @param use_discrete Logical. Should `discrete` agument be used for parallel
+#' computation?
 #' @param max_itiration Numeric. Maximum number of iteration for hGAM to try.
 #' @description Fit a hierarchical GAM model with/without a single common
 #' smoother (`common_trend`) plus group-level smoothers with differing
@@ -19,6 +21,7 @@
 #' than 2, normal GAM model will be fitted.
 #' If `use_parallel` is `TRUE`, number of cores is automatically detected.
 #' @return Fitted hGAM model
+#' @seealso {mgcv::bam()}
 #' @export
 fit_hgam <-
   function(x_var = "age",
@@ -31,6 +34,7 @@ fit_hgam <-
            sel_m = NULL,
            common_trend = TRUE,
            use_parallel = TRUE,
+           use_discrete = FALSE,
            max_itiration = 200) {
     util_check_class("y_var", "character")
 
@@ -71,6 +75,14 @@ fit_hgam <-
     util_check_class("common_trend", "logical")
 
     util_check_class("use_parallel", "logical")
+
+    util_check_class("use_discrete", "logical")
+
+    if (
+      use_parallel == FALSE
+    ) {
+      use_discrete <- FALSE
+    }
 
     util_check_class("max_itiration", "numeric")
 
@@ -161,33 +173,90 @@ fit_hgam <-
           number_of_cores <- n_groups
         }
 
-        cl <- parallel::makeCluster(number_of_cores)
-      }
+        cat(
+          paste(
+            "Using parallel estimation using N cores = ",
+            number_of_cores
+          ), "\n"
+        )
 
-      try(
-        fin_mod <-
-          mgcv::bam(
-            formula = stats::as.formula(formula_hgam_fin),
-            data = data_source,
-            method = "fREML",
-            family = eval(parse(text = error_family)),
-            cluster = cl,
-            control = mgcv::gam.control(
-              trace = TRUE,
-              maxit = max_itiration
+        if (
+          use_discrete == FALSE
+        ) {
+          sel_cluster_type <-
+            ifelse(
+              .Platform["OS.type"] == "unix",
+              "FORK",
+              "PSOCK"
             )
+
+          cl <-
+            parallel::makeCluster(
+              number_of_cores,
+              type = sel_cluster_type
+            )
+
+          try(
+            fin_mod <-
+              mgcv::bam(
+                formula = stats::as.formula(formula_hgam_fin),
+                data = data_source,
+                method = "fREML",
+                family = eval(parse(text = error_family)),
+                cluster = cl,
+                control = mgcv::gam.control(
+                  trace = TRUE,
+                  maxit = max_itiration
+                )
+              )
           )
+
+          # close cluster
+          if (
+            !is.null(cl)
+          ) {
+            parallel::stopCluster(cl)
+            cl <- NULL
+          }
+          gc(verbose = FALSE)
+        } else {
+          try(
+            fin_mod <-
+              mgcv::bam(
+                formula = stats::as.formula(formula_hgam_fin),
+                data = data_source,
+                method = "fREML",
+                family = eval(parse(text = error_family)),
+                discrete = TRUE,
+                control = mgcv::gam.control(
+                  trace = TRUE,
+                  maxit = max_itiration,
+                  nthreads = number_of_cores
+                )
+              )
+          )
+        }
+      } else {
+        try(
+          fin_mod <-
+            mgcv::bam(
+              formula = stats::as.formula(formula_hgam_fin),
+              data = data_source,
+              method = "fREML",
+              family = eval(parse(text = error_family)),
+              control = mgcv::gam.control(
+                trace = TRUE,
+                maxit = max_itiration
+              )
+            )
+        )
+      }
+    } else {
+      cat(
+        "Not enough groups to fit hGAM. Fitting GAM instead",
+        "\n"
       )
 
-      # close cluster
-      if (
-        !is.null(cl)
-      ) {
-        parallel::stopCluster(cl)
-        cl <- NULL
-      }
-      gc(verbose = FALSE)
-    } else {
       try(
         fin_mod <-
           mgcv::bam(
@@ -203,7 +272,9 @@ fit_hgam <-
       )
     }
 
-    if (!exists("fin_mod", envir = current_env)) {
+    if (
+      !exists("fin_mod", envir = current_env)
+    ) {
       fin_mod <- NA_real_
     }
 

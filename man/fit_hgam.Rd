@@ -15,6 +15,7 @@ fit_hgam(
   sel_m = NULL,
   common_trend = TRUE,
   use_parallel = TRUE,
+  use_discrete = FALSE,
   max_itiration = 200
 )
 }
@@ -42,6 +43,9 @@ trend.}
 
 \item{use_parallel}{Logical. Should computation use parallel?}
 
+\item{use_discrete}{Logical. Should \code{discrete} agument be used for parallel
+computation?}
+
 \item{max_itiration}{Numeric. Maximum number of iteration for hGAM to try.}
 }
 \value{
@@ -53,4 +57,7 @@ smoother (\code{common_trend}) plus group-level smoothers with differing
 wiggliness (random effect). If there is less number of groups in the dataset
 than 2, normal GAM model will be fitted.
 If \code{use_parallel} is \code{TRUE}, number of cores is automatically detected.
+}
+\seealso{
+{mgcv::bam()}
 }
