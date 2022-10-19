@@ -21,7 +21,7 @@ Imports:
     purrr,
     RColorBrewer,
     RFossilpol,
-    rlang,
+    rlang (>= 0.4.11),
     tibble,
     tidyr,
     usethis,
@@ -30,6 +30,7 @@ Remotes:
     cran/mvpart,
     HOPE-UIB-BIO/R-Fossilpol-package
 Suggests: 
+    roxygen2,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 VignetteBuilder: knitr
