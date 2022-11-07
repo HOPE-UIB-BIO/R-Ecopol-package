@@ -1,4 +1,3 @@
-
 #' @title Fit multiple individual GAM models
 #' @param data_source Data frame with `x_var`, `y_var`, and `group_var`
 #' @inheritParams fit_gam_safely
@@ -59,14 +58,15 @@ fit_multiple_gams <-
         data_source %>%
         dplyr::select(
           dplyr::all_of(
-            c(group_var, x_var, y_var)
+            c(group_var, x_var, y_var, weights_var)
           )
         ) %>%
         dplyr::group_by(get(group_var)) %>%
         tidyr::nest(data = dplyr::any_of(
           c(
             x_var,
-            y_var
+            y_var,
+            weights_var
           )
         )) %>%
         tidyr::drop_na(data) %>%
