@@ -4,6 +4,7 @@
 #' @param group_var Character. Name of grouping variable
 #' @param error_family Character. Name of the error-family to be used
 #' @param smooth_basis Character. Name of the smooth basis to use for `x_var`
+#' @param weights_var Character. Name of the variable to use as weights
 #' @param data_source Data.frame with columns whose names are set by `y_var`,
 #'  `x_var`, `group_var`
 #' @param sel_k Numeric. Define `k` (wiggliness) for `x_var`
@@ -28,6 +29,7 @@ fit_hgam <-
            y_var = "var",
            group_var = "dataset_id",
            error_family = "gaussian(link = 'identity')",
+           weights_var = NULL,
            smooth_basis = c("tp", "cr"),
            data_source,
            sel_k = 10,
@@ -96,6 +98,20 @@ fit_hgam <-
     ) {
       sel_m <-
         ifelse(common_trend, 1, 2)
+    }
+
+    if (is.null(weights_var) == FALSE) {
+      util_check_class("weights_var", "character")
+
+      util_check_col_names("data_source", eval(weights_var))
+
+      data_source <-
+        data_source %>%
+        dplyr::mutate(weights = with(data_source, get(weights_var)))
+    } else {
+      data_source <-
+        data_source %>%
+        dplyr::mutate(weights = rep(1, nrow(data_source)))
     }
 
     current_env <- environment()
@@ -201,6 +217,7 @@ fit_hgam <-
               mgcv::bam(
                 formula = stats::as.formula(formula_hgam_fin),
                 data = data_source,
+                weights = weights,
                 method = "fREML",
                 family = eval(parse(text = error_family)),
                 cluster = cl,
@@ -225,6 +242,7 @@ fit_hgam <-
               mgcv::bam(
                 formula = stats::as.formula(formula_hgam_fin),
                 data = data_source,
+                weights = weights,
                 method = "fREML",
                 family = eval(parse(text = error_family)),
                 discrete = TRUE,
@@ -242,6 +260,7 @@ fit_hgam <-
             mgcv::bam(
               formula = stats::as.formula(formula_hgam_fin),
               data = data_source,
+              weights = weights,
               method = "fREML",
               family = eval(parse(text = error_family)),
               control = mgcv::gam.control(
@@ -262,6 +281,7 @@ fit_hgam <-
           mgcv::bam(
             formula = stats::as.formula(formula_gam),
             data = data_source,
+            weights = weights,
             method = "fREML",
             family = eval(parse(text = error_family)),
             control = mgcv::gam.control(

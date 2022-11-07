@@ -4,6 +4,7 @@
 #' @param error_family Character. Name of the error-family to be used
 #' @param smooth_basis Character. Name of the Smooth basis to use
 #' @param data_source Data.frame
+#' @param weights_var Character. Name of the variable to use as weights
 #' @param sel_k Preferred `k` (wiggliness)
 #' @param max_k Maximum `k` which can be used
 #' @description A wrapper function for `fit_custom_gam`. The `k`is compared to
@@ -16,6 +17,7 @@ fit_gam_safely <-
            y_var = "var",
            smooth_basis = c("tp", "cr"),
            error_family = "gaussian(link = 'identity')",
+           weights_var = NULL,
            sel_k = 10,
            max_k = 10) {
     current_env <- environment()
@@ -35,6 +37,14 @@ fit_gam_safely <-
     util_check_class("data_source", "data.frame")
 
     util_check_col_names("data_source", c(eval(y_var), eval(x_var)))
+
+    util_check_class(
+      "weights_var",
+      c(
+        "character",
+        NULL
+      )
+    )
 
     util_check_class("sel_k", "numeric")
 
@@ -92,6 +102,7 @@ fit_gam_safely <-
             error_family = error_family,
             smooth_basis = smooth_basis,
             data_source = data_source,
+            weights_var = weights_var,
             sel_k = sel_k
           ),
         silent = TRUE
