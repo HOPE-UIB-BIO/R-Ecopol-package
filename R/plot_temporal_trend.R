@@ -1,4 +1,3 @@
-
 #' @title Plot temporal trend
 #' @param data_source DESCRIPTION.
 #' @param x_var Character. Name of the X-variable
@@ -6,6 +5,7 @@
 #' @param y_var Character. Name of the Y-variable
 #' @param y_var_name Character. label of the Y-variable
 #' @param sel_type DESCRIPTION.
+#' @param group_var DESCRIPTION.
 #' @param display_error DESCRIPTION.
 #' @param y_limits DESCRIPTION.
 #' @param sel_y_trans DESCRIPTION.
@@ -15,9 +15,17 @@
 #' @param n_y_ticks DESCRIPTION.
 #' @param show_rmse DESCRIPTION.
 #' @param show_bin_summary DESCRIPTION.
+#' @param summary_bin_size DESCRIPTION.
 #' @param deafult_color_line DESCRIPTION.
 #' @param default_color_rmse_highlight DESCRIPTION.
+#' @param default_color_summary_line DESCRIPTION.
 #' @param default_color_summary_fill DESCRIPTION.
+#' @param group_color_pallete DESCRIPTION.
+#' @param line_size DESCRIPTION.
+#' @param line_alpha DESCRIPTION.
+#' @param error_alpha DESCRIPTION.
+#' @param summary_line_size DESCRIPTION.
+#' @param summary_alpha DESCRIPTION.
 #' @param default_text_size DESCRIPTION.
 plot_temporal_trend <-
     function(data_source,
@@ -285,6 +293,8 @@ plot_temporal_trend <-
                 res <-
                     p2
             }
+
+            
         }
         return(res)
     }
