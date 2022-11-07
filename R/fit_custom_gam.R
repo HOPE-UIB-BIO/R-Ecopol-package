@@ -12,16 +12,13 @@
 #' @return Fitted GAM model
 #' @export
 fit_custom_gam <-
-  function(
-    x_var = "age",
-    y_var = "var",
-    error_family = "gaussian(link = 'identity')",
-    smooth_basis = c('tp', 'cr'),
-    data_source,
-    weights_var = NULL,
-    sel_k = 10
-  ){
-
+  function(x_var = "age",
+           y_var = "var",
+           error_family = "gaussian(link = 'identity')",
+           smooth_basis = c("tp", "cr"),
+           data_source,
+           weights_var = NULL,
+           sel_k = 10) {
     util_check_class("y_var", "character")
 
     util_check_class("x_var", "character")
@@ -32,14 +29,13 @@ fit_custom_gam <-
 
     util_check_class("smooth_basis", "character")
 
-    util_check_vector_values("smooth_basis", c('tp', 'cr'))
+    util_check_vector_values("smooth_basis", c("tp", "cr"))
 
     util_check_class("data_source", "data.frame")
 
     util_check_col_names("data_source", c(eval(y_var), eval(x_var)))
 
-    if(is.null(weights_var) == FALSE){
-
+    if (is.null(weights_var) == FALSE) {
       util_check_class("weights_var", "character")
 
       util_check_col_names("data_source", eval(weights_var))
@@ -47,34 +43,35 @@ fit_custom_gam <-
       data_weight <-
         data_source %>%
         dplyr::mutate(weights = with(data_source, get(weights_var)))
-
-
     } else {
-
       data_weight <-
         data_source %>%
         dplyr::mutate(weights = rep(1, nrow(data_source)))
-
     }
 
     util_check_class("sel_k", "numeric")
 
     assertthat::assert_that(
       round(sel_k) == sel_k,
-      msg = "'sel_k' must be an integer")
+      msg = "'sel_k' must be an integer"
+    )
 
     formula_w <-
-      paste0(y_var, "~ s(", x_var,", k = ", sel_k, ",bs = '", smooth_basis, "' )") %>%
+      paste0(
+        y_var,
+        "~ s(", x_var, ", k = ", sel_k, ",bs = '", smooth_basis, "' )"
+      ) %>%
       stats::as.formula(.)
 
     res_gam <-
       mgcv::gam(
         formula = formula_w,
         data = as.data.frame(data_weight),
-        family =  eval(parse(text = error_family)),
+        family = eval(parse(text = error_family)),
         weights = weights,
         method = "REML",
-        na.action = "na.omit")
+        na.action = "na.omit"
+      )
 
     return(res_gam)
   }
