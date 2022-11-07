@@ -11,6 +11,7 @@ fit_multiple_gams <-
            group_var = "dataset_id",
            smooth_basis = c("tp", "cr"),
            error_family = "gaussian(link = 'identity')",
+           weights_var = NULL,
            max_k = 10) {
     util_check_class("y_var", "character")
 
@@ -32,6 +33,14 @@ fit_multiple_gams <-
         eval(y_var),
         eval(x_var),
         eval(group_var)
+      )
+    )
+
+    util_check_class(
+      "weights_var",
+      c(
+        "character",
+        NULL
       )
     )
 
@@ -81,7 +90,8 @@ fit_multiple_gams <-
                 smooth_basis = smooth_basis,
                 error_family = error_family,
                 sel_k = (..3 - 1),
-                max_k = max_k
+                max_k = max_k,
+                weights_var = weights_var
               ) %>%
                 return()
             }
