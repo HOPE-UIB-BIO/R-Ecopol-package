@@ -13,7 +13,7 @@
 #' \item `"backward"` - c(59, 105) -> c(0, 100)
 #' \item `"forward"` - c(59, 105) -> c(100, 200)
 #' }
-util_add_age_bin <-
+add_age_bin <-
     function(data_source,
              age_var_name = "age",
              bin_var_name = "BIN",
