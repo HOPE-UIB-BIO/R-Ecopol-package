@@ -4,29 +4,43 @@
 #' @param x_var_name Character. label of the X-variable
 #' @param y_var Character. Name of the Y-variable
 #' @param y_var_name Character. label of the Y-variable
-#' @param sel_type DESCRIPTION.
-#' @param group_var DESCRIPTION.
-#' @param display_error DESCRIPTION.
-#' @param y_limits DESCRIPTION.
-#' @param sel_y_trans DESCRIPTION.
-#' @param sel_x_trans DESCRIPTION.
-#' @param x_ticks DESCRIPTION.
-#' @param y_ticks DESCRIPTION.
-#' @param n_y_ticks DESCRIPTION.
-#' @param show_rmse DESCRIPTION.
-#' @param show_bin_summary DESCRIPTION.
-#' @param summary_bin_size DESCRIPTION.
-#' @param deafult_color_line DESCRIPTION.
-#' @param default_color_rmse_highlight DESCRIPTION.
-#' @param default_color_summary_line DESCRIPTION.
-#' @param default_color_summary_fill DESCRIPTION.
-#' @param group_color_pallete DESCRIPTION.
-#' @param line_size DESCRIPTION.
-#' @param line_alpha DESCRIPTION.
-#' @param error_alpha DESCRIPTION.
-#' @param summary_line_size DESCRIPTION.
-#' @param summary_alpha DESCRIPTION.
-#' @param default_text_size DESCRIPTION.
+#' @param sel_type
+#' Character. The type of time series.
+#' \itemize{
+#' \item `"single"` - only one series
+#' \item `"group"` - several series
+#' }
+#' @param group_var Character. Name of the variable defining the groups
+#' in `sel_type`.
+#' @param display_error Logical. Should error bar be displayed?
+#' @param y_limits Either `NULL` or 2 value vector to set limits.
+#' @param sel_y_trans
+#' Character. Name of tranfsormation used in `scale_y_continuous`
+#' @param sel_x_trans
+#' Character. Name of tranfsormation used in `scale_x_continuous`
+#' @param x_ticks Numeric vector with x-ticks.
+#' @param y_ticks
+#' Numeric vector with y-ticks or `"auto"` to set them automaticaly
+#' @param n_y_ticks If `y_ticks` = `"auto"`, then set number of automatic ticks
+#' @param show_rmse Locigal. Should RMSE visualisation be plotted.
+#' Only works for `group_var` = `"group"`
+#' @param show_bin_summary Locigal. Should age bin summary be plotted.
+#' Only works for `group_var` = `"group"`.
+#' @param summary_bin_size Size of time bins to use.
+#' Only works for `show_bin_summary` = `TRUE`.
+#' @param deafult_color_line Character with HEX code.
+#' @param default_color_rmse_highlight Character with HEX code.
+#' @param default_color_summary_line haracter with HEX code.
+#' @param default_color_summary_fill haracter with HEX code.
+#' @param group_color_pallete
+#' Optional. Name vector with colors for levels of `group_var`
+#' @param line_size Numeric.
+#' @param line_alpha Numeric.
+#' @param error_alpha Numeric.
+#' @param summary_line_size Numeric.
+#' @param summary_alpha Numeric.
+#' @param default_text_size Numeric.
+#' @export 
 plot_temporal_trend <-
     function(data_source,
              x_var = "age",
@@ -63,7 +77,6 @@ plot_temporal_trend <-
             return(NULL)
         }
 
-
         # detect limits in the data
         if (
             missing(y_limits) ||
@@ -77,7 +90,7 @@ plot_temporal_trend <-
                 data_source %>%
                 dplyr::select(
                     dplyr::any_of(
-                        ifelse(display_error, c("var", "upr", "lwr"), "var")
+                        ifelse(display_error, c(y_var, "upr", "lwr"), y_var)
                     )
                 ) %>%
                 unlist()
@@ -91,7 +104,7 @@ plot_temporal_trend <-
 
         # create automaticly y-ticks
         if (
-            any(y_ticks == "auto" | missing(y_ticks))
+            any(y_ticks == "auto" || missing(y_ticks) || is.null(y_ticks))
         ) {
             y_ticks <-
                 seq(
@@ -180,6 +193,19 @@ plot_temporal_trend <-
             sel_type == "group"
         ) {
             if (
+                is.null(group_color_pallete) == FALSE
+            ) {
+                p0 <-
+                    p0 +
+                    ggplot2::scale_fill_manual(
+                        values = group_color_pallete
+                    ) +
+                    ggplot2::scale_color_manual(
+                        values = group_color_pallete
+                    )
+            }
+
+            if (
                 display_error == TRUE
             ) {
                 p1 <-
@@ -206,7 +232,7 @@ plot_temporal_trend <-
                     data_source %>%
                     dplyr::group_by(get(x_var)) %>%
                     dplyr::mutate(
-                        var_diff = var - mean(var, na.rm = TRUE)
+                        var_diff = get(y_var) - mean(get(y_var), na.rm = TRUE)
                     ) %>%
                     dplyr::group_by(get(group_var)) %>%
                     dplyr::mutate(
@@ -252,13 +278,13 @@ plot_temporal_trend <-
                 # Data for boxplot (mean of each time BIN for each dataset)
                 data_boxplot <-
                     data_source %>%
-                    util_add_age_bin(
+                    add_age_bin(
                         bin_size = summary_bin_size
                     ) %>%
                     dplyr::group_by(get(group_var), BIN) %>%
                     dplyr::summarise(
                         .groups = "drop",
-                        var = mean(var)
+                        !!y_var := mean(get(y_var))
                     ) %>%
                     dplyr::rename(
                         !!group_var := `get(group_var)`
@@ -293,8 +319,6 @@ plot_temporal_trend <-
                 res <-
                     p2
             }
-
-            
         }
         return(res)
     }
