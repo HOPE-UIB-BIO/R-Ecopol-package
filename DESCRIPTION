@@ -8,27 +8,32 @@ Description: The package assemble function used in community ecology and present
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 Imports: 
     ape,
     assertthat,
     dplyr,
     ggplot2,
+    knitr,
+    lifecycle,
     magrittr,
     marginaleffects,
+    mgcv,
     mvpart,
     picante,
     purrr,
     RColorBrewer,
-    RFossilpol,
     rlang (>= 0.4.11),
+    RUtilpol,
+    scales,
+    stringr,
     tibble,
     tidyr,
     usethis,
     vegan
 Remotes: 
     cran/mvpart,
-    HOPE-UIB-BIO/R-Fossilpol-package
+    HOPE-UIB-BIO/R-Utilpol-package
 Suggests: 
     roxygen2,
     testthat (>= 3.0.0)
