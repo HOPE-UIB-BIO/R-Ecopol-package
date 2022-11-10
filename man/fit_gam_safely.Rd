@@ -10,6 +10,7 @@ fit_gam_safely(
   y_var = "var",
   smooth_basis = c("tp", "cr"),
   error_family = "gaussian(link = 'identity')",
+  weights_var = NULL,
   sel_k = 10,
   max_k = 10
 )
@@ -24,6 +25,8 @@ fit_gam_safely(
 \item{smooth_basis}{Character. Name of the Smooth basis to use}
 
 \item{error_family}{Character. Name of the error-family to be used}
+
+\item{weights_var}{Character. Name of the variable to use as weights}
 
 \item{sel_k}{Preferred \code{k} (wiggliness)}
 
