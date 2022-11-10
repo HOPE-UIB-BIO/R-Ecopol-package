@@ -9,13 +9,13 @@ get_change_points <-
   function(data_source,
            direction = c("front", "back")) {
 
-    util_check_class("data_source", c("numeric", "character", "factor"))
+    RUtilpol::check_class("data_source", c("numeric", "character", "factor"))
 
-    util_check_class("direction", "character")
+    RUtilpol::check_class("direction", "character")
 
     direction <- match.arg(direction)
 
-    util_check_vector_values("direction", c("front", "back"))
+    RUtilpol::check_vector_values("direction", c("front", "back"))
 
     if (
       class(data_source) %in% c("character", "factor")

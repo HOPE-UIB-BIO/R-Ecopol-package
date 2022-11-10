@@ -16,12 +16,12 @@ melodic <-
            data_source_dissimilarity) {
 
     # check for
-    util_check_class(
+    RUtilpol::check_class(
       "data_source_community", "matrix"
     )
 
 
-    util_check_class(
+    RUtilpol::check_class(
       "data_source_dissimilarity",
       c("matrix", "dist")
     )

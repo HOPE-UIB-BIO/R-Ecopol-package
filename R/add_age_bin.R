@@ -20,19 +20,19 @@ add_age_bin <-
              bin_size = 1000,
              sel_method = c("backward", "forward")) {
 
-        util_check_class("data_source", "data.frame")
+        RUtilpol::check_class("data_source", "data.frame")
 
-        util_check_class("age_var_name", "character")
+        RUtilpol::check_class("age_var_name", "character")
 
-        util_check_col_names("data_source", eval(age_var_name))
+        RUtilpol::check_col_names("data_source", eval(age_var_name))
 
-        util_check_class("bin_var_name", "character")
+        RUtilpol::check_class("bin_var_name", "character")
 
-        util_check_class("bin_size", "numeric")
+        RUtilpol::check_class("bin_size", "numeric")
 
-        util_check_class("sel_method", "character")
+        RUtilpol::check_class("sel_method", "character")
 
-        util_check_vector_values("sel_method", c("backward", "forward"))
+        RUtilpol::check_vector_values("sel_method", c("backward", "forward"))
 
         sel_method <- match.arg(sel_method)
 

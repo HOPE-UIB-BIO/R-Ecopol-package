@@ -9,15 +9,15 @@ add_data_partition <-
            data_source_levels,
            age_var = "age") {
 
-    util_check_class("data_source_var", "data.frame")
+    RUtilpol::check_class("data_source_var", "data.frame")
 
-    util_check_class("data_source_levels", "data.frame")
+    RUtilpol::check_class("data_source_levels", "data.frame")
 
-    util_check_class("age_var", "character")
+    RUtilpol::check_class("age_var", "character")
 
-    util_check_col_names("data_source_var", "sample_id")
+    RUtilpol::check_col_names("data_source_var", "sample_id")
 
-    util_check_col_names("data_source_levels", c("sample_id", age_var))
+    RUtilpol::check_col_names("data_source_levels", c("sample_id", age_var))
 
     data_work <-
       dplyr::inner_join(

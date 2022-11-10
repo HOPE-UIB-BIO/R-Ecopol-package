@@ -13,7 +13,7 @@ get_density <-
            reflected = TRUE,
            ...) {
 
-    util_check_class("data_source", "numeric")
+    RUtilpol::check_class("data_source", "numeric")
 
     if (
       missing(values_range)
@@ -21,7 +21,7 @@ get_density <-
       values_range <- range(data_source)
     }
 
-    util_check_class("values_range", "numeric")
+    RUtilpol::check_class("values_range", "numeric")
 
     assertthat::assert_that(
       length(values_range) == 2,
@@ -30,7 +30,7 @@ get_density <-
       )
     )
 
-    util_check_class("reflected", "logical")
+    RUtilpol::check_class("reflected", "logical")
 
     rescale_to <- c(0, 1)
 

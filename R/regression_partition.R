@@ -8,13 +8,13 @@ regression_partition <-
     function(data_source,
              var = "",
              age_var = "") {
-        util_check_class("data_source", "data.frame")
+        RUtilpol::check_class("data_source", "data.frame")
 
-        util_check_class("var", "character")
+        RUtilpol::check_class("var", "character")
 
-        util_check_class("age_var", "character")
+        RUtilpol::check_class("age_var", "character")
 
-        util_check_col_names("data_source", c(var, age_var))
+        RUtilpol::check_col_names("data_source", c(var, age_var))
 
         rpart_result <-
             mvpart::rpart(

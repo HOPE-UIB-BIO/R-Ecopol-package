@@ -42,26 +42,26 @@ diversity_estimate_phylogenetic <-
            abundance_weighted = TRUE,
            rand = 999,
            iterations = 1000) {
-    util_check_class("data_matrix", c("data.frame", "matrix"))
+    RUtilpol::check_class("data_matrix", c("data.frame", "matrix"))
 
-    util_check_class("phylogenetic_tree", "phylo")
+    RUtilpol::check_class("phylogenetic_tree", "phylo")
 
-    util_check_class("abundance_weighted", "logical")
+    RUtilpol::check_class("abundance_weighted", "logical")
 
     sel_method <- match.arg(sel_method)
 
-    util_check_class("sel_method", "character")
+    RUtilpol::check_class("sel_method", "character")
 
-    util_check_vector_values("sel_method", c("diversity", "nri", "nt"))
+    RUtilpol::check_vector_values("sel_method", c("diversity", "nri", "nt"))
 
-    util_check_class("rand", "numeric")
+    RUtilpol::check_class("rand", "numeric")
 
     assertthat::assert_that(
       rand == round(rand),
       msg = "'rand' must be a 'integer'"
     )
 
-    util_check_class("iterations", "numeric")
+    RUtilpol::check_class("iterations", "numeric")
 
     assertthat::assert_that(
       iterations == round(iterations),

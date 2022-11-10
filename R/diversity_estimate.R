@@ -74,15 +74,15 @@ diversity_estimate <-
            abundance_weighted = TRUE,
            data_source_tree = NULL,
            data_source_traits = NULL) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names("data_source", "sample_id")
+    RUtilpol::check_col_names("data_source", "sample_id")
 
     sel_method <- match.arg(sel_method)
 
-    util_check_class("sel_method", "character")
+    RUtilpol::check_class("sel_method", "character")
 
-    util_check_vector_values(
+    RUtilpol::check_vector_values(
       "sel_method",
       c(
         "taxonomic",
@@ -95,7 +95,7 @@ diversity_estimate <-
       )
     )
 
-    util_check_class("rand", "numeric")
+    RUtilpol::check_class("rand", "numeric")
 
     assertthat::assert_that(
       rand == round(rand),
@@ -144,7 +144,7 @@ diversity_estimate <-
           min()
       }
 
-      util_check_class("sample_size", "numeric")
+      RUtilpol::check_class("sample_size", "numeric")
 
       assertthat::assert_that(
         round(sample_size) == sample_size,

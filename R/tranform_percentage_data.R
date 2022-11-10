@@ -12,13 +12,13 @@ tranform_percentage_data <-
     data_source,
     transformation = c("chisq", "hellinger", "none")) {
 
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names("data_source", "sample_id")
+    RUtilpol::check_col_names("data_source", "sample_id")
 
-    util_check_class("transformation", "character")
+    RUtilpol::check_class("transformation", "character")
 
-    util_check_vector_values("transformation", c("hellinger", "chisq", "none"))
+    RUtilpol::check_vector_values("transformation", c("hellinger", "chisq", "none"))
 
     transformation <- match.arg(transformation)
 

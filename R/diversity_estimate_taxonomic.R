@@ -21,7 +21,7 @@
 diversity_estimate_taxonomic <-
   function(data_matrix,
            sample_size) {
-    util_check_class("data_matrix", c("data.frame", "matrix"))
+    RUtilpol::check_class("data_matrix", c("data.frame", "matrix"))
 
     if
     (
@@ -30,7 +30,7 @@ diversity_estimate_taxonomic <-
       sample_size <- min(apply(data_matrix, 1, sum))
     }
 
-    util_check_class("sample_size", "numeric")
+    RUtilpol::check_class("sample_size", "numeric")
 
     assertthat::assert_that(
       round(sample_size) == sample_size,

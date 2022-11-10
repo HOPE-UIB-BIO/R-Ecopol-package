@@ -38,32 +38,32 @@ fit_hgam <-
            use_parallel = TRUE,
            use_discrete = FALSE,
            max_itiration = 200) {
-    util_check_class("y_var", "character")
+    RUtilpol::check_class("y_var", "character")
 
-    util_check_class("x_var", "character")
+    RUtilpol::check_class("x_var", "character")
 
-    util_check_class("group_var", "character")
+    RUtilpol::check_class("group_var", "character")
 
-    util_check_class("error_family", "character")
+    RUtilpol::check_class("error_family", "character")
 
     smooth_basis <- match.arg(smooth_basis)
 
-    util_check_class("smooth_basis", "character")
+    RUtilpol::check_class("smooth_basis", "character")
 
-    util_check_vector_values("smooth_basis", c("tp", "cr"))
+    RUtilpol::check_vector_values("smooth_basis", c("tp", "cr"))
 
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names("data_source", c(eval(group_var), eval(y_var), eval(x_var)))
+    RUtilpol::check_col_names("data_source", c(eval(group_var), eval(y_var), eval(x_var)))
 
-    util_check_class("sel_k", "numeric")
+    RUtilpol::check_class("sel_k", "numeric")
 
     assertthat::assert_that(
       round(sel_k) == sel_k,
       msg = "'sel_k' must be an integer"
     )
 
-    util_check_class("sel_m", c("NULL", "numeric"))
+    RUtilpol::check_class("sel_m", c("NULL", "numeric"))
 
     if (
       is.null(sel_m) == FALSE
@@ -74,11 +74,11 @@ fit_hgam <-
       )
     }
 
-    util_check_class("common_trend", "logical")
+    RUtilpol::check_class("common_trend", "logical")
 
-    util_check_class("use_parallel", "logical")
+    RUtilpol::check_class("use_parallel", "logical")
 
-    util_check_class("use_discrete", "logical")
+    RUtilpol::check_class("use_discrete", "logical")
 
     if (
       use_parallel == FALSE
@@ -86,7 +86,7 @@ fit_hgam <-
       use_discrete <- FALSE
     }
 
-    util_check_class("max_itiration", "numeric")
+    RUtilpol::check_class("max_itiration", "numeric")
 
     assertthat::assert_that(
       round(max_itiration) == max_itiration,
@@ -101,9 +101,9 @@ fit_hgam <-
     }
 
     if (is.null(weights_var) == FALSE) {
-      util_check_class("weights_var", "character")
+      RUtilpol::check_class("weights_var", "character")
 
-      util_check_col_names("data_source", eval(weights_var))
+      RUtilpol::check_col_names("data_source", eval(weights_var))
 
       data_source <-
         data_source %>%
