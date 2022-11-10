@@ -3,6 +3,7 @@
 #' Takes a character string and parses it with TAB separator,
 #' returning specified range of string entries
 #' @author Petr Smilauer
+#' @keywords internal
 util_get_line_by_tabs <-
   function(sel_line,
            id_from,
@@ -20,6 +21,7 @@ util_get_line_by_tabs <-
 #' Reads specified number of lines from the passed
 #' connection. Last read line is returned
 #' @author Petr Smilauer
+#' @keywords internal
 util_read_n_lines <-
   function(connection_file,
            num_lines) {
@@ -48,6 +50,7 @@ util_read_n_lines <-
 #' Passed connection (connection_file) must be already open for reading
 #' The function returns empty string to indicate a failure
 #' @author Petr Smilauer
+#' @keywords internal
 util_read_lines_until <-
   function(connection_file,
            sel_text) {
@@ -77,6 +80,7 @@ util_read_lines_until <-
 
 #' @title Delete files within folder
 #' @description Try to delete all files within folder but `file_to_omit`
+#' @keywords internal
 util_clean_files <-
   function(sel_folder_path,
            file_to_omit = "canoco.exe") {

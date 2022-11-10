@@ -13,3 +13,4 @@ connection. Last read line is returned
 \author{
 Petr Smilauer
 }
+\keyword{internal}

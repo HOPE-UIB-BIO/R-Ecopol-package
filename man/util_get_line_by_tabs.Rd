@@ -13,3 +13,4 @@ returning specified range of string entries
 \author{
 Petr Smilauer
 }
+\keyword{internal}
