@@ -6,6 +6,11 @@
 \usage{
 dcca_make_can_file(sel_path, sel_data)
 }
+\arguments{
+\item{sel_path}{Path to the file}
+
+\item{sel_data}{Data to use}
+}
 \value{
 FALSE on failure, TRUE otherwise
 }

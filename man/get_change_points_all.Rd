@@ -20,9 +20,9 @@ get_change_points_all(
 Name of the columns, which should be use as a order of values}
 
 \item{use_inbetween_values}{Logical. If \code{TRUE} additional values will be placed
-in between values of \code{var_name_order}.
-#' @param sel_output
-Character. Only used for \code{use_inbetween_values} == \code{TRUE}
+in between values of \code{var_name_order}.}
+
+\item{sel_output}{Character. Only used for \code{use_inbetween_values} == \code{TRUE}
 Define what should the function output.
 \itemize{
 \item \code{"only_inbetween"} - only inbetween values,

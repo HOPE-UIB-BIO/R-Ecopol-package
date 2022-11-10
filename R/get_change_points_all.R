@@ -5,7 +5,7 @@
 #' @param use_inbetween_values
 #' Logical. If `TRUE` additional values will be placed
 #' in between values of `var_name_order`.
-#' #' @param sel_output
+#' @param sel_output
 #' Character. Only used for `use_inbetween_values` == `TRUE`
 #' Define what should the function output.
 #' \itemize{

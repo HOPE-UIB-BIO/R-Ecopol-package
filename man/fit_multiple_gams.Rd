@@ -22,6 +22,9 @@ fit_multiple_gams(
 
 \item{y_var}{Character. Name of the Y-variable}
 
+\item{group_var}{Character. Name fo the variable used for identification of
+groups.}
+
 \item{smooth_basis}{Character. Name of the Smooth basis to use}
 
 \item{error_family}{Character. Name of the error-family to be used}

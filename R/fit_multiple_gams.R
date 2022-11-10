@@ -1,5 +1,7 @@
 #' @title Fit multiple individual GAM models
 #' @param data_source Data frame with `x_var`, `y_var`, and `group_var`
+#' @param group_var Character. Name fo the variable used for identification of
+#' groups.
 #' @inheritParams fit_gam_safely
 #' @description Helper function to apply multiple`fit_gam_safely`.
 #' @seealso [fit_gam_safely()]
@@ -83,7 +85,7 @@ fit_multiple_gams <-
             .f = ~ {
               message(..2)
 
-              REcopol:::fit_gam_safely(
+              fit_gam_safely(
                 data_source = ..1,
                 x_var = x_var,
                 y_var = y_var,

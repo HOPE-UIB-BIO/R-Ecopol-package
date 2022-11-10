@@ -1,4 +1,6 @@
 #' @title Export CAN file
+#' @param sel_path Path to the file
+#' @param sel_data Data to use 
 #' @description
 #' Saves a data frame into a file in Canoco free format
 #' path is the fully qualified name of the file to create

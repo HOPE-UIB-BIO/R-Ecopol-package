@@ -25,10 +25,10 @@
 #' @param iterations
 #' Numeric. Only for `"phylogenetic"`. Number of iterations
 #' to use for each randomization (for independent swap and trial null models).
-#' @param phylogenetic_tree
+#' @param data_source_tree
 #' Only for `"phylogenetic"`. Phylogenetic backbone tree constructed
 #' using `ape` package.
-#' #' @param data_source_traits
+#' @param data_source_traits
 #' Data frame. Row names be the same taxa as
 #' in `data_source_community` and vice versa.
 #' @description

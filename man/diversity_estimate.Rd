@@ -45,10 +45,10 @@ to use for each randomization (for independent swap and trial null models).}
 \item{abundance_weighted}{Logical. Only for \code{"phylogenetic"} or \code{"functional"}.
 It FALSE, presence/absence data will be used for calculations.}
 
-\item{phylogenetic_tree}{Only for \code{"phylogenetic"}. Phylogenetic backbone tree constructed
-using \code{ape} package.
-#' @param data_source_traits
-Data frame. Row names be the same taxa as
+\item{data_source_tree}{Only for \code{"phylogenetic"}. Phylogenetic backbone tree constructed
+using \code{ape} package.}
+
+\item{data_source_traits}{Data frame. Row names be the same taxa as
 in \code{data_source_community} and vice versa.}
 }
 \value{
