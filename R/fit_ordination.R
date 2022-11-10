@@ -55,26 +55,26 @@ fit_ordination <-
              ),
              transform_to_percentage = FALSE,
              tranformation = c("none", "chisq", "hellinger")) {
-        util_check_class("data_source_community", "data.frame")
+        RUtilpol::check_class("data_source_community", "data.frame")
 
-        util_check_col_names("data_source_community", "sample_id")
+        RUtilpol::check_col_names("data_source_community", "sample_id")
 
-        util_check_class("data_source_predictors", c("data.frame", "NULL"))
+        RUtilpol::check_class("data_source_predictors", c("data.frame", "NULL"))
 
-        util_check_class("sel_method", "character")
+        RUtilpol::check_class("sel_method", "character")
 
-        util_check_vector_values(
+        RUtilpol::check_vector_values(
             "sel_method",
             c("unconstrained", "constrained")
         )
 
         sel_method <- match.arg(sel_method)
 
-        util_check_class("transform_to_percentage", "logical")
+        RUtilpol::check_class("transform_to_percentage", "logical")
 
-        util_check_class("tranformation", "character")
+        RUtilpol::check_class("tranformation", "character")
 
-        util_check_vector_values(
+        RUtilpol::check_vector_values(
             "tranformation",
             c("none", "chisq", "hellinger")
         )
@@ -102,14 +102,14 @@ fit_ordination <-
         if (
             sel_method == "constrained"
         ) {
-            util_check_class("var_name_pred", "character")
+            RUtilpol::check_class("var_name_pred", "character")
 
             assertthat::assert_that(
                 length(var_name_pred) == 1,
                 msg = "The 'constrained' method can only handle single predictor"
             )
 
-            util_check_col_names(
+            RUtilpol::check_col_names(
                 "data_source_predictors",
                 c(
                     "sample_id",
@@ -117,9 +117,9 @@ fit_ordination <-
                 )
             )
 
-            util_check_class("sel_complexity", "character")
+            RUtilpol::check_class("sel_complexity", "character")
 
-            util_check_vector_values(
+            RUtilpol::check_vector_values(
                 "sel_complexity",
                 c(
                     "linear",

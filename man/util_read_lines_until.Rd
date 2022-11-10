@@ -16,3 +16,4 @@ The function returns empty string to indicate a failure
 \author{
 Petr Smilauer
 }
+\keyword{internal}

@@ -19,26 +19,26 @@ fit_custom_gam <-
            data_source,
            weights_var = NULL,
            sel_k = 10) {
-    util_check_class("y_var", "character")
+    RUtilpol::check_class("y_var", "character")
 
-    util_check_class("x_var", "character")
+    RUtilpol::check_class("x_var", "character")
 
-    util_check_class("error_family", "character")
+    RUtilpol::check_class("error_family", "character")
 
     smooth_basis <- match.arg(smooth_basis)
 
-    util_check_class("smooth_basis", "character")
+    RUtilpol::check_class("smooth_basis", "character")
 
-    util_check_vector_values("smooth_basis", c("tp", "cr"))
+    RUtilpol::check_vector_values("smooth_basis", c("tp", "cr"))
 
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names("data_source", c(eval(y_var), eval(x_var)))
+    RUtilpol::check_col_names("data_source", c(eval(y_var), eval(x_var)))
 
     if (is.null(weights_var) == FALSE) {
-      util_check_class("weights_var", "character")
+      RUtilpol::check_class("weights_var", "character")
 
-      util_check_col_names("data_source", eval(weights_var))
+      RUtilpol::check_col_names("data_source", eval(weights_var))
 
       data_weight <-
         data_source %>%
@@ -49,7 +49,7 @@ fit_custom_gam <-
         dplyr::mutate(weights = rep(1, nrow(data_source)))
     }
 
-    util_check_class("sel_k", "numeric")
+    RUtilpol::check_class("sel_k", "numeric")
 
     assertthat::assert_that(
       round(sel_k) == sel_k,

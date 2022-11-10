@@ -22,23 +22,23 @@ fit_gam_safely <-
            max_k = 10) {
     current_env <- environment()
 
-    util_check_class("y_var", "character")
+    RUtilpol::check_class("y_var", "character")
 
-    util_check_class("x_var", "character")
+    RUtilpol::check_class("x_var", "character")
 
-    util_check_class("error_family", "character")
+    RUtilpol::check_class("error_family", "character")
 
     smooth_basis <- match.arg(smooth_basis)
 
-    util_check_class("smooth_basis", "character")
+    RUtilpol::check_class("smooth_basis", "character")
 
-    util_check_vector_values("smooth_basis", c("tp", "cr"))
+    RUtilpol::check_vector_values("smooth_basis", c("tp", "cr"))
 
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names("data_source", c(eval(y_var), eval(x_var)))
+    RUtilpol::check_col_names("data_source", c(eval(y_var), eval(x_var)))
 
-    util_check_class(
+    RUtilpol::check_class(
       "weights_var",
       c(
         "character",
@@ -46,14 +46,14 @@ fit_gam_safely <-
       )
     )
 
-    util_check_class("sel_k", "numeric")
+    RUtilpol::check_class("sel_k", "numeric")
 
     assertthat::assert_that(
       round(sel_k) == sel_k,
       msg = "'sel_k' must be an integer"
     )
 
-    util_check_class("max_k", "numeric")
+    RUtilpol::check_class("max_k", "numeric")
 
     assertthat::assert_that(
       round(max_k) == max_k,

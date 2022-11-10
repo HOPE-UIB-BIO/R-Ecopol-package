@@ -11,13 +11,13 @@
 util_get_inbetween_values <-
   function(data_source,
            sel_output = c("only_inbetween", "both")) {
-    util_check_class("data_source", "numeric")
+    RUtilpol::check_class("data_source", "numeric")
 
-    util_check_class("sel_output", "character")
+    RUtilpol::check_class("sel_output", "character")
 
     sel_output <- match.arg(sel_output)
 
-    util_check_vector_values("sel_output", c("only_inbetween", "both"))
+    RUtilpol::check_vector_values("sel_output", c("only_inbetween", "both"))
 
     # helper function
     offdiag <-

@@ -9,3 +9,4 @@ util_clean_files(sel_folder_path, file_to_omit = "canoco.exe")
 \description{
 Try to delete all files within folder but \code{file_to_omit}
 }
+\keyword{internal}

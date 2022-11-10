@@ -11,6 +11,7 @@ fit_multiple_gams(
   group_var = "dataset_id",
   smooth_basis = c("tp", "cr"),
   error_family = "gaussian(link = 'identity')",
+  weights_var = NULL,
   max_k = 10
 )
 }
@@ -21,9 +22,14 @@ fit_multiple_gams(
 
 \item{y_var}{Character. Name of the Y-variable}
 
+\item{group_var}{Character. Name fo the variable used for identification of
+groups.}
+
 \item{smooth_basis}{Character. Name of the Smooth basis to use}
 
 \item{error_family}{Character. Name of the error-family to be used}
+
+\item{weights_var}{Character. Name of the variable to use as weights}
 
 \item{max_k}{Maximum \code{k} which can be used}
 }

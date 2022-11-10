@@ -33,15 +33,15 @@ fit_ordination_dcca <-
              "poly_3"
            ),
            downweight = FALSE) {
-    util_check_class("data_source_resp", "data.frame")
+    RUtilpol::check_class("data_source_resp", "data.frame")
 
-    util_check_class("data_source_pred", "data.frame")
+    RUtilpol::check_class("data_source_pred", "data.frame")
 
-    util_check_class("downweight", "logical")
+    RUtilpol::check_class("downweight", "logical")
 
-    util_check_class("sel_complexity", "character")
+    RUtilpol::check_class("sel_complexity", "character")
 
-    util_check_vector_values(
+    RUtilpol::check_vector_values(
       "sel_complexity",
       c(
         "linear",

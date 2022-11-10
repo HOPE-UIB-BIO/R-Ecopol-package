@@ -10,13 +10,13 @@ transfer_into_proportions <-
     data_source,
     method = c("percentages", "proportions")) {
 
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names("data_source", "sample_id")
+    RUtilpol::check_col_names("data_source", "sample_id")
 
-    util_check_class("method", "character")
+    RUtilpol::check_class("method", "character")
 
-    util_check_vector_values("method", c("percentages", "proportions"))
+    RUtilpol::check_vector_values("method", c("percentages", "proportions"))
 
     method <- match.arg(method)
 

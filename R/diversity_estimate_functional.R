@@ -35,22 +35,22 @@ diversity_estimate_functional <-
            sel_method = c("rao", "mpd", "simpson"),
            abundance_weighted = TRUE,
            rand = 1000) {
-    util_check_class("data_source_community", c("data.frame", "matrix"))
+    RUtilpol::check_class("data_source_community", c("data.frame", "matrix"))
 
-    util_check_class("data_source_traits", "data.frame")
+    RUtilpol::check_class("data_source_traits", "data.frame")
 
-    util_check_class("abundance_weighted", "logical")
+    RUtilpol::check_class("abundance_weighted", "logical")
 
     sel_method <- match.arg(sel_method)
 
-    util_check_class("sel_method", "character")
+    RUtilpol::check_class("sel_method", "character")
 
-    util_check_vector_values(
+    RUtilpol::check_vector_values(
       "sel_method",
       c("rao", "mpd", "simpson")
     )
 
-    util_check_class("rand", "numeric")
+    RUtilpol::check_class("rand", "numeric")
 
     assertthat::assert_that(
       rand == round(rand),

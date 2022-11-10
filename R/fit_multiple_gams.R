@@ -1,5 +1,7 @@
 #' @title Fit multiple individual GAM models
 #' @param data_source Data frame with `x_var`, `y_var`, and `group_var`
+#' @param group_var Character. Name fo the variable used for identification of
+#' groups.
 #' @inheritParams fit_gam_safely
 #' @description Helper function to apply multiple`fit_gam_safely`.
 #' @seealso [fit_gam_safely()]
@@ -12,21 +14,21 @@ fit_multiple_gams <-
            error_family = "gaussian(link = 'identity')",
            weights_var = NULL,
            max_k = 10) {
-    util_check_class("y_var", "character")
+    RUtilpol::check_class("y_var", "character")
 
-    util_check_class("x_var", "character")
+    RUtilpol::check_class("x_var", "character")
 
-    util_check_class("error_family", "character")
+    RUtilpol::check_class("error_family", "character")
 
-    util_check_class("smooth_basis", "character")
+    RUtilpol::check_class("smooth_basis", "character")
 
-    util_check_vector_values("smooth_basis", c("tp", "cr"))
+    RUtilpol::check_vector_values("smooth_basis", c("tp", "cr"))
 
     smooth_basis <- match.arg(smooth_basis)
 
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "data_source",
       c(
         eval(y_var),
@@ -35,7 +37,7 @@ fit_multiple_gams <-
       )
     )
 
-    util_check_class(
+    RUtilpol::check_class(
       "weights_var",
       c(
         "character",
@@ -83,7 +85,7 @@ fit_multiple_gams <-
             .f = ~ {
               message(..2)
 
-              REcopol:::fit_gam_safely(
+              fit_gam_safely(
                 data_source = ..1,
                 x_var = x_var,
                 y_var = y_var,

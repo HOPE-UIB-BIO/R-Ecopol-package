@@ -9,6 +9,7 @@ fit_hgam(
   y_var = "var",
   group_var = "dataset_id",
   error_family = "gaussian(link = 'identity')",
+  weights_var = NULL,
   smooth_basis = c("tp", "cr"),
   data_source,
   sel_k = 10,
@@ -27,6 +28,8 @@ fit_hgam(
 \item{group_var}{Character. Name of grouping variable}
 
 \item{error_family}{Character. Name of the error-family to be used}
+
+\item{weights_var}{Character. Name of the variable to use as weights}
 
 \item{smooth_basis}{Character. Name of the smooth basis to use for \code{x_var}}
 

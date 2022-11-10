@@ -9,9 +9,9 @@
 #' @export
 predic_model <-
   function(data_source, model_source, exclude_var = NULL) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_class("exclude_var", c("character", "NULL"))
+    RUtilpol::check_class("exclude_var", c("character", "NULL"))
 
     if (
       "gam" %in% class(model_source)

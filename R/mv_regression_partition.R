@@ -16,19 +16,19 @@ mv_regression_partition <-
            data_source_levels,
            rand = 1000,
            transformation = c("chisq", "hellinger", "none")) {
-    util_check_class("data_source_counts", "data.frame")
+    RUtilpol::check_class("data_source_counts", "data.frame")
 
-    util_check_col_names("data_source_counts", "sample_id")
+    RUtilpol::check_col_names("data_source_counts", "sample_id")
 
-    util_check_class("data_source_levels", "data.frame")
+    RUtilpol::check_class("data_source_levels", "data.frame")
 
-    util_check_col_names("data_source_levels", c("sample_id", "age"))
+    RUtilpol::check_col_names("data_source_levels", c("sample_id", "age"))
 
-    util_check_class("rand", "numeric")
+    RUtilpol::check_class("rand", "numeric")
 
-    util_check_class("transformation", "character")
+    RUtilpol::check_class("transformation", "character")
 
-    util_check_vector_values("transformation", c("hellinger", "chisq", "none"))
+    RUtilpol::check_vector_values("transformation", c("hellinger", "chisq", "none"))
 
     transformation <- match.arg(transformation)
 

@@ -5,7 +5,7 @@
 #' @param use_inbetween_values
 #' Logical. If `TRUE` additional values will be placed
 #' in between values of `var_name_order`.
-#' #' @param sel_output
+#' @param sel_output
 #' Character. Only used for `use_inbetween_values` == `TRUE`
 #' Define what should the function output.
 #' \itemize{
@@ -28,28 +28,28 @@ get_change_points_all <-
            sel_output = c("only_inbetween", "both"),
            var_name_detection = NULL,
            direction = c("front", "back")) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_class("var_name_order", "character")
+    RUtilpol::check_class("var_name_order", "character")
 
-    util_check_class("use_inbetween_values", "logical")
+    RUtilpol::check_class("use_inbetween_values", "logical")
 
-    util_check_class("direction", "character")
+    RUtilpol::check_class("direction", "character")
 
     direction <- match.arg(direction)
 
-    util_check_vector_values("direction", c("front", "back"))
+    RUtilpol::check_vector_values("direction", c("front", "back"))
 
-    util_check_col_names("data_source", c(var_name_order, "sample_id"))
+    RUtilpol::check_col_names("data_source", c(var_name_order, "sample_id"))
 
     if (
       use_inbetween_values == TRUE
     ) {
-      util_check_class("sel_output", "character")
+      RUtilpol::check_class("sel_output", "character")
 
       sel_output <- match.arg(sel_output)
 
-      util_check_vector_values("sel_output", c("only_inbetween", "both"))
+      RUtilpol::check_vector_values("sel_output", c("only_inbetween", "both"))
 
       data_position_work <-
         data_source %>%
@@ -77,7 +77,7 @@ get_change_points_all <-
     (
       is.null(var_name_detection) == FALSE
     ) {
-      util_check_class("var_name_detection", "character")
+      RUtilpol::check_class("var_name_detection", "character")
 
       assertthat::assert_that(
         stringr::str_detect(names(data_source), var_name_detection) %>%
@@ -85,7 +85,7 @@ get_change_points_all <-
         msg = paste(
           "'data_source' must contain at least one column",
           "which partly matched with",
-          util_paste_as_vector(var_name_detection)
+          RUtilpol::paste_as_vector(var_name_detection)
         )
       )
     } else {
