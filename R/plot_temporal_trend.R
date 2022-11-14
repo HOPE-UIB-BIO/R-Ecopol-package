@@ -134,7 +134,6 @@ plot_temporal_trend <-
                 trans = sel_x_trans
             ) +
             ggplot2::scale_y_continuous(
-                limits = y_limits,
                 breaks = y_ticks,
                 trans = sel_y_trans,
                 labels = scales::label_number(accuracy = 0.1)
@@ -157,6 +156,10 @@ plot_temporal_trend <-
                     margin = ggplot2::margin(t = 0, r = 0, b = 0, l = 0)
                 ),
                 legend.position = "none"
+            ) +
+            ggplot2::coord_cartesian(
+                xlim = range(x_ticks),
+                ylim = y_limits
             )
 
         if (
