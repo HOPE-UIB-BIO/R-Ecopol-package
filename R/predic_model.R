@@ -14,7 +14,7 @@ predic_model <-
     RUtilpol::check_class("exclude_var", c("character", "NULL"))
 
     if (
-      "gam" %in% class(model_source)
+      "bam" %in% class(model_source)
     ) {
       raw_pred <-
         marginaleffects::predictions(
