@@ -12,7 +12,9 @@ fit_multiple_gams(
   smooth_basis = c("tp", "cr"),
   error_family = "gaussian(link = 'identity')",
   weights_var = NULL,
-  max_k = 10
+  max_k = 10,
+  max_iterations = 200,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -22,7 +24,7 @@ fit_multiple_gams(
 
 \item{y_var}{Character. Name of the Y-variable}
 
-\item{group_var}{Character. Name fo the variable used for identification of
+\item{group_var}{Character. Name of the variable used for identification of
 groups.}
 
 \item{smooth_basis}{Character. Name of the Smooth basis to use}
@@ -32,6 +34,10 @@ groups.}
 \item{weights_var}{Character. Name of the variable to use as weights}
 
 \item{max_k}{Maximum \code{k} which can be used}
+
+\item{max_iterations}{Numeric. Maximum number of iteration for GAM to try.}
+
+\item{verbose}{Logical. Should additional messages be output?}
 }
 \description{
 Helper function to apply multiple\code{fit_gam_safely}.

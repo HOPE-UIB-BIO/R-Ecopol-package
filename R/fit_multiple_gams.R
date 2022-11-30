@@ -1,8 +1,9 @@
 #' @title Fit multiple individual GAM models
-#' @param data_source Data frame with `x_var`, `y_var`, and `group_var`
-#' @param group_var Character. Name fo the variable used for identification of
-#' groups.
+#' @inheritParams fit_custom_gam
 #' @inheritParams fit_gam_safely
+#' @param data_source Data frame with `x_var`, `y_var`, and `group_var`
+#' @param group_var Character. Name of the variable used for identification of
+#' groups.
 #' @description Helper function to apply multiple`fit_gam_safely`.
 #' @seealso [fit_gam_safely()]
 fit_multiple_gams <-
@@ -13,7 +14,9 @@ fit_multiple_gams <-
            smooth_basis = c("tp", "cr"),
            error_family = "gaussian(link = 'identity')",
            weights_var = NULL,
-           max_k = 10) {
+           max_k = 10,
+           max_iterations = 200,
+           verbose = TRUE) {
     RUtilpol::check_class("y_var", "character")
 
     RUtilpol::check_class("x_var", "character")
@@ -41,11 +44,22 @@ fit_multiple_gams <-
       "weights_var",
       c(
         "character",
-        NULL
+        "NULL"
       )
     )
 
-    cat("fitting multiple GAMs ")
+    assertthat::assert_that(
+      round(max_itiration) == max_itiration,
+      msg = "'max_itiration' must be an integer"
+    )
+
+    RUtilpol::check_class("verbose", "logical")
+
+    if (
+      isTRUE(verbose)
+    ) {
+      RUtilpol::output_comment("fitting multiple GAMs")
+    }
 
     n_datasets <-
       data_source %>%
@@ -53,7 +67,13 @@ fit_multiple_gams <-
       purrr::pluck(1) %>%
       length()
 
-    cat(paste("N datasets:", n_datasets), "\n")
+    if (
+      isTRUE(verbose)
+    ) {
+      RUtilpol::output_comment(
+        paste("N datasets:", n_datasets)
+      )
+    }
 
     suppressWarnings(
       res <-
@@ -83,7 +103,11 @@ fit_multiple_gams <-
           mod = purrr::pmap(
             .l = list(data, get(group_var), n_levels),
             .f = ~ {
-              message(..2)
+              if (
+                isTRUE(verbose)
+              ) {
+                message(..2)
+              }
 
               fit_gam_safely(
                 data_source = ..1,
@@ -93,7 +117,9 @@ fit_multiple_gams <-
                 error_family = error_family,
                 sel_k = (..3 - 1),
                 max_k = max_k,
-                weights_var = weights_var
+                weights_var = weights_var,
+                max_iterations = max_iterations,
+                verbose = verbose
               ) %>%
                 return()
             }

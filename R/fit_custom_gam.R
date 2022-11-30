@@ -7,9 +7,12 @@
 #'  `x_var`
 #' @param weights_var Character. Name of the variable to use as weights
 #' @param sel_k Numeric. Define `k` (wiggliness)
+#' @param max_iterations Numeric. Maximum number of iteration for GAM to try.
+#' @param verbose Logical. Should additional messages be output?
 #' @description A wrapper function for `mgcv::gam` to help fit GAM models
 #' functionally.
 #' @return Fitted GAM model
+#' @seealso {mgcv::gam()}
 #' @export
 fit_custom_gam <-
   function(x_var = "age",
@@ -18,7 +21,9 @@ fit_custom_gam <-
            smooth_basis = c("tp", "cr"),
            data_source,
            weights_var = NULL,
-           sel_k = 10) {
+           sel_k = 10,
+           max_iterations = 200,
+           verbose = FALSE) {
     RUtilpol::check_class("y_var", "character")
 
     RUtilpol::check_class("x_var", "character")
@@ -56,6 +61,15 @@ fit_custom_gam <-
       msg = "'sel_k' must be an integer"
     )
 
+    RUtilpol::check_class("max_itiration", "numeric")
+
+    assertthat::assert_that(
+      round(max_itiration) == max_itiration,
+      msg = "'max_itiration' must be an integer"
+    )
+
+    RUtilpol::check_class("verbose", "logical")
+
     formula_w <-
       paste0(
         y_var,
@@ -70,7 +84,11 @@ fit_custom_gam <-
         family = eval(parse(text = error_family)),
         weights = weights,
         method = "REML",
-        na.action = "na.omit"
+        na.action = "na.omit",
+        control = mgcv::gam.control(
+          trace = verbose,
+          maxit = max_iterations
+        )
       )
 
     return(res_gam)
