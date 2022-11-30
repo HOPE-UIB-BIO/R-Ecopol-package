@@ -1,16 +1,12 @@
 #' @title Safely fit single term GAM
-#' @param y_var Character. Name of the Y-variable
-#' @param x_var Character. Name of the X-variable
-#' @param error_family Character. Name of the error-family to be used
-#' @param smooth_basis Character. Name of the Smooth basis to use
-#' @param data_source Data.frame
-#' @param weights_var Character. Name of the variable to use as weights
+#' @inheritParams fit_custom_gam
 #' @param sel_k Preferred `k` (wiggliness)
 #' @param max_k Maximum `k` which can be used
 #' @description A wrapper function for `fit_custom_gam`. The `k`is compared to
 #' the number of samples and to the `max_k`. If there is a zero variability in
 #' the term, `lm` is fitted instead. If no model was cretaed (due to errors),
 #' the function retun `NA_real`
+#' @seealso [fit_custom_gam()]
 fit_gam_safely <-
   function(data_source,
            x_var = "age",
@@ -19,7 +15,9 @@ fit_gam_safely <-
            error_family = "gaussian(link = 'identity')",
            weights_var = NULL,
            sel_k = 10,
-           max_k = 10) {
+           max_k = 10,
+           max_iterations = 200,
+           verbose = FALSE) {
     current_env <- environment()
 
     RUtilpol::check_class("y_var", "character")
@@ -42,7 +40,7 @@ fit_gam_safely <-
       "weights_var",
       c(
         "character",
-        NULL
+        "NULL"
       )
     )
 
@@ -59,6 +57,15 @@ fit_gam_safely <-
       round(max_k) == max_k,
       msg = "'max_k' must be an integer"
     )
+
+    RUtilpol::check_class("max_itiration", "numeric")
+
+    assertthat::assert_that(
+      round(max_itiration) == max_itiration,
+      msg = "'max_itiration' must be an integer"
+    )
+
+    RUtilpol::check_class("verbose", "logical")
 
     if (
       sel_k > nrow(data_source) - 1
@@ -84,6 +91,17 @@ fit_gam_safely <-
         purrr::pluck(y_var) %>%
         sd() == 0
     ) {
+      if (
+        isTRUE(verbose)
+      ) {
+        RUtilpol::output_comment(
+          paste(
+            "Detected no changes in", eval(y_var),
+            "Fittin 'lm' instead"
+          )
+        )
+      }
+
       formula_w <-
         paste0(y_var, "~", x_var) %>%
         stats::as.formula(.)
@@ -103,9 +121,11 @@ fit_gam_safely <-
             smooth_basis = smooth_basis,
             data_source = data_source,
             weights_var = weights_var,
-            sel_k = sel_k
+            sel_k = sel_k,
+            max_iterations = max_iterations,
+            verbose = verbose
           ),
-        silent = TRUE
+        silent = verbose
       )
     }
 

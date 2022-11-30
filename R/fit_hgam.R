@@ -1,13 +1,7 @@
 #' @title Fit single term hierarchical GAM model
-#' @param y_var Character. Name of the Y-variable
-#' @param x_var Character. Name of the X-variable
-#' @param group_var Character. Name of grouping variable
-#' @param error_family Character. Name of the error-family to be used
-#' @param smooth_basis Character. Name of the smooth basis to use for `x_var`
-#' @param weights_var Character. Name of the variable to use as weights
-#' @param data_source Data.frame with columns whose names are set by `y_var`,
-#'  `x_var`, `group_var`
-#' @param sel_k Numeric. Define `k` (wiggliness) for `x_var`
+#' @inheritParams fit_custom_gam
+#' @inheritParams fit_gam_safely
+#' @inheritParams fit_multiple_gams
 #' @param sel_m Numeric. User specify the order of the penalty for this term.
 #' if `NULL`, function will use `1` or `2` depending on the presence of common
 #' trend.
@@ -15,7 +9,6 @@
 #' @param use_parallel Logical. Should computation use parallel?
 #' @param use_discrete Logical. Should `discrete` agument be used for parallel
 #' computation?
-#' @param max_itiration Numeric. Maximum number of iteration for hGAM to try.
 #' @description Fit a hierarchical GAM model with/without a single common
 #' smoother (`common_trend`) plus group-level smoothers with differing
 #' wiggliness (random effect). If there is less number of groups in the dataset
@@ -37,7 +30,8 @@ fit_hgam <-
            common_trend = TRUE,
            use_parallel = TRUE,
            use_discrete = FALSE,
-           max_itiration = 200) {
+           max_iterations = 200,
+           verbose = TRUE) {
     RUtilpol::check_class("y_var", "character")
 
     RUtilpol::check_class("x_var", "character")
@@ -54,7 +48,10 @@ fit_hgam <-
 
     RUtilpol::check_class("data_source", "data.frame")
 
-    RUtilpol::check_col_names("data_source", c(eval(group_var), eval(y_var), eval(x_var)))
+    RUtilpol::check_col_names(
+      "data_source",
+      c(eval(group_var), eval(y_var), eval(x_var))
+    )
 
     RUtilpol::check_class("sel_k", "numeric")
 
@@ -86,12 +83,14 @@ fit_hgam <-
       use_discrete <- FALSE
     }
 
-    RUtilpol::check_class("max_itiration", "numeric")
+    RUtilpol::check_class("max_iterations", "numeric")
 
     assertthat::assert_that(
-      round(max_itiration) == max_itiration,
-      msg = "'max_itiration' must be an integer"
+      round(max_iterations) == max_iterations,
+      msg = "'max_iterations' must be an integer"
     )
+
+    RUtilpol::check_class("verbose", "logical")
 
     if (
       is.null(sel_m)
@@ -126,9 +125,13 @@ fit_hgam <-
       purrr::pluck(1) %>%
       length()
 
-    cat(
-      paste("N datasets:", n_groups), "\n"
-    )
+    if (
+      isTRUE(verbose)
+    ) {
+      RUtilpol::output_comment(
+        paste("N datasets:", n_groups)
+      )
+    }
 
     formula_gam <-
       paste0(
@@ -189,12 +192,16 @@ fit_hgam <-
           number_of_cores <- n_groups
         }
 
-        cat(
-          paste(
-            "Using parallel estimation using N cores = ",
-            number_of_cores
-          ), "\n"
-        )
+        if (
+          isTRUE(verbose)
+        ) {
+          RUtilpol::output_comment(
+            paste(
+              "Using parallel estimation using N cores = ",
+              number_of_cores
+            )
+          )
+        }
 
         if (
           use_discrete == FALSE
@@ -222,8 +229,8 @@ fit_hgam <-
                 family = eval(parse(text = error_family)),
                 cluster = cl,
                 control = mgcv::gam.control(
-                  trace = TRUE,
-                  maxit = max_itiration
+                  trace = verbose,
+                  maxit = max_iterations
                 )
               )
           )
@@ -247,8 +254,8 @@ fit_hgam <-
                 family = eval(parse(text = error_family)),
                 discrete = TRUE,
                 control = mgcv::gam.control(
-                  trace = TRUE,
-                  maxit = max_itiration,
+                  trace = verbose,
+                  maxit = max_iterations,
                   nthreads = number_of_cores
                 )
               )
@@ -264,17 +271,20 @@ fit_hgam <-
               method = "fREML",
               family = eval(parse(text = error_family)),
               control = mgcv::gam.control(
-                trace = TRUE,
-                maxit = max_itiration
+                trace = verbose,
+                maxit = max_iterations
               )
             )
         )
       }
     } else {
-      cat(
-        "Not enough groups to fit hGAM. Fitting GAM instead",
-        "\n"
-      )
+      if (
+        isTRUE(verbose)
+      ) {
+        RUtilpol::output_comment(
+          "Not enough groups to fit hGAM. Fitting GAM instead"
+        )
+      }
 
       try(
         fin_mod <-
@@ -285,8 +295,8 @@ fit_hgam <-
             method = "fREML",
             family = eval(parse(text = error_family)),
             control = mgcv::gam.control(
-              trace = TRUE,
-              maxit = max_itiration
+              trace = verbose,
+              maxit = max_iterations
             )
           )
       )

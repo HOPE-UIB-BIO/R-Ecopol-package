@@ -17,7 +17,8 @@ fit_hgam(
   common_trend = TRUE,
   use_parallel = TRUE,
   use_discrete = FALSE,
-  max_itiration = 200
+  max_iterations = 200,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -25,18 +26,19 @@ fit_hgam(
 
 \item{y_var}{Character. Name of the Y-variable}
 
-\item{group_var}{Character. Name of grouping variable}
+\item{group_var}{Character. Name of the variable used for identification of
+groups.}
 
 \item{error_family}{Character. Name of the error-family to be used}
 
 \item{weights_var}{Character. Name of the variable to use as weights}
 
-\item{smooth_basis}{Character. Name of the smooth basis to use for \code{x_var}}
+\item{smooth_basis}{Character. Name of the Smooth basis to use}
 
-\item{data_source}{Data.frame with columns whose names are set by \code{y_var},
-\code{x_var}, \code{group_var}}
+\item{data_source}{Data.frame with columns whose names are set by \code{y_var} and
+\code{x_var}}
 
-\item{sel_k}{Numeric. Define \code{k} (wiggliness) for \code{x_var}}
+\item{sel_k}{Numeric. Define \code{k} (wiggliness)}
 
 \item{sel_m}{Numeric. User specify the order of the penalty for this term.
 if \code{NULL}, function will use \code{1} or \code{2} depending on the presence of common
@@ -49,7 +51,9 @@ trend.}
 \item{use_discrete}{Logical. Should \code{discrete} agument be used for parallel
 computation?}
 
-\item{max_itiration}{Numeric. Maximum number of iteration for hGAM to try.}
+\item{max_iterations}{Numeric. Maximum number of iteration for GAM to try.}
+
+\item{verbose}{Logical. Should additional messages be output?}
 }
 \value{
 Fitted hGAM model

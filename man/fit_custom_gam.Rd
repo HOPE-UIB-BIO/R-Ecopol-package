@@ -11,7 +11,9 @@ fit_custom_gam(
   smooth_basis = c("tp", "cr"),
   data_source,
   weights_var = NULL,
-  sel_k = 10
+  sel_k = 10,
+  max_iterations = 200,
+  verbose = FALSE
 )
 }
 \arguments{
@@ -29,6 +31,10 @@ fit_custom_gam(
 \item{weights_var}{Character. Name of the variable to use as weights}
 
 \item{sel_k}{Numeric. Define \code{k} (wiggliness)}
+
+\item{max_iterations}{Numeric. Maximum number of iteration for GAM to try.}
+
+\item{verbose}{Logical. Should additional messages be output?}
 }
 \value{
 Fitted GAM model
@@ -36,4 +42,7 @@ Fitted GAM model
 \description{
 A wrapper function for \code{mgcv::gam} to help fit GAM models
 functionally.
+}
+\seealso{
+{mgcv::gam()}
 }

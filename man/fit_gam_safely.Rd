@@ -12,11 +12,14 @@ fit_gam_safely(
   error_family = "gaussian(link = 'identity')",
   weights_var = NULL,
   sel_k = 10,
-  max_k = 10
+  max_k = 10,
+  max_iterations = 200,
+  verbose = FALSE
 )
 }
 \arguments{
-\item{data_source}{Data.frame}
+\item{data_source}{Data.frame with columns whose names are set by \code{y_var} and
+\code{x_var}}
 
 \item{x_var}{Character. Name of the X-variable}
 
@@ -31,10 +34,17 @@ fit_gam_safely(
 \item{sel_k}{Preferred \code{k} (wiggliness)}
 
 \item{max_k}{Maximum \code{k} which can be used}
+
+\item{max_iterations}{Numeric. Maximum number of iteration for GAM to try.}
+
+\item{verbose}{Logical. Should additional messages be output?}
 }
 \description{
 A wrapper function for \code{fit_custom_gam}. The \code{k}is compared to
 the number of samples and to the \code{max_k}. If there is a zero variability in
 the term, \code{lm} is fitted instead. If no model was cretaed (due to errors),
 the function retun \code{NA_real}
+}
+\seealso{
+\code{\link[=fit_custom_gam]{fit_custom_gam()}}
 }
