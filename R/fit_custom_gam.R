@@ -61,11 +61,11 @@ fit_custom_gam <-
       msg = "'sel_k' must be an integer"
     )
 
-    RUtilpol::check_class("max_itiration", "numeric")
+    RUtilpol::check_class("max_iterations", "numeric")
 
     assertthat::assert_that(
-      round(max_itiration) == max_itiration,
-      msg = "'max_itiration' must be an integer"
+      round(max_iterations) == max_iterations,
+      msg = "'max_iterations' must be an integer"
     )
 
     RUtilpol::check_class("verbose", "logical")
