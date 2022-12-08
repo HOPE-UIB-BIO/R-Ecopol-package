@@ -9,7 +9,7 @@
 The package assemble function used in community ecology and present them in easy-to-use wrapper functions.
 }
 \author{
-\strong{Maintainer}: First Last \email{first.last@example.com} (\href{https://orcid.org/YOUR-ORCID-ID}{ORCID})
+\strong{Maintainer}: Ondrej Mottl \email{ondrej.mottl@gmail.com} (\href{https://orcid.org/0000-0002-9796-5081}{ORCID})
 
 }
 \keyword{internal}
