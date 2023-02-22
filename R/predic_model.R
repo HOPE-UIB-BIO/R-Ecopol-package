@@ -32,7 +32,7 @@ predic_model <-
 
     raw_pred %>%
       dplyr::rename(
-        fit = predicted,
+        fit = estimate,
         lwr = conf.low,
         upr = conf.high,
         sd_error = std.error
