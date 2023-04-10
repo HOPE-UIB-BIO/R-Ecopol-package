@@ -1,20 +1,18 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- README.md is generated from README.qmd. Please edit that file -->
 
-# REcopol
+# REcopol package:package:<img src="man/figures/REcopol_logo.png" align="right" width="400" />
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of REcopol is to make an easy-to-use function to analyse fossil
-pollen data
+The goal of {`REcopol`} is to make an easy-to-use function to analyse fossil pollen data
 
 ## Installation
 
-You can install the development version of REcopol from
-[GitHub](https://github.com/) with:
+You can install the development version of REcopol:package: from [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("HOPE-UIB-BIO/REcopol")
+# install.packages("remotes")
+remotes::install_github("HOPE-UIB-BIO/R-Ecopol-package")
 ```
