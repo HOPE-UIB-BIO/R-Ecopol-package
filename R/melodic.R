@@ -26,8 +26,7 @@ melodic <-
       c("matrix", "dist")
     )
 
-    if
-    (
+    if (
       !any(class(data_source_dissimilarity) == "matrix")
     ) {
       data_source_dissimilarity <-
@@ -86,8 +85,7 @@ melodic <-
       melodic$richness[i] <-
         length(spp_in_sample)
 
-      if
-      (
+      if (
         length(spp_in_sample) <= 1
       ) {
         melodic$abundance$mpd[i] <- NA
