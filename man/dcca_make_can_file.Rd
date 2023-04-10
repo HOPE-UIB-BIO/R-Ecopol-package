@@ -22,3 +22,4 @@ data is the data frame
 \author{
 Petr Smilauer
 }
+\keyword{internal}

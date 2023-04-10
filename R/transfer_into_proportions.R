@@ -5,6 +5,7 @@
 #' level (sample) and each column represent one taxon. Table must contain
 #' `sample_id` column with unique values.
 #' @description Tranform pollen data into percentages (or proportions)
+#' @export
 transfer_into_proportions <-
   function(
     data_source,

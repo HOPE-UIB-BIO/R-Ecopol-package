@@ -48,3 +48,4 @@ the function retun \code{NA_real}
 \seealso{
 \code{\link[=fit_custom_gam]{fit_custom_gam()}}
 }
+\keyword{internal}

@@ -8,6 +8,7 @@
 #' }
 #' @description Add values in-between each pair or values in a vector. Position
 #' of each value is calculated as average of 2 original values.
+#' @keywords internal
 util_get_inbetween_values <-
   function(data_source,
            sel_output = c("only_inbetween", "both")) {

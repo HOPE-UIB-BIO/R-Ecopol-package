@@ -13,3 +13,4 @@ util_renumber_groups(clusgr)
 Utility function to re-number vector of integers to simple
 sequence of numbers
 }
+\keyword{internal}

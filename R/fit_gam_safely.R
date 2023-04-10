@@ -7,6 +7,7 @@
 #' the term, `lm` is fitted instead. If no model was cretaed (due to errors),
 #' the function retun `NA_real`
 #' @seealso [fit_custom_gam()]
+#' @keywords internal
 fit_gam_safely <-
   function(data_source,
            x_var = "age",

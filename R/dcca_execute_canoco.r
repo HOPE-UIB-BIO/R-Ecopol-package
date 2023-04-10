@@ -31,6 +31,7 @@
 #' \item `case_r` - numeric matrix with CaseR scores for first 4 axes
 #' }
 #' @author Petr Smilauer
+#' @keywords internal
 dcca_execute_canoco <-
   function(data_resp,
            data_pred,

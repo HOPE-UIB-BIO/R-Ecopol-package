@@ -7,6 +7,7 @@
 #' and Chisq are recommend for proportional/percentage data
 #' @description Transform pollen data using one of the selected transformation
 #' functions
+#' @export 
 tranform_percentage_data <-
   function(
     data_source,
