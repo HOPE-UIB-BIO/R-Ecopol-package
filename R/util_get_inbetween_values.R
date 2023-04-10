@@ -40,8 +40,7 @@ util_get_inbetween_values <-
       as.matrix() %>%
       offdiag(., 1)
 
-    if
-    (
+    if (
       sel_output == "both"
     ) {
       c(
@@ -50,8 +49,7 @@ util_get_inbetween_values <-
       ) %>%
         sort() %>%
         return()
-    } else if
-    (
+    } else if (
       sel_output == "only_inbetween"
     ) {
       inbetween_values %>%

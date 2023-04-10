@@ -2,7 +2,7 @@
 % Please edit documentation in R/fit_multiple_gams.R
 \name{fit_multiple_gams}
 \alias{fit_multiple_gams}
-\title{Fit multiple individual GAM models}
+\title{Fit multiple individual generalized additive models (GAMs)}
 \usage{
 fit_multiple_gams(
   data_source,
@@ -39,8 +39,18 @@ groups.}
 
 \item{verbose}{Logical. Should additional messages be output?}
 }
+\value{
+A data frame containing the original grouping variable and the
+corresponding fitted GAM model for each group.
+}
 \description{
-Helper function to apply multiple\code{fit_gam_safely}.
+This function fits multiple generalized additive models (GAMs) using the
+\code{fit_gam_safely()} function. GAMs are fitted
+to each dataset defined by the \code{group_var} argument in the input
+\code{data_source} data frame. The number of models fitted is equal to the
+number of unique levels of the \code{group_var}. The function returns a data
+frame with one row per group, including the original group identifier and the
+fitted GAM model for that group.
 }
 \seealso{
 \code{\link[=fit_gam_safely]{fit_gam_safely()}}

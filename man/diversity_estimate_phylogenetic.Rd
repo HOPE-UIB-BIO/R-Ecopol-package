@@ -50,6 +50,9 @@ Possible outputs depending on the \code{sel_method}:
 \description{
 Function for estimating one of three metrics of phylogenetic diversity
 }
+\seealso{
+\code{\link[=diversity_estimate]{diversity_estimate()}}
+}
 \author{
 Ondrej Mottl, Kuber Bhatta
 }

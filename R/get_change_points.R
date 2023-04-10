@@ -1,14 +1,16 @@
 #' @title Detect change points in a vector
 #' @param data_source Vector with values (numeric, character, or factor)
-#' @param direction 
+#' @param direction
 #' Which direction should the values be compared ("front" or "back")
-#' @return Vector with binary values of length = `data_source` + 1.
-#' `1` represent change point
+#' @return Vector with binary values of length = `data_source` + 1,
+#' where `1` represents a change point and `0` represents no change point.
+#' @description This function returns a binary vector indicating where a
+#' change occurs in the input numeric, character, or factor vector.
+#' The change points are identified based on the direction parameter provided.
 #' @export
 get_change_points <-
   function(data_source,
            direction = c("front", "back")) {
-
     RUtilpol::check_class("data_source", c("numeric", "character", "factor"))
 
     RUtilpol::check_class("direction", "character")

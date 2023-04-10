@@ -86,7 +86,7 @@ fit_ordination_dcca <-
             )
           )
         pred_df[, 1:2] <-
-          poly(pred_df[, 1], 2)
+          stats::poly(pred_df[, 1], 2)
       },
       "poly_3" = {
         pred_df <-
@@ -103,7 +103,7 @@ fit_ordination_dcca <-
             )
           )
         pred_df[, 1:3] <-
-          poly(pred_df[, 1], 3)
+          stats::poly(pred_df[, 1], 3)
       }
     )
 

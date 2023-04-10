@@ -90,7 +90,7 @@ fit_gam_safely <-
     if (
       data_source %>%
         purrr::pluck(y_var) %>%
-        sd() == 0
+        stats::sd() == 0
     ) {
       if (
         isTRUE(verbose)

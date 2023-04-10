@@ -1,10 +1,13 @@
 #' @title Get density from vector of numbers
 #' @param data_source Vector with numeric values
-#' @param values_range Specific know range of the `data_source`
-#' @param reflected Logical. Should reflecting technique be used to fix
-#' the boundary effect? (from Density Estimation for Statistics and Data
-#' Analysis by B.W.Silverman)
+#' @param values_range A numeric vector of length 2 specifying the range to
+#' rescale the data to. If missing, the range of the data is used.
+#' @param reflected Logical. Whether or not to reflect the data around 0?
+#' (from Density Estimation for Statistics and Data Analysis by B.W.Silverman)
 #' @param ... Additional parameters used in `stats::density`
+#' @description
+#' This function calculates the density of a numeric vector, potentially
+#' rescaling it to a specific range and reflecting it.
 #' @return Data.frame with the `data_source` values and estimated density
 #' @export
 get_density <-
@@ -12,7 +15,6 @@ get_density <-
            values_range,
            reflected = TRUE,
            ...) {
-
     RUtilpol::check_class("data_source", "numeric")
 
     if (
@@ -40,12 +42,9 @@ get_density <-
     if (
       reflected == TRUE
     ) {
-
       data_work <-
-        c( -(data_rescaled), data_rescaled, (2 - (data_rescaled)))
-
+        c(-(data_rescaled), data_rescaled, (2 - (data_rescaled)))
     } else {
-
       data_work <- data_rescaled
     }
 
@@ -55,11 +54,13 @@ get_density <-
         from = min(rescale_to),
         to = max(rescale_to),
         kernel = "gaussian",
-        ...)
+        ...
+      )
 
     tibble::tibble(
       x = density_values$x,
-      y = density_values$y * ifelse(reflected, 3, 1)) %>%
+      y = density_values$y * ifelse(reflected, 3, 1)
+    ) %>%
       dplyr::mutate(
         var = scales::rescale(x, from = rescale_to, to = values_range)
       ) %>%

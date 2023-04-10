@@ -26,9 +26,11 @@ in \code{data_source_community} and vice versa.}
 \item \code{"simpson"} = Simpsons Diversity Index
 }}
 
-\item{abundance_weighted}{Logical. It FALSE, presence absence data will be used.}
+\item{abundance_weighted}{Logical. A value indicating whether or not the calculation should be
+abundance-weighted (TRUE) or presence/absence-based (FALSE).}
 
-\item{rand}{Numeric. Number of randomization}
+\item{rand}{Numeric. An integer specifying the number of randomizations to perform to
+obtain null distributions}
 }
 \value{
 Data frame with diversity metric estimated for each level (sample).
@@ -42,7 +44,11 @@ Possible outputs depending on the \code{sel_method}:
 }
 }
 \description{
-TODO
+This function estimates functional diversity using various methods and
+allows for randomization to obtain null distributions.
+}
+\seealso{
+\code{\link[=diversity_estimate]{diversity_estimate()}}
 }
 \author{
 Triin Reitalu, Ondrej Mottl

@@ -40,5 +40,8 @@ Data.frame with \code{var_name_order} and all columns detected based on
 \code{var_name_detection}, with \code{1} represent change points.
 }
 \description{
-Detect change points for all columns
+This function takes a data frame as input and returns a data frame
+containing change points for each variable specified in the input data frame.
+Change points are identified as the locations where the value of a variable
+changes from its previous value
 }

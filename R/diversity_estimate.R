@@ -32,7 +32,9 @@
 #' Data frame. Row names be the same taxa as
 #' in `data_source_community` and vice versa.
 #' @description
-#' Estimation of diversity from community data. TODO
+#' This function estimates diversity from community data using various methods,
+#'  including taxonomic, phylogenetic diversity, phylogenetic NRI,
+#' phylogenetic NTI, functional Rao, functional MPD, and functional Simpson.
 #' @returns
 #' Data frame with diversity metric estimated for each level (sample).
 #' Possible outputs depending on the `sel_method`:
@@ -55,6 +57,8 @@
 #' \item `z_score` - Standarise Effect Size (SES), calculated as
 #' (observed value - mean randomised value ) / sd of randomised value
 #' }
+#' @seealso [diversity_estimate_taxonomic()], [diversity_estimate_functional()],
+#' [diversity_estimate_phylogenetic()]
 #' @export
 diversity_estimate <-
   function(data_source,
@@ -102,8 +106,7 @@ diversity_estimate <-
       msg = "'rand' must be a 'integer'"
     )
 
-    if
-    (
+    if (
       round == TRUE
     ) {
       # remove sample_id, round down, and transform into matrix
@@ -121,8 +124,7 @@ diversity_estimate <-
         as.matrix()
     }
 
-    if
-    (
+    if (
       ncol(data_matrix) < 2
     ) {
       cat("Dataset does not have enough taxons to estimate diversity", "\n")
@@ -130,12 +132,10 @@ diversity_estimate <-
       return(NA)
     }
 
-    if
-    (
+    if (
       sel_method == "taxonomic"
     ) {
-      if
-      (
+      if (
         missing(sample_size)
       ) {
         sample_size <-
@@ -156,8 +156,7 @@ diversity_estimate <-
           data_matrix = data_matrix,
           sample_size = sample_size
         )
-    } else if
-    (
+    } else if (
       sel_method == "phylogenetic_diversity"
     ) {
       div <-
@@ -169,8 +168,7 @@ diversity_estimate <-
           iterations = iterations,
           phylogenetic_tree = data_source_tree
         )
-    } else if
-    (
+    } else if (
       sel_method == "phylogenetic_nri"
     ) {
       div <-
@@ -182,8 +180,7 @@ diversity_estimate <-
           iterations = iterations,
           phylogenetic_tree = data_source_tree
         )
-    } else if
-    (
+    } else if (
       sel_method == "phylogenetic_nti"
     ) {
       div <-
@@ -195,8 +192,7 @@ diversity_estimate <-
           iterations = iterations,
           phylogenetic_tree = data_source_tree
         )
-    } else if
-    (
+    } else if (
       sel_method == "functional_rao"
     ) {
       div <-
@@ -207,8 +203,7 @@ diversity_estimate <-
           sel_method = "rao",
           rand = rand
         )
-    } else if
-    (
+    } else if (
       sel_method == "functional_mpd"
     ) {
       div <-
@@ -219,8 +214,7 @@ diversity_estimate <-
           sel_method = "mpd",
           rand = rand
         )
-    } else if
-    (
+    } else if (
       sel_method == "functional_simpson"
     ) {
       div <-

@@ -18,6 +18,11 @@
 #' For all columns use `NULL``.
 #' @param direction
 #' Which direction should the values be compared ("front" or "back")
+#' @description
+#'  This function takes a data frame as input and returns a data frame
+#' containing change points for each variable specified in the input data frame.
+#' Change points are identified as the locations where the value of a variable
+#' changes from its previous value
 #' @return Data.frame with `var_name_order` and all columns detected based on
 #' `var_name_detection`, with `1` represent change points.
 #' @export
@@ -73,8 +78,7 @@ get_change_points_all <-
         purrr::pluck(var_name_order)
     }
 
-    if
-    (
+    if (
       is.null(var_name_detection) == FALSE
     ) {
       RUtilpol::check_class("var_name_detection", "character")
@@ -90,7 +94,7 @@ get_change_points_all <-
       )
     } else {
       var_name_detection <-
-        data_source %>% 
+        data_source %>%
         dplyr::select(
           !dplyr::any_of(
             c(

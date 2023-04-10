@@ -33,6 +33,7 @@
 #' \item `z_score` - Standarise Effect Size (SES), calculated as
 #' (observed value - mean randomised value ) / sd of randomised value
 #' }
+#' @seealso [diversity_estimate()]
 #' @author Ondrej Mottl, Kuber Bhatta
 #' @export
 diversity_estimate_phylogenetic <-
@@ -76,8 +77,7 @@ diversity_estimate_phylogenetic <-
       )
     )
 
-    if
-    (
+    if (
       ncol(data_matrix) <= 2
     ) {
       cat(
@@ -106,8 +106,7 @@ diversity_estimate_phylogenetic <-
     # Create cophenetic distance from the pruned phylogenetic_tree.
     phy_dist <- stats::cophenetic(pruned_tree)
 
-    if
-    (
+    if (
       sel_method == "diversity"
     ) {
       # Calculate Faith's pylogenetic diversity
@@ -129,8 +128,7 @@ diversity_estimate_phylogenetic <-
           z_score = pd.obs.z,
         ) %>%
         dplyr::select(n_taxa, pd_faith, z_score)
-    } else if
-    (
+    } else if (
       sel_method == "nri"
     ) {
       # Calculate nri
@@ -152,8 +150,7 @@ diversity_estimate_phylogenetic <-
         ) %>%
         dplyr::mutate(pd_nri = mpd.obs.z * (-1)) %>%
         dplyr::select(n_taxa, pd_mpd, pd_nri)
-    } else if
-    (
+    } else if (
       sel_method == "nti"
     ) {
       # Calculate nri

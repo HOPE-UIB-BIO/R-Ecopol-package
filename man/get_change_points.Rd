@@ -12,9 +12,11 @@ get_change_points(data_source, direction = c("front", "back"))
 \item{direction}{Which direction should the values be compared ("front" or "back")}
 }
 \value{
-Vector with binary values of length = \code{data_source} + 1.
-\code{1} represent change point
+Vector with binary values of length = \code{data_source} + 1,
+where \code{1} represents a change point and \code{0} represents no change point.
 }
 \description{
-Detect change points in a vector
+This function returns a binary vector indicating where a
+change occurs in the input numeric, character, or factor vector.
+The change points are identified based on the direction parameter provided.
 }

@@ -75,5 +75,11 @@ Possible outputs depending on the \code{sel_method}:
 }
 }
 \description{
-Estimation of diversity from community data. TODO
+This function estimates diversity from community data using various methods,
+including taxonomic, phylogenetic diversity, phylogenetic NRI,
+phylogenetic NTI, functional Rao, functional MPD, and functional Simpson.
+}
+\seealso{
+\code{\link[=diversity_estimate_taxonomic]{diversity_estimate_taxonomic()}}, \code{\link[=diversity_estimate_functional]{diversity_estimate_functional()}},
+\code{\link[=diversity_estimate_phylogenetic]{diversity_estimate_phylogenetic()}}
 }
