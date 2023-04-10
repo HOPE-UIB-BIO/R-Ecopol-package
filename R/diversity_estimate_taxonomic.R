@@ -1,4 +1,4 @@
-#' @title Estimation taxonomic diversity
+#' @title Estimate taxonomic diversity using Hill numbers
 #' @param data_matrix
 #' Data matrix. Rows as levels and columns as taxa.
 #' Row names should be the `sample_id`.
@@ -14,8 +14,16 @@
 #' \item `n1_divided_by_n0` - evenness ratios (N1/N0)
 #' }
 #' @description
-#' Estimation of interpolation and extrapolation of individual-based
+#' Estimation of interpolation and extrapolation of individual-based.
+#' This function estimates taxonomic diversity using Hill numbers.
+#' It takes a data matrix as input, with rows representing samples and columns
+#' representing taxa, and returns a dataframe with diversity indices for
+#' each sample.
+#' The diversity indices calculated are: Hill number 0, 1, and 2,
+#' Hill number 1 minus Hill number 2, Hill number 2 divided by Hill number 1,
+#' and Hill number 1 divided by Hill number 0
 #' Hill numbers
+#' @seealso [diversity_estimate()]
 #' @author Vivian Felde, Ondrej Mottl
 #' @export
 diversity_estimate_taxonomic <-
@@ -23,8 +31,7 @@ diversity_estimate_taxonomic <-
            sample_size) {
     RUtilpol::check_class("data_matrix", c("data.frame", "matrix"))
 
-    if
-    (
+    if (
       missing(sample_size)
     ) {
       sample_size <- min(apply(data_matrix, 1, sum))
@@ -42,8 +49,7 @@ diversity_estimate_taxonomic <-
       function(data, sample_size) {
         data_sub <- data[data > 0]
         data_sum <- sum(data_sub)
-        if
-        (
+        if (
           sample_size <= data_sum
         ) {
           res <- sum(1 - exp(lchoose(data_sum - data_sub, sample_size) -
@@ -58,8 +64,7 @@ diversity_estimate_taxonomic <-
       function(data, sample_size) {
         data_sub <- data[data > 0]
         data_sum <- sum(data_sub)
-        if
-        (
+        if (
           sample_size <= data_sum
         ) {
           sub <-
@@ -79,8 +84,7 @@ diversity_estimate_taxonomic <-
       function(data, sample_size) {
         data_sub <- data[data > 0]
         data_sum <- sum(data_sub)
-        if
-        (
+        if (
           sample_size <= data_sum
         ) {
           k <- 1:sample_size
@@ -98,8 +102,7 @@ diversity_estimate_taxonomic <-
       function(data, sample_size) {
         data_sub <- data[data > 0]
         data_sum <- sum(data_sub)
-        if
-        (
+        if (
           sample_size <= data_sum
         ) {
           res <- 1 / (1 / sample_size +

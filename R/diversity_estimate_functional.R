@@ -13,9 +13,11 @@
 #' \item `"simpson"` = Simpsons Diversity Index
 #' }
 #' @param abundance_weighted
-#' Logical. It FALSE, presence absence data will be used.
+#' Logical. A value indicating whether or not the calculation should be
+#' abundance-weighted (TRUE) or presence/absence-based (FALSE).
 #' @param rand
-#' Numeric. Number of randomization
+#' Numeric. An integer specifying the number of randomizations to perform to
+#' obtain null distributions
 #' @return
 #' Data frame with diversity metric estimated for each level (sample).
 #' Possible outputs depending on the `sel_method`:
@@ -26,8 +28,11 @@
 #' \item `z_score` - Standarise Effect Size (SES), calculated as
 #' (observed value - mean randomised value ) / sd of randomised value
 #' }
-#' @description TODO
+#' @description
+#' This function estimates functional diversity using various methods and
+#' allows for randomization to obtain null distributions.
 #' @author Triin Reitalu, Ondrej Mottl
+#' @seealso [diversity_estimate()]
 #' @export
 diversity_estimate_functional <-
   function(data_source_community,
@@ -76,7 +81,6 @@ diversity_estimate_functional <-
       )
 
     for (i in 1:rand) {
-
       # sample rows of trait matrix
       traits_rand <-
         data_source_traits[sample(1:nrow(data_source_traits)), ]

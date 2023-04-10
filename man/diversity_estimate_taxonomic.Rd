@@ -2,7 +2,7 @@
 % Please edit documentation in R/diversity_estimate_taxonomic.R
 \name{diversity_estimate_taxonomic}
 \alias{diversity_estimate_taxonomic}
-\title{Estimation taxonomic diversity}
+\title{Estimate taxonomic diversity using Hill numbers}
 \usage{
 diversity_estimate_taxonomic(data_matrix, sample_size)
 }
@@ -24,8 +24,18 @@ Row names should be the \code{sample_id}.}
 }
 }
 \description{
-Estimation of interpolation and extrapolation of individual-based
+Estimation of interpolation and extrapolation of individual-based.
+This function estimates taxonomic diversity using Hill numbers.
+It takes a data matrix as input, with rows representing samples and columns
+representing taxa, and returns a dataframe with diversity indices for
+each sample.
+The diversity indices calculated are: Hill number 0, 1, and 2,
+Hill number 1 minus Hill number 2, Hill number 2 divided by Hill number 1,
+and Hill number 1 divided by Hill number 0
 Hill numbers
+}
+\seealso{
+\code{\link[=diversity_estimate]{diversity_estimate()}}
 }
 \author{
 Vivian Felde, Ondrej Mottl
