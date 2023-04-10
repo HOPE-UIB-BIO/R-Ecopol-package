@@ -70,7 +70,7 @@ mv_regression_partition <-
       )
 
     # wrapper to prevent any message
-    capture.output(
+    utils::capture.output(
       change_points_age <-
         as.data.frame(summary(mvpart_result)$splits) %>%
         purrr::pluck("index"),

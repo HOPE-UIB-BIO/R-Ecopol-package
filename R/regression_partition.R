@@ -71,7 +71,7 @@ regression_partition <-
             length()
 
         # wrapper to prevent any message
-        capture.output(
+        utils::capture.output(
             change_points_age <-
                 as.data.frame(summary(pruned_tree)$splits) %>%
                 purrr::pluck("index"),
