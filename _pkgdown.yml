@@ -1,0 +1,37 @@
+reference:
+- title: Diversity
+  desc: Functions for estimation diversity
+- contents: 
+  - diversity_estimate
+  - diversity_estimate_taxonomic
+  - diversity_estimate_functional
+  - diversity_estimate_phylogenetic
+- title: Ordinations
+  desc: Functions to fit Detrended (Canonical) Correspondence Analysis
+- contents:
+  - fit_ordination
+  - fit_ordination_dca
+  - fit_ordination_dcca
+- title: Gam modeling
+  desc: Functions to fit, predict, and visualise GAM models
+- contents:
+  - fit_custom_gam
+  - fit_hgam
+  - fit_multiple_gams
+  - predic_model
+  - plot_temporal_trend
+- title: Change-point analyses and regression partition
+  desc: Functions for detection of change points in temporal patterns
+- contents:
+  - regression_partition
+  - mv_regression_partition
+  - get_change_points
+  - get_change_points_all
+  - get_density
+  - add_data_partition
+- title: Utilities
+  desc: Functions for operation with fossil pollen data
+- contents:
+  - add_age_bin
+  - transfer_into_proportions
+  - tranform_percentage_data
