@@ -11,10 +11,10 @@
 #' resolving shortcomings with existing paradigms and algorithms.
 #' Oecologia 180, 933–940 (2016).
 #' https://doi.org/10.1007/s00442-016-3546-0
+#' @keywords internal
 melodic <-
   function(data_source_community,
            data_source_dissimilarity) {
-
     # check for
     RUtilpol::check_class(
       "data_source_community", "matrix"

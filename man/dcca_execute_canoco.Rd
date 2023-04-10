@@ -50,3 +50,4 @@ construct to catch such cases
 \author{
 Petr Smilauer
 }
+\keyword{internal}

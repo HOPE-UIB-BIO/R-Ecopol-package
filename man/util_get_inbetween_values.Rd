@@ -22,3 +22,4 @@ util_get_inbetween_values(
 Add values in-between each pair or values in a vector. Position
 of each value is calculated as average of 2 original values.
 }
+\keyword{internal}

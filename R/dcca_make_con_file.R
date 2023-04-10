@@ -26,6 +26,7 @@
 #' @return
 #' TRUE on success, FALSE otherwise
 #' @author Petr Smilauer
+#' @keywords internal
 dcca_make_con_file <-
   function(con_file_path,
            resp_file_path,

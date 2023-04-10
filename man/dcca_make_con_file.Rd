@@ -47,3 +47,4 @@ type of analysis (DCCA with detrending by segments)
 \author{
 Petr Smilauer
 }
+\keyword{internal}

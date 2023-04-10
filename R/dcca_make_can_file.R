@@ -8,6 +8,7 @@
 #' @return
 #' FALSE on failure, TRUE otherwise
 #' @author Petr Smilauer
+#' @keywords internal
 dcca_make_can_file <-
   function(sel_path,
            sel_data) {
