@@ -2,7 +2,7 @@
 % Please edit documentation in R/mv_regression_partition.R
 \name{mv_regression_partition}
 \alias{mv_regression_partition}
-\title{Multivariate regression trees}
+\title{Multivariate regression partitioning}
 \usage{
 mv_regression_partition(
   data_source_counts,
@@ -21,13 +21,28 @@ one level (sample). Table must contain two columns: \code{sample_id} with unique
 values corresponding to \code{data_source_levels}, and \code{age} with ages of each
 level}
 
-\item{rand}{Number of multiple cross-validations}
+\item{rand}{The number of times to randomly split the data to determine the
+optimal tree.}
 
 \item{transformation}{Selection of data transformation options. \code{hellinger} =
 Hellinger, \code{chisq} = Chisq, \code{none} = without transformation. Both Hellinger
 and Chisq are recommend for proportional/percentage data}
 }
+\value{
+A list containing the following items:
+\itemize{
+\item{\code{mrt_result}}{The multivariate regression tree object.}
+\item{\code{change_points}}{The change points in the regression tree.}
+\item{\code{partitions}}{The partition assignments for each sample.}
+\item{\code{mrt_groups}}{The number of groups in the partitioning.}
+\item{\code{mrt_groups_per_sample}}{The number of groups per sample.}
+}
+}
 \description{
-Transform pollen data into percentages, apply selected
-tranformation, and then apply multivariate regression trees.
+This function performs multivariate regression partitioning
+using the mvpart R package.
+It takes in a data frame of count data, a data frame of sample level
+information, and various optional arguments, and returns a list of outputs
+including the multivariate regression tree object, the change points, the
+partition assignments, and the number of groups.
 }

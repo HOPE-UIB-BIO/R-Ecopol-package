@@ -9,11 +9,11 @@ get_density(data_source, values_range, reflected = TRUE, ...)
 \arguments{
 \item{data_source}{Vector with numeric values}
 
-\item{values_range}{Specific know range of the \code{data_source}}
+\item{values_range}{A numeric vector of length 2 specifying the range to
+rescale the data to. If missing, the range of the data is used.}
 
-\item{reflected}{Logical. Should reflecting technique be used to fix
-the boundary effect? (from Density Estimation for Statistics and Data
-Analysis by B.W.Silverman)}
+\item{reflected}{Logical. Whether or not to reflect the data around 0?
+(from Density Estimation for Statistics and Data Analysis by B.W.Silverman)}
 
 \item{...}{Additional parameters used in \code{stats::density}}
 }
@@ -21,5 +21,6 @@ Analysis by B.W.Silverman)}
 Data.frame with the \code{data_source} values and estimated density
 }
 \description{
-Get density from vector of numbers
+This function calculates the density of a numeric vector, potentially
+rescaling it to a specific range and reflecting it.
 }
