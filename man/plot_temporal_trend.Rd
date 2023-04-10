@@ -36,43 +36,54 @@ plot_temporal_trend(
 )
 }
 \arguments{
-\item{data_source}{DESCRIPTION.}
+\item{data_source}{data.frame to be plotted.}
 
-\item{x_var}{Character. Name of the X-variable}
+\item{x_var}{Character. The name of the column in \code{data_source} containing
+the x-variable (default: "age")}
 
-\item{x_var_name}{Character. label of the X-variable}
+\item{x_var_name}{Character. The name of the x-axis variable
+(default: "Time (ka BP)")}
 
-\item{y_var}{Character. Name of the Y-variable}
+\item{y_var}{Character. The name of the column in \code{data_source} containing
+the y-variable}
 
-\item{y_var_name}{Character. label of the Y-variable}
+\item{y_var_name}{Character. The name of the y-axis variable}
 
 \item{sel_type}{Character. The type of time series.
 \itemize{
 \item \code{"single"} - only one series
 \item \code{"group"} - several series
-}}
+}
+The function will plot a single line with error bars (if \code{display_error} is
+\code{TRUE}). If \code{"group"}, the function will plot multiple lines with different
+colours based on the `group_var``}
 
 \item{group_var}{Character. Name of the variable defining the groups
 in \code{sel_type}.}
 
-\item{display_error}{Logical. Should error bar be displayed?}
+\item{display_error}{Logical. Should an error bar be displayed?}
 
-\item{y_limits}{Either \code{NULL} or 2 value vector to set limits.}
+\item{y_limits}{The limits of the y-axis in the form of a vector of length 2
+(default: \code{NULL}). If \code{NULL}, the function will calculate the limits
+automatically.}
 
-\item{sel_y_trans}{Character. Name of tranfsormation used in \code{scale_y_continuous}}
+\item{sel_y_trans}{Character. Name of tranfsormation used in \code{scale_y_continuous}
+(default: \code{"identity"})}
 
-\item{sel_x_trans}{Character. Name of tranfsormation used in \code{scale_x_continuous}}
+\item{sel_x_trans}{Character. Name of tranfsormation used in \code{scale_x_continuous}
+(default: \code{"reverse"})}
 
 \item{x_ticks}{Numeric vector with x-ticks.}
 
-\item{y_ticks}{Numeric vector with y-ticks or \code{"auto"} to set them automaticaly}
+\item{y_ticks}{Numeric vector with y-ticks or \code{"auto"} to set them automatically}
 
 \item{n_y_ticks}{If \code{y_ticks} = \code{"auto"}, then set number of automatic ticks}
 
-\item{show_rmse}{Locigal. Should RMSE visualisation be plotted.
+\item{show_rmse}{Locigal. Should root mean square error (RMSE) visualisation
+be plotted.
 Only works for \code{group_var} = \code{"group"}}
 
-\item{show_bin_summary}{Locigal. Should age bin summary be plotted.
+\item{show_bin_summary}{Locigal. Should an age bin summary be plotted?
 Only works for \code{group_var} = \code{"group"}.}
 
 \item{summary_bin_size}{Size of time bins to use.
@@ -82,11 +93,11 @@ Only works for \code{show_bin_summary} = \code{TRUE}.}
 
 \item{default_color_rmse_highlight}{Character with HEX code.}
 
-\item{default_color_summary_line}{haracter with HEX code.}
+\item{default_color_summary_line}{Character with HEX code.}
 
-\item{default_color_summary_fill}{haracter with HEX code.}
+\item{default_color_summary_fill}{Character with HEX code.}
 
-\item{group_color_pallete}{Optional. Name vector with colors for levels of \code{group_var}}
+\item{group_color_pallete}{Optional. Name vector with colours for levels of \code{group_var}}
 
 \item{line_size}{Numeric.}
 
@@ -101,5 +112,10 @@ Only works for \code{show_bin_summary} = \code{TRUE}.}
 \item{default_text_size}{Numeric.}
 }
 \description{
-Plot temporal trend
+a customizable plotting function that takes in several arguments to plot
+a temporal trend of a variable over time. The function allows the user to
+customize the x and y variables, the display of error bars, the grouping
+of the data, the colour and size of the lines, and many other graphical
+features. The function returns a plot object that can be further
+customized or saved.
 }

@@ -1,46 +1,64 @@
 #' @title Plot temporal trend
-#' @param data_source DESCRIPTION.
-#' @param x_var Character. Name of the X-variable
-#' @param x_var_name Character. label of the X-variable
-#' @param y_var Character. Name of the Y-variable
-#' @param y_var_name Character. label of the Y-variable
+#' @param data_source data.frame to be plotted.
+#' @param x_var Character. The name of the column in `data_source` containing
+#' the x-variable (default: "age")
+#' @param x_var_name Character. The name of the x-axis variable
+#' (default: "Time (ka BP)")
+#' @param y_var Character. The name of the column in `data_source` containing
+#' the y-variable
+#' @param y_var_name Character. The name of the y-axis variable
 #' @param sel_type
 #' Character. The type of time series.
 #' \itemize{
 #' \item `"single"` - only one series
 #' \item `"group"` - several series
 #' }
+#' The function will plot a single line with error bars (if `display_error` is
+#' `TRUE`). If `"group"`, the function will plot multiple lines with different
+#' colours based on the `group_var``
 #' @param group_var Character. Name of the variable defining the groups
 #' in `sel_type`.
-#' @param display_error Logical. Should error bar be displayed?
-#' @param y_limits Either `NULL` or 2 value vector to set limits.
+#' @param display_error Logical. Should an error bar be displayed?
+#' @param y_limits The limits of the y-axis in the form of a vector of length 2
+#' (default: `NULL`). If `NULL`, the function will calculate the limits 
+#' automatically.
 #' @param sel_y_trans
 #' Character. Name of tranfsormation used in `scale_y_continuous`
+#' (default: `"identity"`)
 #' @param sel_x_trans
 #' Character. Name of tranfsormation used in `scale_x_continuous`
+#' (default: `"reverse"`)
 #' @param x_ticks Numeric vector with x-ticks.
 #' @param y_ticks
-#' Numeric vector with y-ticks or `"auto"` to set them automaticaly
+#' Numeric vector with y-ticks or `"auto"` to set them automatically
 #' @param n_y_ticks If `y_ticks` = `"auto"`, then set number of automatic ticks
-#' @param show_rmse Locigal. Should RMSE visualisation be plotted.
+#' @param show_rmse Locigal. Should root mean square error (RMSE) visualisation 
+#' be plotted.
 #' Only works for `group_var` = `"group"`
-#' @param show_bin_summary Locigal. Should age bin summary be plotted.
+#' @param show_bin_summary Locigal. Should an age bin summary be plotted?
 #' Only works for `group_var` = `"group"`.
 #' @param summary_bin_size Size of time bins to use.
 #' Only works for `show_bin_summary` = `TRUE`.
 #' @param deafult_color_line Character with HEX code.
 #' @param default_color_rmse_highlight Character with HEX code.
-#' @param default_color_summary_line haracter with HEX code.
-#' @param default_color_summary_fill haracter with HEX code.
+#' @param default_color_summary_line Character with HEX code.
+#' @param default_color_summary_fill Character with HEX code.
 #' @param group_color_pallete
-#' Optional. Name vector with colors for levels of `group_var`
+#' Optional. Name vector with colours for levels of `group_var`
 #' @param line_size Numeric.
 #' @param line_alpha Numeric.
 #' @param error_alpha Numeric.
 #' @param summary_line_size Numeric.
 #' @param summary_alpha Numeric.
 #' @param default_text_size Numeric.
-#' @export 
+#' @description
+#' a customizable plotting function that takes in several arguments to plot
+#' a temporal trend of a variable over time. The function allows the user to
+#' customize the x and y variables, the display of error bars, the grouping
+#' of the data, the colour and size of the lines, and many other graphical
+#' features. The function returns a plot object that can be further
+#' customized or saved.
+#' @export
 plot_temporal_trend <-
     function(data_source,
              x_var = "age",
@@ -277,7 +295,6 @@ plot_temporal_trend <-
             if (
                 show_bin_summary == TRUE
             ) {
-
                 # Data for boxplot (mean of each time BIN for each dataset)
                 data_boxplot <-
                     data_source %>%
