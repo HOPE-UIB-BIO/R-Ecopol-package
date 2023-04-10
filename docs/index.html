@@ -73,6 +73,59 @@
 <code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"HOPE-UIB-BIO/R-Ecopol-package"</span><span class="op">)</span></span></code></pre></div>
 </div>
+<div class="section level2">
+<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+</h2>
+<p>The main purpose of {REcopol} is to provide tools for easy-to-use analyses of fossil pollen data. All functions can be grouped into 5 categories:</p>
+<ol style="list-style-type: decimal">
+<li>
+<strong>Diversity estimations</strong> - Functions to estimates diversity from community data using various methods, including taxonomic, functional. and phylogenetic diversity.
+<ul>
+<li><a href="https://hope-uib-bio.github.io/R-Ecopol-package/reference/diversity_estimate.html" class="external-link">diversity_estimate()</a></li>
+<li><a href="https://hope-uib-bio.github.io/R-Ecopol-package/reference/diversity_estimate_taxonomic.html" class="external-link">diversity_estimate_taxonomic()</a></li>
+<li><a href="https://hope-uib-bio.github.io/R-Ecopol-package/reference/diversity_estimate_functional.html" class="external-link">diversity_estimate_functional()</a></li>
+<li><a href="https://hope-uib-bio.github.io/R-Ecopol-package/reference/diversity_estimate_phylogenetic.html" class="external-link">diversity_estimate_phylogenetic()</a></li>
+</ul>
+</li>
+<li>
+<strong>Ordinations</strong> - Functions to fit Detrended (Canonical) Correspondence Analysis.
+<ul>
+<li><a href="https://hope-uib-bio.github.io/R-Ecopol-package/reference/fit_ordination.html" class="external-link">fit_ordination()</a></li>
+<li><a href="https://hope-uib-bio.github.io/R-Ecopol-package/reference/fit_ordination_dca.html" class="external-link">fit_ordination_dca()</a></li>
+<li><a href="https://hope-uib-bio.github.io/R-Ecopol-package/reference/fit_ordination_dcca.html" class="external-link">fit_ordination_dcca()</a></li>
+</ul>
+</li>
+<li>
+<strong>GAM modeling</strong> - Functions to fit, predict, and visualise generalized additive models (GAM) models.
+<ul>
+<li><a href="https://hope-uib-bio.github.io/R-Ecopol-package/reference/fit_custom_gam.html" class="external-link">fit_custom_gam()</a></li>
+<li><a href="https://hope-uib-bio.github.io/R-Ecopol-package/reference/fit_hgam.html" class="external-link">fit_hgam()</a></li>
+<li><a href="https://hope-uib-bio.github.io/R-Ecopol-package/reference/fit_multiple_gams.html" class="external-link">fit_multiple_gams()</a></li>
+<li><a href="https://hope-uib-bio.github.io/R-Ecopol-package/reference/predic_model.html" class="external-link">predic_model()</a></li>
+<li><a href="https://hope-uib-bio.github.io/R-Ecopol-package/reference/plot_temporal_trend.html" class="external-link">plot_temporal_trend()</a></li>
+</ul>
+</li>
+<li>
+<strong>Change-point analyses and regression partition</strong> - Functions for detection of change points in temporal patterns
+<ul>
+<li><a href="https://hope-uib-bio.github.io/R-Ecopol-package/reference/regression_partition.html" class="external-link">regression_partition()</a></li>
+<li><a href="https://hope-uib-bio.github.io/R-Ecopol-package/reference/mv_regression_partition.html" class="external-link">mv_regression_partition()</a></li>
+<li><a href="https://hope-uib-bio.github.io/R-Ecopol-package/reference/get_change_points.html" class="external-link">get_change_points()</a></li>
+<li><a href="https://hope-uib-bio.github.io/R-Ecopol-package/reference/get_change_points_all.html" class="external-link">get_change_points_all()</a></li>
+<li><a href="https://hope-uib-bio.github.io/R-Ecopol-package/reference/add_data_partition.html" class="external-link">add_data_partition()</a></li>
+</ul>
+</li>
+<li>
+<strong>Utility</strong> - Functions for operation with (not only) fossil pollen data
+<ul>
+<li><a href="https://hope-uib-bio.github.io/R-Ecopol-package/reference/add_age_bin.html" class="external-link">add_age_bin()</a></li>
+<li><a href="https://hope-uib-bio.github.io/R-Ecopol-package/reference/transfer_into_proportions.html" class="external-link">transfer_into_proportions()</a></li>
+<li><a href="https://hope-uib-bio.github.io/R-Ecopol-package/reference/tranform_percentage_data.html" class="external-link">tranform_percentage_data()</a></li>
+<li><a href="https://hope-uib-bio.github.io/R-Ecopol-package/reference/get_density.html" class="external-link">get_density()</a></li>
+</ul>
+</li>
+</ol>
+</div>
 </div>
   </div>
 

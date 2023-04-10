@@ -12,8 +12,8 @@ reference:
   - fit_ordination
   - fit_ordination_dca
   - fit_ordination_dcca
-- title: Gam modeling
-  desc: Functions to fit, predict, and visualise GAM models
+- title: GAM modeling
+  desc: Functions to fit, predict, and visualise generalized additive models (GAM) models
 - contents:
   - fit_custom_gam
   - fit_hgam
@@ -27,11 +27,11 @@ reference:
   - mv_regression_partition
   - get_change_points
   - get_change_points_all
-  - get_density
   - add_data_partition
-- title: Utilities
-  desc: Functions for operation with fossil pollen data
+- title: Utility
+  desc: Functions for operation with (not only) fossil pollen data
 - contents:
   - add_age_bin
   - transfer_into_proportions
   - tranform_percentage_data
+  - get_density
