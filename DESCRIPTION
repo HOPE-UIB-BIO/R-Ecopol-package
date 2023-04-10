@@ -2,20 +2,16 @@ Package: REcopol
 Title: Analyse fossil pollen records
 Version: 0.0.1
 Authors@R: 
-    person(given = "Ondrej", family = "Mottl",
-            email = "ondrej.mottl@gmail.com", role = c("aut", "cre"),
-            comment = c(ORCID = "0000-0002-9796-5081"))
-Description: The package assemble function used in community ecology and present them in easy-to-use wrapper functions.
+    person("Ondrej", "Mottl", , "ondrej.mottl@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-9796-5081"))
+Description: The package assemble function used in community ecology and
+    present them in easy-to-use wrapper functions.
 License: MIT + file LICENSE
-Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
 Imports: 
     ape,
     assertthat,
     dplyr,
     ggplot2,
-    knitr,
     lifecycle,
     magrittr,
     marginaleffects,
@@ -23,20 +19,25 @@ Imports:
     mvpart,
     picante,
     purrr,
-    RColorBrewer,
     rlang (>= 0.4.11),
     RUtilpol,
     scales,
+    stats,
     stringr,
     tibble,
     tidyr,
-    usethis,
+    utils,
     vegan
+Suggests: 
+    knitr,
+    roxygen2,
+    testthat (>= 3.0.0)
+VignetteBuilder: 
+    knitr
 Remotes: 
     cran/mvpart,
     HOPE-UIB-BIO/R-Utilpol-package
-Suggests: 
-    roxygen2,
-    testthat (>= 3.0.0)
 Config/testthat/edition: 3
-VignetteBuilder: knitr
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
