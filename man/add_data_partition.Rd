@@ -7,12 +7,21 @@
 add_data_partition(data_source_var, data_source_levels, age_var = "age")
 }
 \arguments{
-\item{data_source_var}{Data frame with the variables to partition}
+\item{data_source_var}{A dataframe with samples as rows and variables as
+columns. This dataframe must contain a "sample_id" column.}
 
-\item{data_source_levels}{Data frame with ages of levels}
+\item{data_source_levels}{A dataframe with one row per sample, where the
+sample_id column must match the data_source_var dataframe. This dataframe
+must contain an "age" column.}
 
-\item{age_var}{Name (in quotes) of variable which define the age of samples}
+\item{age_var}{A character string indicating the name of the age column in
+the data_source_levels dataframe. Default value is "age".}
+}
+\value{
+A dataframe with the same columns as data_source_var plus a column
+for each partition, named as variable name plus "_part".
 }
 \description{
-Add partition for each column for chronologically ordered data using regression trees
+Add partition for each column for chronologically ordered
+data using regression trees.
 }
