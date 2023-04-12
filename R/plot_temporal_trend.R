@@ -20,7 +20,7 @@
 #' in `sel_type`.
 #' @param display_error Logical. Should an error bar be displayed?
 #' @param y_limits The limits of the y-axis in the form of a vector of length 2
-#' (default: `NULL`). If `NULL`, the function will calculate the limits 
+#' (default: `NULL`). If `NULL`, the function will calculate the limits
 #' automatically.
 #' @param sel_y_trans
 #' Character. Name of tranfsormation used in `scale_y_continuous`
@@ -32,7 +32,7 @@
 #' @param y_ticks
 #' Numeric vector with y-ticks or `"auto"` to set them automatically
 #' @param n_y_ticks If `y_ticks` = `"auto"`, then set number of automatic ticks
-#' @param show_rmse Locigal. Should root mean square error (RMSE) visualisation 
+#' @param show_rmse Locigal. Should root mean square error (RMSE) visualisation
 #' be plotted.
 #' Only works for `group_var` = `"group"`
 #' @param show_bin_summary Locigal. Should an age bin summary be plotted?
@@ -57,7 +57,7 @@
 #' customize the x and y variables, the display of error bars, the grouping
 #' of the data, the colour and size of the lines, and many other graphical
 #' features. The function returns a plot object that can be further
-#' customized or saved.
+#' customized or saved. This function is currently `r lifecycle::badge("experimental")`
 #' @export
 plot_temporal_trend <-
     function(data_source,
@@ -88,6 +88,7 @@ plot_temporal_trend <-
              summary_line_size = 0.5,
              summary_alpha = 0.5,
              default_text_size = 16) {
+        lifecycle::signal_stage("experimental", "plot_temporal_trend()")
         if (
             is.null(data_source) | missing(data_source)
         ) {

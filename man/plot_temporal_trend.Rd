@@ -117,5 +117,5 @@ a temporal trend of a variable over time. The function allows the user to
 customize the x and y variables, the display of error bars, the grouping
 of the data, the colour and size of the lines, and many other graphical
 features. The function returns a plot object that can be further
-customized or saved.
+customized or saved. This function is currently \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
