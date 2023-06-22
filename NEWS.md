@@ -1,3 +1,7 @@
+# REcopol 0.0.2
+
+* For all exported functions, specify, which function is used "under the hood".
+
 # REcopol 0.0.1
 
 * Move from `RFossilpol` to [`RUtilpol`](https://github.com/HOPE-UIB-BIO/R-Utilpol-package) for internal functions
