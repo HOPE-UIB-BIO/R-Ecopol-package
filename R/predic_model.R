@@ -1,11 +1,12 @@
 #' Predict data from a regression model
-#'
 #' @param data_source Data.frame with values to be predicted upon
 #' @param model_source Selected model. Can be any of supported models by
 #' `marginaleffects`
 #' @param exclude_var Vector with terms to exclude. This is used only for `gam`
 #' models
-#' @description Predict model using `marginaleffects::predictions` function
+#' @description 
+#' Predict model using `marginaleffects::predictions` function.
+#' @seealso [marginaleffects::predictions()]
 #' @export
 predic_model <-
   function(data_source, model_source, exclude_var = NULL) {

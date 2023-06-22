@@ -1,9 +1,10 @@
 #' @title Fit DCA
 #' @description
-#' Fits a DCA using `vegan` package
+#' Fits a DCA using [vegan::decorana()].
 #' @param data_source
 #' data frame with response data (pollen counts or percentages). Sample ID as
 #' rownames.
+#' @seealso [vegan::decorana()]
 #' @return
 #' \itemize{
 #' \item `ordination` - ordination object of class "decorana"
@@ -38,7 +39,7 @@ fit_ordination_dca <-
                     .cols = dplyr::everything(),
                     .fns = ~ ifelse(.x < 0, 0, .x)
                 )
-            )  %>% 
+            ) %>%
             tibble::rownames_to_column("sample_id") %>%
             tibble::as_tibble()
 

@@ -17,5 +17,8 @@ rownames.}
 }
 }
 \description{
-Fits a DCA using \code{vegan} package
+Fits a DCA using \code{\link[vegan:decorana]{vegan::decorana()}}.
+}
+\seealso{
+\code{\link[vegan:decorana]{vegan::decorana()}}
 }

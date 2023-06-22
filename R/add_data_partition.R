@@ -5,11 +5,12 @@
 #' sample_id column must match the data_source_var dataframe. This dataframe
 #' must contain an "age" column.
 #' @param age_var A character string indicating the name of the age column in
-#' the data_source_levels dataframe. Default value is "age".
+#' the data_source_levels dataframe. The default value is "age".
 #' @description Add partition for each column for chronologically ordered
-#' data using regression trees.
+#' data using regression trees (`mvpart::rpart()`).
 #' @return A dataframe with the same columns as data_source_var plus a column
 #' for each partition, named as variable name plus "_part".
+#' @seealso [regression_partition()], [mvpart::rpart()]
 #' @export
 add_data_partition <-
   function(data_source_var,

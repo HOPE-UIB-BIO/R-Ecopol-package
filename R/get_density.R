@@ -1,4 +1,4 @@
-#' @title Get density from vector of numbers
+#' @title Get density from a vector of numbers
 #' @param data_source Vector with numeric values
 #' @param values_range A numeric vector of length 2 specifying the range to
 #' rescale the data to. If missing, the range of the data is used.
@@ -7,8 +7,10 @@
 #' @param ... Additional parameters used in `stats::density`
 #' @description
 #' This function calculates the density of a numeric vector, potentially
-#' rescaling it to a specific range and reflecting it.
-#' @return Data.frame with the `data_source` values and estimated density
+#' rescaling it to a specific range and reflecting it. it is a wrapper for
+#' `stats::density()`.
+#' @return Data.frame with the `data_source` values and estimated density+
+#' @seealso [stats::density()]
 #' @export
 get_density <-
   function(data_source,

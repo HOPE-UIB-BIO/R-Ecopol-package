@@ -2,7 +2,7 @@
 % Please edit documentation in R/fit_hgam.R
 \name{fit_hgam}
 \alias{fit_hgam}
-\title{Fit single term hierarchical GAM model}
+\title{Fit single-term hierarchical GAM model}
 \usage{
 fit_hgam(
   x_var = "age",
@@ -29,7 +29,7 @@ fit_hgam(
 \item{group_var}{Character. Name of the variable used for identification of
 groups.}
 
-\item{error_family}{Character. Name of the error-family to be used}
+\item{error_family}{Character. Name of the error family to be used}
 
 \item{weights_var}{Character. Name of the variable to use as weights}
 
@@ -40,18 +40,18 @@ groups.}
 
 \item{sel_k}{Numeric. Define \code{k} (wiggliness)}
 
-\item{sel_m}{Numeric. User specify the order of the penalty for this term.
-if \code{NULL}, function will use \code{1} or \code{2} depending on the presence of common
-trend.}
+\item{sel_m}{Numeric. The user specifies the order of the penalty for this
+term. if \code{NULL}, the function will use \code{1} or \code{2} depending on the presence
+of common trend.}
 
 \item{common_trend}{Logical. Should hGAM have a common shared trend?}
 
 \item{use_parallel}{Logical. Should computation use parallel?}
 
-\item{use_discrete}{Logical. Should \code{discrete} agument be used for parallel
-computation?}
+\item{use_discrete}{Logical. Should the \code{discrete} argument be used for
+parallel computation?}
 
-\item{max_iterations}{Numeric. Maximum number of iteration for GAM to try.}
+\item{max_iterations}{Numeric. Maximum number of iterations for GAM to try.}
 
 \item{verbose}{Logical. Should additional messages be output?}
 }
@@ -62,9 +62,10 @@ Fitted hGAM model
 Fit a hierarchical GAM model with/without a single common
 smoother (\code{common_trend}) plus group-level smoothers with differing
 wiggliness (random effect). If there is less number of groups in the dataset
-than 2, normal GAM model will be fitted.
-If \code{use_parallel} is \code{TRUE}, number of cores is automatically detected.
+than 2, a normal GAM model will be fitted. This function is a wrapper for
+complex \code{mgcv::bam()}.
+If \code{use_parallel} is \code{TRUE}, the number of cores is automatically detected.
 }
 \seealso{
-{mgcv::bam()}
+\code{\link[mgcv:bam]{mgcv::bam()}}
 }

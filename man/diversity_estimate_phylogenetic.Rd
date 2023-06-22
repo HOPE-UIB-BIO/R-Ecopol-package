@@ -26,7 +26,7 @@ Row names should be the \code{sample_id}.}
 \item \code{"nti"} = Nearest Taxon Index
 }}
 
-\item{abundance_weighted}{Logical. It FALSE, presence absence data will be used.}
+\item{abundance_weighted}{Logical. If FALSE, presence-absence data will be used.}
 
 \item{rand}{Numeric. Number of randomization}
 
@@ -48,9 +48,11 @@ Possible outputs depending on the \code{sel_method}:
 }
 }
 \description{
-Function for estimating one of three metrics of phylogenetic diversity
+Function for estimating one of three metrics of phylogenetic diversity. It is
+a wrapper for various functions from {picante} package.
 }
 \seealso{
+\code{\link[picante:ses.pd]{picante::ses.pd()}}, \code{\link[picante:ses.mpd]{picante::ses.mpd()}}, \code{\link[picante:ses.mntd]{picante::ses.mntd()}},
 \code{\link[=diversity_estimate]{diversity_estimate()}}
 }
 \author{

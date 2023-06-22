@@ -23,10 +23,10 @@
 #' (default: `NULL`). If `NULL`, the function will calculate the limits
 #' automatically.
 #' @param sel_y_trans
-#' Character. Name of tranfsormation used in `scale_y_continuous`
+#' Character. Name of a transformation used in `scale_y_continuous`
 #' (default: `"identity"`)
 #' @param sel_x_trans
-#' Character. Name of tranfsormation used in `scale_x_continuous`
+#' Character. Name of a transformation used in `scale_x_continuous`
 #' (default: `"reverse"`)
 #' @param x_ticks Numeric vector with x-ticks.
 #' @param y_ticks
@@ -53,11 +53,12 @@
 #' @param default_text_size Numeric.
 #' @description
 #' a customizable plotting function that takes in several arguments to plot
-#' a temporal trend of a variable over time. The function allows the user to
-#' customize the x and y variables, the display of error bars, the grouping
-#' of the data, the colour and size of the lines, and many other graphical
-#' features. The function returns a plot object that can be further
-#' customized or saved. This function is currently `r lifecycle::badge("experimental")`
+#' a temporal trend of a variable over time using {`ggplo2`} package.
+#' The function allows the user to customize the x and y variables, the display
+#' of error bars, the grouping of the data, the colour and size of the lines,
+#' and many other graphical features. The function returns a plot object that
+#' can be further customized or saved.
+#' This function is currently `r lifecycle::badge("experimental")`
 #' @export
 plot_temporal_trend <-
     function(data_source,

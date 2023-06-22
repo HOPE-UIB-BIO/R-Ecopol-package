@@ -15,18 +15,18 @@ fit_ordination(
 )
 }
 \arguments{
-\item{data_source_community}{Data.frame with community data. Each row is sample. First columns is
-\code{sample_id}, each other is taxa.}
+\item{data_source_community}{Data.frame with community data. Each row is a sample. The first column is
+\code{sample_id}and others are individual taxa.}
 
 \item{sel_method}{\itemize{
 \item \code{"unconstrained"} - Detrended Correspondence Analysis
 \item \code{"constrained"} - Detrended Correspondence Canonical Analysis
 }}
 
-\item{data_source_predictors}{Data.frame with predictors. First columns is \code{sample_id}. Other columns
+\item{data_source_predictors}{Data.frame with predictors. The first column is \code{sample_id}. Other columns
 can be predictors.}
 
-\item{var_name_pred}{Character. Vector with the name of predictot variable.}
+\item{var_name_pred}{Character. Vector with the name of a predictor variable.}
 
 \item{sel_complexity}{Indicate how the predictor should be used
 \itemize{
@@ -35,34 +35,37 @@ can be predictors.}
 \item \code{"poly_3"} - a polynomial predictor of third order
 }}
 
-\item{transform_to_percentage}{Logical. Should community data be tranformed into percentages?}
+\item{transform_to_percentage}{Logical. Should community data be transformed into percentages?}
 
-\item{tranformation}{Logical. Which tranformation should be applied?
+\item{tranformation}{Logical. Which transformation should be applied?
 \itemize{
 \item "none" -  without transformation
 \item "chisq" - Chisq tranformation
-\item "hellinger" - Hellinger tranformation
+\item "hellinger" - Hellinger transformation
 }
-It is recomneded to apply tranformation to percentage data.}
+It is recommended to apply a transformation to percentage data.}
 }
 \value{
 \itemize{
 \item \code{case_r} - numeric matrix with CaseR scores for first 4 axes
 \item \code{tot_inertia} - total variation in (transformed) response data
-\item \code{axis_1_grad_length} - total gradient length of first axis
+\item \code{axis_1_grad_length} - total gradient length of the first axis
 }
-Addtional values are reported for \code{unconstrained}
+Additional values are reported for \code{unconstrained}
 \itemize{
 \item \code{ordination} - ordination object of class "decorana"
 }
-Addtional values are reported for \code{constrained}
+Additional values are reported for \code{constrained}
 \itemize{
 \item \code{sel_complexity} - see \code{sel_complexity} agument description
 }
 }
 \description{
 This is a wrapper function to perform standard data preparation
-and either unconstrained (DCA) or consatrined ordination (DCCA)
-with fossil pollen data. By default constrained ordination is constrained by
-\code{"age"}.
+and either unconstrained (DCA, \code{vegan} package]) or constrained
+ordination (DCCA, \code{CANOCO} software) with fossil pollen data.
+By default constrained ordination is constrained by \code{"age"}.
+}
+\seealso{
+\code{\link[=fit_ordination_dca]{fit_ordination_dca()}}, \code{\link[=fit_ordination_dcca]{fit_ordination_dcca()}}, \code{\link[vegan:decorana]{vegan::decorana()}}
 }

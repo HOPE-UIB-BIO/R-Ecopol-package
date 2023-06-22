@@ -45,3 +45,6 @@ containing change points for each variable specified in the input data frame.
 Change points are identified as the locations where the value of a variable
 changes from its previous value
 }
+\seealso{
+\code{\link[=get_change_points]{get_change_points()}}
+}

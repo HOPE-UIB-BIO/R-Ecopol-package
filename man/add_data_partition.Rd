@@ -15,7 +15,7 @@ sample_id column must match the data_source_var dataframe. This dataframe
 must contain an "age" column.}
 
 \item{age_var}{A character string indicating the name of the age column in
-the data_source_levels dataframe. Default value is "age".}
+the data_source_levels dataframe. The default value is "age".}
 }
 \value{
 A dataframe with the same columns as data_source_var plus a column
@@ -23,5 +23,8 @@ for each partition, named as variable name plus "_part".
 }
 \description{
 Add partition for each column for chronologically ordered
-data using regression trees.
+data using regression trees (\code{mvpart::rpart()}).
+}
+\seealso{
+\code{\link[=regression_partition]{regression_partition()}}, \code{\link[mvpart:rpart]{mvpart::rpart()}}
 }

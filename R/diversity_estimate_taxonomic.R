@@ -41,7 +41,7 @@ diversity_estimate_taxonomic <-
 
     assertthat::assert_that(
       round(sample_size) == sample_size,
-      msg = "'sample_size' has be integer"
+      msg = "'sample_size' has to be integer"
     )
 
     # helper functions
@@ -114,7 +114,7 @@ diversity_estimate_taxonomic <-
         }
       }
 
-    # estimate the diversity indeces
+    # estimate the diversity indices
     est_n_0 <-
       sapply(
         sample_size,

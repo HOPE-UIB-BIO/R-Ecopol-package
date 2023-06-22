@@ -16,5 +16,8 @@ predic_model(data_source, model_source, exclude_var = NULL)
 models}
 }
 \description{
-Predict model using \code{marginaleffects::predictions} function
+Predict model using \code{marginaleffects::predictions} function.
+}
+\seealso{
+\code{\link[marginaleffects:predictions]{marginaleffects::predictions()}}
 }

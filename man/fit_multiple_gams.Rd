@@ -29,13 +29,13 @@ groups.}
 
 \item{smooth_basis}{Character. Name of the Smooth basis to use}
 
-\item{error_family}{Character. Name of the error-family to be used}
+\item{error_family}{Character. Name of the error family to be used}
 
 \item{weights_var}{Character. Name of the variable to use as weights}
 
 \item{max_k}{Maximum \code{k} which can be used}
 
-\item{max_iterations}{Numeric. Maximum number of iteration for GAM to try.}
+\item{max_iterations}{Numeric. Maximum number of iterations for GAM to try.}
 
 \item{verbose}{Logical. Should additional messages be output?}
 }

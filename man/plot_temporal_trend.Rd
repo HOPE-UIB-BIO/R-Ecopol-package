@@ -67,10 +67,10 @@ in \code{sel_type}.}
 (default: \code{NULL}). If \code{NULL}, the function will calculate the limits
 automatically.}
 
-\item{sel_y_trans}{Character. Name of tranfsormation used in \code{scale_y_continuous}
+\item{sel_y_trans}{Character. Name of a transformation used in \code{scale_y_continuous}
 (default: \code{"identity"})}
 
-\item{sel_x_trans}{Character. Name of tranfsormation used in \code{scale_x_continuous}
+\item{sel_x_trans}{Character. Name of a transformation used in \code{scale_x_continuous}
 (default: \code{"reverse"})}
 
 \item{x_ticks}{Numeric vector with x-ticks.}
@@ -113,9 +113,10 @@ Only works for \code{show_bin_summary} = \code{TRUE}.}
 }
 \description{
 a customizable plotting function that takes in several arguments to plot
-a temporal trend of a variable over time. The function allows the user to
-customize the x and y variables, the display of error bars, the grouping
-of the data, the colour and size of the lines, and many other graphical
-features. The function returns a plot object that can be further
-customized or saved. This function is currently \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+a temporal trend of a variable over time using {\code{ggplo2}} package.
+The function allows the user to customize the x and y variables, the display
+of error bars, the grouping of the data, the colour and size of the lines,
+and many other graphical features. The function returns a plot object that
+can be further customized or saved.
+This function is currently \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
