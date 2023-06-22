@@ -21,7 +21,7 @@ diversity_estimate(
 \item{data_source}{Data frame with rows as levels and columns as taxa. First
 columns should be named \code{sample_id}.}
 
-\item{sel_method}{Character. Selected method of diversify estimation
+\item{sel_method}{Character. The selected method of diversity estimation
 \itemize{
 \item \code{"taxonomic"} - individual-based Hill numbers of taxonomic diversity
 (diversity and evenness)
@@ -45,7 +45,7 @@ to use for each randomization (for independent swap and trial null models).}
 \item{abundance_weighted}{Logical. Only for \code{"phylogenetic"} or \code{"functional"}.
 It FALSE, presence/absence data will be used for calculations.}
 
-\item{data_source_tree}{Only for \code{"phylogenetic"}. Phylogenetic backbone tree constructed
+\item{data_source_tree}{Only for \code{"phylogenetic"}. A phylogenetic backbone tree constructed
 using \code{ape} package.}
 
 \item{data_source_traits}{Data frame. Row names be the same taxa as
@@ -78,6 +78,7 @@ Possible outputs depending on the \code{sel_method}:
 This function estimates diversity from community data using various methods,
 including taxonomic, phylogenetic diversity, phylogenetic NRI,
 phylogenetic NTI, functional Rao, functional MPD, and functional Simpson.
+Therefore, it is a wrapper for additional functions.
 }
 \seealso{
 \code{\link[=diversity_estimate_taxonomic]{diversity_estimate_taxonomic()}}, \code{\link[=diversity_estimate_functional]{diversity_estimate_functional()}},

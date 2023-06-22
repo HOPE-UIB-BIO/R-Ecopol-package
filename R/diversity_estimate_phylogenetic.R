@@ -12,14 +12,15 @@
 #' \item `"nti"` = Nearest Taxon Index
 #' }
 #' @param abundance_weighted
-#' Logical. It FALSE, presence absence data will be used.
+#' Logical. If FALSE, presence-absence data will be used.
 #' @param rand
 #' Numeric. Number of randomization
 #' @param iterations
 #' Number of iterations to use for each randomization
 #'  (for independent swap and trial null models)
 #' @description
-#' Function for estimating one of three metrics of phylogenetic diversity
+#' Function for estimating one of three metrics of phylogenetic diversity. It is
+#' a wrapper for various functions from {picante} package.
 #' @return
 #' Data frame with diversity metric estimated for each level (sample).
 #' Possible outputs depending on the `sel_method`:
@@ -33,7 +34,8 @@
 #' \item `z_score` - Standarise Effect Size (SES), calculated as
 #' (observed value - mean randomised value ) / sd of randomised value
 #' }
-#' @seealso [diversity_estimate()]
+#' @seealso [picante::ses.pd()], [picante::ses.mpd()], [picante::ses.mntd()],
+#' [diversity_estimate()]
 #' @author Ondrej Mottl, Kuber Bhatta
 #' @export
 diversity_estimate_phylogenetic <-

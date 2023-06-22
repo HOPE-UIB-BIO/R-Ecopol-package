@@ -2,7 +2,7 @@
 % Please edit documentation in R/fit_custom_gam.R
 \name{fit_custom_gam}
 \alias{fit_custom_gam}
-\title{Fit custom single term GAM model}
+\title{Fit custom single-term GAM model}
 \usage{
 fit_custom_gam(
   x_var = "age",
@@ -21,7 +21,7 @@ fit_custom_gam(
 
 \item{y_var}{Character. Name of the Y-variable}
 
-\item{error_family}{Character. Name of the error-family to be used}
+\item{error_family}{Character. Name of the error family to be used}
 
 \item{smooth_basis}{Character. Name of the Smooth basis to use}
 
@@ -32,7 +32,7 @@ fit_custom_gam(
 
 \item{sel_k}{Numeric. Define \code{k} (wiggliness)}
 
-\item{max_iterations}{Numeric. Maximum number of iteration for GAM to try.}
+\item{max_iterations}{Numeric. Maximum number of iterations for GAM to try.}
 
 \item{verbose}{Logical. Should additional messages be output?}
 }
@@ -44,5 +44,5 @@ A wrapper function for \code{mgcv::gam} to help fit GAM models
 functionally.
 }
 \seealso{
-{mgcv::gam()}
+\code{\link[mgcv:gam]{mgcv::gam()}}
 }

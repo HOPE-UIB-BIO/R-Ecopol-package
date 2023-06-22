@@ -27,11 +27,15 @@ indicating the segment to which each row belongs
 }
 }
 \description{
-Partition chronologically ordered data using regression trees.
+Partition chronologically ordered data using regression trees
+(\code{mvpart::rpart()}).
 This function performs regression partitioning analysis on a given data
 source to identify segments with different relationships between the
 dependent variable and a specified independent variable. The output includes
 the partitioned data, the resulting regression tree, the number of resulting
 segments, and the change points in the independent variable age that
 correspond to the partitioning.
+}
+\seealso{
+\code{\link[mvpart:rpart]{mvpart::rpart()}}
 }

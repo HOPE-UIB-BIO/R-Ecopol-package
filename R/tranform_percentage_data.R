@@ -1,18 +1,18 @@
 #' @title Transform pollen data using selected transformation
-#' @param data_source Data frame with pollen data. Each row represent one
-#' level (sample) and each column represent one taxon. Table must contain
+#' @param data_source Data frame with pollen data. Each row represents one
+#' level (sample) and each column represents one taxon. Table must contain
 #' `sample_id` column with unique values.
 #' @param transformation Selection of data transformation options. `hellinger` =
 #' Hellinger, `chisq` = Chisq, `none` = without transformation. Both Hellinger
-#' and Chisq are recommend for proportional/percentage data
-#' @description Transform pollen data using one of the selected transformation
-#' functions
-#' @export 
+#' and Chisq are recommended for proportional/percentage data
+#' @description Transform pollen data using one of the selected transformations
+#' functions. This is a wrapper for `vegan::decostand()`
+#' @seealso [vegan::decostand()]
+#' @export
 tranform_percentage_data <-
   function(
-    data_source,
-    transformation = c("chisq", "hellinger", "none")) {
-
+      data_source,
+      transformation = c("chisq", "hellinger", "none")) {
     RUtilpol::check_class("data_source", "data.frame")
 
     RUtilpol::check_col_names("data_source", "sample_id")
@@ -31,11 +31,13 @@ tranform_percentage_data <-
     if (transformation == "hellinger") {
       data_trans <-
         vegan::decostand(data_rownames,
-                         method = "hellinger")
+          method = "hellinger"
+        )
     } else if (transformation == "chisq") {
       data_trans <-
         vegan::decostand(data_rownames,
-                         method = "chi.square")
+          method = "chi.square"
+        )
     } else if (transformation == "none") {
       data_trans <- data_rownames
     }
@@ -45,5 +47,4 @@ tranform_percentage_data <-
       dplyr::relocate(sample_id) %>%
       tibble::as_tibble() %>%
       return()
-
   }

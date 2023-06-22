@@ -25,6 +25,7 @@
 #' changes from its previous value
 #' @return Data.frame with `var_name_order` and all columns detected based on
 #' `var_name_detection`, with `1` represent change points.
+#' @seealso [get_change_points()]
 #' @export
 get_change_points_all <-
   function(data_source,

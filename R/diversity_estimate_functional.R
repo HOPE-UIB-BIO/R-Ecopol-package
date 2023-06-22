@@ -30,9 +30,11 @@
 #' }
 #' @description
 #' This function estimates functional diversity using various methods and
-#' allows for randomization to obtain null distributions.
+#' allows for randomization to obtain null distributions. This function is
+#' a wrapper for the `melodic` adapted from
+#' https://doi.org/10.1007/s00442-016-3546-0.
 #' @author Triin Reitalu, Ondrej Mottl
-#' @seealso [diversity_estimate()]
+#' @seealso [diversity_estimate()], [melodic()]
 #' @export
 diversity_estimate_functional <-
   function(data_source_community,

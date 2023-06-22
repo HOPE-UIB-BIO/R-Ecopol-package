@@ -3,7 +3,7 @@
 #' Data frame with rows as levels and columns as taxa. First
 #' columns should be named `sample_id`.
 #' @param sel_method
-#' Character. Selected method of diversify estimation
+#' Character. The selected method of diversity estimation
 #' \itemize{
 #' \item `"taxonomic"` - individual-based Hill numbers of taxonomic diversity
 #' (diversity and evenness)
@@ -26,7 +26,7 @@
 #' Numeric. Only for `"phylogenetic"`. Number of iterations
 #' to use for each randomization (for independent swap and trial null models).
 #' @param data_source_tree
-#' Only for `"phylogenetic"`. Phylogenetic backbone tree constructed
+#' Only for `"phylogenetic"`. A phylogenetic backbone tree constructed
 #' using `ape` package.
 #' @param data_source_traits
 #' Data frame. Row names be the same taxa as
@@ -35,6 +35,7 @@
 #' This function estimates diversity from community data using various methods,
 #'  including taxonomic, phylogenetic diversity, phylogenetic NRI,
 #' phylogenetic NTI, functional Rao, functional MPD, and functional Simpson.
+#' Therefore, it is a wrapper for additional functions.
 #' @returns
 #' Data frame with diversity metric estimated for each level (sample).
 #' Possible outputs depending on the `sel_method`:

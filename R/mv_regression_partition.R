@@ -1,16 +1,16 @@
 #' @title Multivariate regression partitioning
-#' @param data_source_counts Data frame with pollen data. Each row represent one
-#' level (sample) and each column represent one taxon. Table must contain
+#' @param data_source_counts Data frame with pollen data. Each row represents
+#' one level (sample) and each column represents one taxon. Table must contain
 #' `sample_id` column with unique values corresponding to `data_source_levels`
-#' @param data_source_levels Data frame with level ages, with each row represent
-#'  one level (sample). Table must contain two columns: `sample_id` with unique
-#'  values corresponding to `data_source_levels`, and `age` with ages of each
-#'  level
-#' @param rand The number of times to randomly split the data to determine the 
+#' @param data_source_levels Data frame with level ages, with each row
+#' representing one level (sample). The table must contain two columns:
+#'  `sample_id` with unique values corresponding to `data_source_levels`,
+#' and `age` with ages of each level
+#' @param rand The number of times to randomly split the data to determine the
 #' optimal tree.
 #' @inheritParams tranform_percentage_data
 #' @description This function performs multivariate regression partitioning
-#' using the mvpart R package.
+#' using the mvpart R package (`mvpart::mvpart()`).
 #' It takes in a data frame of count data, a data frame of sample level
 #' information, and various optional arguments, and returns a list of outputs
 #' including the multivariate regression tree object, the change points, the
@@ -23,6 +23,7 @@
 #' \item{`mrt_groups`}{The number of groups in the partitioning.}
 #' \item{`mrt_groups_per_sample`}{The number of groups per sample.}
 #' }
+#' @seealso [mvpart::mvpart()]
 #' @export
 mv_regression_partition <-
   function(data_source_counts,

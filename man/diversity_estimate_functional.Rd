@@ -45,10 +45,12 @@ Possible outputs depending on the \code{sel_method}:
 }
 \description{
 This function estimates functional diversity using various methods and
-allows for randomization to obtain null distributions.
+allows for randomization to obtain null distributions. This function is
+a wrapper for the \code{melodic} adapted from
+https://doi.org/10.1007/s00442-016-3546-0.
 }
 \seealso{
-\code{\link[=diversity_estimate]{diversity_estimate()}}
+\code{\link[=diversity_estimate]{diversity_estimate()}}, \code{\link[=melodic]{melodic()}}
 }
 \author{
 Triin Reitalu, Ondrej Mottl

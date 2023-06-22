@@ -1,21 +1,22 @@
-#' @title Fit single term hierarchical GAM model
+#' @title Fit single-term hierarchical GAM model
 #' @inheritParams fit_custom_gam
 #' @inheritParams fit_gam_safely
 #' @inheritParams fit_multiple_gams
-#' @param sel_m Numeric. User specify the order of the penalty for this term.
-#' if `NULL`, function will use `1` or `2` depending on the presence of common
-#' trend.
+#' @param sel_m Numeric. The user specifies the order of the penalty for this
+#' term. if `NULL`, the function will use `1` or `2` depending on the presence
+#' of common trend.
 #' @param common_trend Logical. Should hGAM have a common shared trend?
 #' @param use_parallel Logical. Should computation use parallel?
-#' @param use_discrete Logical. Should `discrete` agument be used for parallel
-#' computation?
+#' @param use_discrete Logical. Should the `discrete` argument be used for
+#' parallel computation?
 #' @description Fit a hierarchical GAM model with/without a single common
 #' smoother (`common_trend`) plus group-level smoothers with differing
 #' wiggliness (random effect). If there is less number of groups in the dataset
-#' than 2, normal GAM model will be fitted.
-#' If `use_parallel` is `TRUE`, number of cores is automatically detected.
+#' than 2, a normal GAM model will be fitted. This function is a wrapper for
+#' complex `mgcv::bam()`.
+#' If `use_parallel` is `TRUE`, the number of cores is automatically detected.
 #' @return Fitted hGAM model
-#' @seealso {mgcv::bam()}
+#' @seealso [mgcv::bam()]
 #' @export
 fit_hgam <-
   function(x_var = "age",

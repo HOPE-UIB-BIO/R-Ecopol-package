@@ -10,15 +10,18 @@ tranform_percentage_data(
 )
 }
 \arguments{
-\item{data_source}{Data frame with pollen data. Each row represent one
-level (sample) and each column represent one taxon. Table must contain
+\item{data_source}{Data frame with pollen data. Each row represents one
+level (sample) and each column represents one taxon. Table must contain
 \code{sample_id} column with unique values.}
 
 \item{transformation}{Selection of data transformation options. \code{hellinger} =
 Hellinger, \code{chisq} = Chisq, \code{none} = without transformation. Both Hellinger
-and Chisq are recommend for proportional/percentage data}
+and Chisq are recommended for proportional/percentage data}
 }
 \description{
-Transform pollen data using one of the selected transformation
-functions
+Transform pollen data using one of the selected transformations
+functions. This is a wrapper for \code{vegan::decostand()}
+}
+\seealso{
+\code{\link[vegan:decostand]{vegan::decostand()}}
 }

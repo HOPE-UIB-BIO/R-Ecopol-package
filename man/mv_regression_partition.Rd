@@ -12,21 +12,21 @@ mv_regression_partition(
 )
 }
 \arguments{
-\item{data_source_counts}{Data frame with pollen data. Each row represent one
-level (sample) and each column represent one taxon. Table must contain
+\item{data_source_counts}{Data frame with pollen data. Each row represents
+one level (sample) and each column represents one taxon. Table must contain
 \code{sample_id} column with unique values corresponding to \code{data_source_levels}}
 
-\item{data_source_levels}{Data frame with level ages, with each row represent
-one level (sample). Table must contain two columns: \code{sample_id} with unique
-values corresponding to \code{data_source_levels}, and \code{age} with ages of each
-level}
+\item{data_source_levels}{Data frame with level ages, with each row
+representing one level (sample). The table must contain two columns:
+\code{sample_id} with unique values corresponding to \code{data_source_levels},
+and \code{age} with ages of each level}
 
 \item{rand}{The number of times to randomly split the data to determine the
 optimal tree.}
 
 \item{transformation}{Selection of data transformation options. \code{hellinger} =
 Hellinger, \code{chisq} = Chisq, \code{none} = without transformation. Both Hellinger
-and Chisq are recommend for proportional/percentage data}
+and Chisq are recommended for proportional/percentage data}
 }
 \value{
 A list containing the following items:
@@ -40,9 +40,12 @@ A list containing the following items:
 }
 \description{
 This function performs multivariate regression partitioning
-using the mvpart R package.
+using the mvpart R package (\code{mvpart::mvpart()}).
 It takes in a data frame of count data, a data frame of sample level
 information, and various optional arguments, and returns a list of outputs
 including the multivariate regression tree object, the change points, the
 partition assignments, and the number of groups.
+}
+\seealso{
+\code{\link[mvpart:mvpart]{mvpart::mvpart()}}
 }

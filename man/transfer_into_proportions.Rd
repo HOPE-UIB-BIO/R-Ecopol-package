@@ -10,13 +10,13 @@ transfer_into_proportions(
 )
 }
 \arguments{
-\item{data_source}{Data frame with pollen data. Each row represent one
-level (sample) and each column represent one taxon. Table must contain
+\item{data_source}{Data frame with pollen data. Each row represents one
+level (sample) and each column represents one taxon. Table must contain
 \code{sample_id} column with unique values.}
 
-\item{method}{variable to select result as either percentage (\code{percentages})
-or proportions (\code{percentages}).}
+\item{method}{variable to select result as either percentage
+(\code{"percentages"}) or proportions (\code{"percentages"}).}
 }
 \description{
-Tranform pollen data into percentages (or proportions)
+Transform pollen data into percentages (or proportions)
 }

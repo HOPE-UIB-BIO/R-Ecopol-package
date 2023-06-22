@@ -1,47 +1,48 @@
 #' @title Fit ordination
 #' @param data_source_community
-#' Data.frame with community data. Each row is sample. First columns is
-#' `sample_id`, each other is taxa.
+#' Data.frame with community data. Each row is a sample. The first column is
+#' `sample_id`and others are individual taxa.
 #' @param sel_method
 #' \itemize{
 #' \item `"unconstrained"` - Detrended Correspondence Analysis
 #' \item `"constrained"` - Detrended Correspondence Canonical Analysis
 #' }
 #' @param data_source_predictors
-#' Data.frame with predictors. First columns is `sample_id`. Other columns
+#' Data.frame with predictors. The first column is `sample_id`. Other columns
 #' can be predictors.
 #' @param var_name_pred
-#' Character. Vector with the name of predictot variable.
+#' Character. Vector with the name of a predictor variable.
 #' @param transform_to_percentage
-#' Logical. Should community data be tranformed into percentages?
+#' Logical. Should community data be transformed into percentages?
 #' @param tranformation
-#' Logical. Which tranformation should be applied?
+#' Logical. Which transformation should be applied?
 #' \itemize{
 #' \item "none" -  without transformation
 #' \item "chisq" - Chisq tranformation
-#' \item "hellinger" - Hellinger tranformation
+#' \item "hellinger" - Hellinger transformation
 #' }
-#' It is recomneded to apply tranformation to percentage data.
+#' It is recommended to apply a transformation to percentage data.
 #' @inheritParams fit_ordination_dcca
 #' @description
 #' This is a wrapper function to perform standard data preparation
-#' and either unconstrained (DCA) or consatrined ordination (DCCA)
-#' with fossil pollen data. By default constrained ordination is constrained by
-#' `"age"`.
+#' and either unconstrained (DCA, `vegan` package]) or constrained
+#' ordination (DCCA, `CANOCO` software) with fossil pollen data.
+#' By default constrained ordination is constrained by `"age"`.
 #' @returns
 #' \itemize{
 #' \item `case_r` - numeric matrix with CaseR scores for first 4 axes
 #' \item `tot_inertia` - total variation in (transformed) response data
-#' \item `axis_1_grad_length` - total gradient length of first axis
+#' \item `axis_1_grad_length` - total gradient length of the first axis
 #' }
-#' Addtional values are reported for `unconstrained`
+#' Additional values are reported for `unconstrained`
 #' \itemize{
 #' \item `ordination` - ordination object of class "decorana"
 #' }
-#' Addtional values are reported for `constrained`
+#' Additional values are reported for `constrained`
 #' \itemize{
 #' \item `sel_complexity` - see `sel_complexity` agument description
 #' }
+#' @seealso [fit_ordination_dca()], [fit_ordination_dcca()], [vegan::decorana()]
 #' @export
 fit_ordination <-
     function(data_source_community,
