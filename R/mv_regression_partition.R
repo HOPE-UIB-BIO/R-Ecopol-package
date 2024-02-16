@@ -46,6 +46,20 @@ mv_regression_partition <-
 
     transformation <- match.arg(transformation)
 
+    if (
+      isFALSE(
+        requireNamespace("mvpart", character.only = TRUE)
+      )
+    ) {
+      stop(
+        paste(
+          "The mvpart package is required to run this function.", "\n",
+          "please install it using:
+          remotes::install_github('cran/mvpart')"
+        )
+      )
+    }
+
     data_percentage <-
       transfer_into_proportions(
         data_source_counts,
