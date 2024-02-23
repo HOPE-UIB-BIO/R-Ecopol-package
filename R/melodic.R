@@ -6,10 +6,10 @@
 #' https://doi.org/10.1007/s00442-016-3546-0
 #' @author Carlos P. Carmona, Ondrej Mottl
 #' @references
-#' de Bello, F., Carmona, C.P., Lepš, J. et al.
+#' de Bello, F., Carmona, C.P., Leps, J. et al.
 #' Functional diversity through the mean trait dissimilarity:
 #' resolving shortcomings with existing paradigms and algorithms.
-#' Oecologia 180, 933–940 (2016).
+#' Oecologia 180, 933-940 (2016).
 #' https://doi.org/10.1007/s00442-016-3546-0
 #' @keywords internal
 melodic <-
