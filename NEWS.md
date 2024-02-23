@@ -1,3 +1,7 @@
+# REcopol 0.0.3
+
+* Move {mvpart} to Suggest and add a warning message to all functions using {mvpart} if not installed. This will allow the package to be built on newer versions of R.
+
 # REcopol 0.0.2
 
 * For all exported functions, specify, which function is used "under the hood".
